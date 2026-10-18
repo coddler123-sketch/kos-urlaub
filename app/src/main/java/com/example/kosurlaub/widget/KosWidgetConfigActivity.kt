@@ -1,6 +1,7 @@
 package com.example.kosurlaub.widget
 
 import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.widget.FrameLayout
@@ -46,28 +47,39 @@ class KosWidgetConfigActivity : ComponentActivity() {
         ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
         // Zurueck-Taste = abbrechen, das Widget wird dann nicht platziert.
         setResult(RESULT_CANCELED, resultIntent(appWidgetId))
-        if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+        val forAll = intent.getBooleanExtra(EXTRA_ALL_WIDGETS, false)
+        if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID && !forAll) {
             finish()
             return
         }
-        val current = WidgetStyle.of(this, appWidgetId)
+        val current = (if (forAll) placedWidgetIds().firstOrNull() else appWidgetId)
+            ?.let { WidgetStyle.of(this, it) } ?: WidgetStyle.ISLAND
         setContent {
             KosWidgetTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    StylePicker(current) { choose(appWidgetId, it) }
+                    StylePicker(current) { choose(if (forAll) placedWidgetIds() else listOf(appWidgetId), it) }
                 }
             }
         }
     }
 
-    private fun choose(appWidgetId: Int, style: WidgetStyle) {
-        WidgetStyle.save(this, appWidgetId, style)
-        KosCountdownLargeWidgetProvider.updateLargeWidget(
-            this, AppWidgetManager.getInstance(this), appWidgetId
-        )
+    private fun placedWidgetIds(): List<Int> = AppWidgetManager.getInstance(this)
+        .getAppWidgetIds(ComponentName(this, KosCountdownLargeWidgetProvider::class.java)).toList()
+
+    private fun choose(appWidgetIds: List<Int>, style: WidgetStyle) {
+        val manager = AppWidgetManager.getInstance(this)
+        appWidgetIds.forEach {
+            WidgetStyle.save(this, it, style)
+            KosCountdownLargeWidgetProvider.updateLargeWidget(this, manager, it)
+        }
         KosWidgetWorker.ensureScheduled(this, requestRefresh = true)
-        setResult(RESULT_OK, resultIntent(appWidgetId))
+        setResult(RESULT_OK, resultIntent(appWidgetIds.firstOrNull() ?: AppWidgetManager.INVALID_APPWIDGET_ID))
         finish()
+    }
+
+    companion object {
+        /** Stil fuer alle platzierten Widgets setzen (Aufruf aus den App-Optionen). */
+        const val EXTRA_ALL_WIDGETS = "all_widgets"
     }
 
     private fun resultIntent(appWidgetId: Int) =

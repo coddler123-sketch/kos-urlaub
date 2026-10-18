@@ -102,6 +102,20 @@ fun SettingsSheet(
             onAction = onOpenGallery,
             actionTag = "settings-open-gallery"
         )
+        val context = LocalContext.current
+        SettingsRow(
+            icon = "▦",
+            label = "Widget-Stil",
+            detail = "Für alle platzierten Widgets",
+            actionLabel = "Wählen",
+            onAction = {
+                context.startActivity(
+                    android.content.Intent(context, KosWidgetConfigActivity::class.java)
+                        .putExtra(KosWidgetConfigActivity.EXTRA_ALL_WIDGETS, true)
+                )
+            },
+            actionTag = "settings-widget-style"
+        )
         PrivateImagesSection()
         SettingsRow(
             icon = if (hasUpdate) "●" else "✓",
