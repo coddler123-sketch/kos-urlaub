@@ -51,7 +51,12 @@ import com.example.kosurlaub.ui.theme.KosSerif
 
 /** Tagesfoto als leicht gekipptes Polaroid. Die Rahmenfarbe bleibt in beiden Modi hell wie Fotopapier. */
 @Composable
-fun PolaroidPhoto(imageRes: Int, caption: String, modifier: Modifier = Modifier) {
+fun PolaroidPhoto(
+    imageRes: Int,
+    caption: String,
+    modifier: Modifier = Modifier,
+    photo: androidx.compose.ui.graphics.ImageBitmap? = null
+) {
     if (imageRes == 0) return
     Column(
         modifier = modifier
@@ -64,7 +69,7 @@ fun PolaroidPhoto(imageRes: Int, caption: String, modifier: Modifier = Modifier)
             .testTag("home-polaroid")
     ) {
         Image(
-            painter = painterResource(imageRes),
+            painter = photo?.let { androidx.compose.ui.graphics.painter.BitmapPainter(it) } ?: painterResource(imageRes),
             contentDescription = caption,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxWidth().aspectRatio(4f / 3f)

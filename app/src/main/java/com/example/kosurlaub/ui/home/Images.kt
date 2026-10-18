@@ -92,13 +92,28 @@ object Images {
         return rotationImageName()
     }
 
-    fun rotationImageName(): String {
+    private fun daysSinceEpoch(): Long {
         val now = Calendar.getInstance()
         val localMillis = now.timeInMillis +
             now.get(Calendar.ZONE_OFFSET) + now.get(Calendar.DST_OFFSET)
-        val daysSinceEpoch = TimeUnit.MILLISECONDS.toDays(localMillis)
-        val index = (daysSinceEpoch % resourceNames.size).toInt()
+        return TimeUnit.MILLISECONDS.toDays(localMillis)
+    }
+
+    fun rotationImageName(): String {
+        val index = (daysSinceEpoch() % resourceNames.size).toInt()
         return resourceNames[index]
+    }
+
+    /**
+     * Pfad des privaten Tagesbilds, wenn heute eines dran ist (Pool = freie Bilder + geladene
+     * private). Null ohne geladene Bilder oder bei festgepinntem Titelbild.
+     */
+    fun privatePathOfTheDay(context: Context): String? {
+        val pinned = getPinnedImage(context)
+        if (pinned != null && pinned != "auto" && pinned in allImageNames) return null
+        val pool = PrivateImages.ROTATION.filter { PrivateImages.has(context, it) }
+        val index = (daysSinceEpoch() % (resourceNames.size + pool.size)).toInt()
+        return pool.getOrNull(index - resourceNames.size)
     }
 
     /** Drawable-Resource fuer das heutige Hintergrundbild. */

@@ -45,6 +45,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -120,7 +121,7 @@ internal fun CompassHeroCard(
             .testTag("compass-featured-tip")
     ) {
         Image(
-            painter = painterResource(editorial.imageRes),
+            painter = tipPainter(tip, editorial.imageRes),
             contentDescription = tip.title,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -476,7 +477,7 @@ internal fun CompassTipCard(
                 .testTag("compass-tip-${tip.id}")
         ) {
             Image(
-                painter = painterResource(editorial.imageRes),
+                painter = tipPainter(tip, editorial.imageRes),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -749,4 +750,14 @@ internal fun categoryColor(category: String): Color = when (category) {
     "Souvenirs" -> Color(0xFFD6A4E8)
     "Regionale Produkte" -> Color(0xFFD9A86C)
     else -> HomeAccent
+}
+
+/** Privates Foto zum Tipp, falls geladen, sonst das freie Bild aus den Ressourcen. */
+@Composable
+private fun tipPainter(tip: CompassTip, @DrawableRes fallback: Int): androidx.compose.ui.graphics.painter.Painter {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val photo = remember(tip.id, PrivateImages.version.intValue) {
+        PrivateImages.tipBitmap(context, tip.id)?.asImageBitmap()
+    }
+    return photo?.let { androidx.compose.ui.graphics.painter.BitmapPainter(it) } ?: painterResource(fallback)
 }

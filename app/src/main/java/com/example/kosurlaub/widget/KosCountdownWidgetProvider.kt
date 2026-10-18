@@ -77,8 +77,7 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
                     views.setViewVisibility(R.id.widget_vacation_subtitle, View.GONE)
                     views.setViewVisibility(R.id.widget_phrase_container, View.GONE)
                     views.setTextViewText(R.id.widget_arrival_message, context.getString(R.string.widget_over_message))
-                    val image = Images.resourceOfTheDay(context)
-                    if (image != 0) views.setImageViewResource(R.id.widget_background_image, image)
+                    applyDayImage(context, views)
                 }
                 remaining.isOnVacation -> {
                     views.setViewVisibility(R.id.widget_countdown_row, View.GONE)
@@ -88,8 +87,7 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
                     views.setViewVisibility(R.id.widget_phrase_container, View.GONE)
                     views.setTextViewText(R.id.widget_arrival_message,
                         context.getString(R.string.widget_vacation_line1))
-                    val image = Images.resourceOfTheDay(context)
-                    if (image != 0) views.setImageViewResource(R.id.widget_background_image, image)
+                    applyDayImage(context, views)
                 }
                 remaining.isReached -> {
                     views.setViewVisibility(R.id.widget_countdown_row, View.GONE)
@@ -116,8 +114,7 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
                     views.setTextViewText(R.id.widget_days, remaining.days.toString())
                     views.setTextViewText(R.id.widget_hours, remaining.hours.toString().padStart(2, '0'))
                     views.setTextViewText(R.id.widget_minutes, remaining.minutes.toString().padStart(2, '0'))
-                    val image = Images.resourceOfTheDay(context)
-                    if (image != 0) views.setImageViewResource(R.id.widget_background_image, image)
+                    applyDayImage(context, views)
                     val progress = widgetProgressValue(CountdownCalculator.progressFraction())
                     views.setProgressBar(R.id.widget_progress_bar, 1000, progress, false)
                     views.setViewVisibility(R.id.widget_progress_bar, View.VISIBLE)
@@ -144,6 +141,17 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
             (progressFraction.coerceIn(0f, 1f) * 1000).toInt()
 
         internal fun shouldShowWidgetPhrase(fontScale: Float): Boolean = fontScale < 1.3f
+
+        /** Privates Tagesfoto (klein skaliert, RemoteViews-Limit), sonst freies Bild aus den Ressourcen. */
+        private fun applyDayImage(context: Context, views: RemoteViews) {
+            val bitmap = Images.privatePathOfTheDay(context)?.let { PrivateImages.bitmap(context, it, 900) }
+            if (bitmap != null) {
+                views.setImageViewBitmap(R.id.widget_background_image, bitmap)
+                return
+            }
+            val image = Images.resourceOfTheDay(context)
+            if (image != 0) views.setImageViewResource(R.id.widget_background_image, image)
+        }
 
         private fun applyWeather(context: Context, views: RemoteViews) {
             val weather = WeatherRepository.cached(context) ?: return

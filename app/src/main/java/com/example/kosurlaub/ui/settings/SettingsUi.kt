@@ -20,7 +20,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -92,6 +102,7 @@ fun SettingsSheet(
             onAction = onOpenGallery,
             actionTag = "settings-open-gallery"
         )
+        PrivateImagesSection()
         SettingsRow(
             icon = if (hasUpdate) "●" else "✓",
             label = "Version v${BuildConfig.VERSION_NAME}",
@@ -206,5 +217,70 @@ private fun DebugClockSection() {
                 modifier = Modifier.testTag("debug-clock-$index")
             )
         }
+    }
+}
+
+/** Zugangscode (Lese-Token) fuer die privaten Fotos: laedt sie einmal und blendet sie ein. */
+@Composable
+private fun PrivateImagesSection() {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var enabled by remember { mutableStateOf(PrivateImages.isEnabled(context)) }
+    var code by remember { mutableStateOf("") }
+    var busy by remember { mutableStateOf(false) }
+    var status by remember {
+        mutableStateOf(if (enabled) "${PrivateImages.fileCount(context)} Fotos geladen" else "Mit Zugangscode freischalten")
+    }
+
+    fun load(token: String) {
+        busy = true
+        status = "Lädt …"
+        scope.launch {
+            val count = withContext(Dispatchers.IO) { PrivateImages.download(context, token) }
+            busy = false
+            if (count == null) {
+                status = "Code ungültig oder kein Netz"
+            } else {
+                enabled = true
+                code = ""
+                status = "$count Fotos geladen"
+                PrivateImages.version.intValue++
+                withContext(Dispatchers.IO) { KosCountdownLargeWidgetProvider.updateAllLargeWidgets(context) }
+            }
+        }
+    }
+
+    SettingsRow(
+        icon = "🔑",
+        label = "Private Fotos",
+        detail = status,
+        actionLabel = when {
+            busy -> "Lädt …"
+            enabled -> "Entfernen"
+            else -> "Laden"
+        },
+        onAction = {
+            if (enabled) {
+                PrivateImages.clear(context)
+                enabled = false
+                status = "Mit Zugangscode freischalten"
+                PrivateImages.version.intValue++
+                KosCountdownLargeWidgetProvider.updateAllLargeWidgets(context)
+            } else if (code.isNotBlank()) {
+                load(code.trim())
+            }
+        },
+        enabled = !busy && (enabled || code.isNotBlank()),
+        actionTag = "settings-private-images"
+    )
+    if (!enabled) {
+        OutlinedTextField(
+            value = code,
+            onValueChange = { code = it },
+            singleLine = true,
+            label = { Text("Zugangscode") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth().testTag("settings-private-code")
+        )
     }
 }

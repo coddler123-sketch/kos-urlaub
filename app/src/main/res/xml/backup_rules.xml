@@ -2,4 +2,6 @@
 <full-backup-content>
     <!-- User choices, saved tips and personal notes should follow the user. -->
     <include domain="sharedpref" path="." />
+    <!-- Zugangscode fuer private Bilder bleibt auf dem Geraet. -->
+    <exclude domain="sharedpref" path="kos_private.xml" />
 </full-backup-content>

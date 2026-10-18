@@ -53,6 +53,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -354,9 +355,16 @@ private fun KosHome(
             if (selectedDay != null) {
                 DayPage(day = selectedDay, onOpenIdeas = onOpenIdeas)
             } else {
+            val privatePath = remember(PrivateImages.version.intValue, s.backgroundRes) {
+                Images.privatePathOfTheDay(context)
+            }
+            val privatePhoto = remember(privatePath) {
+                privatePath?.let { PrivateImages.bitmap(context, it, 1200)?.asImageBitmap() }
+            }
             PolaroidPhoto(
                 imageRes = s.backgroundRes,
-                caption = Images.displayNameOf(Images.currentImageName(context))
+                caption = if (privatePhoto != null) "Kos Impression" else Images.displayNameOf(Images.currentImageName(context)),
+                photo = privatePhoto
             )
             Spacer(Modifier.height(20.dp))
             CountdownSection(s)
