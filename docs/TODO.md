@@ -6,7 +6,7 @@ Entwurf: [docs/superpowers/specs/2026-10-18-app-konzept-design.md](superpowers/s
 
 Reihenfolge, jedes Teilprojekt einzeln lauffähig und releasebar:
 
-- [ ] **1. Postkarten-Designsystem** – Farben, Schriften (Serife Titel, Sans Zahlen), Foto-Karte, Stempel-Chip, Papier-Panel, Perforationskante; hell und dunkel. Ändert noch keine Funktion.
+- [ ] **1. Postkarten-Designsystem** – Farben, Schriften (Serife Titel, Sans Zahlen), Foto-Karte, Stempel-Chip, Papier-Panel, Perforationskante; hell und dunkel. Ändert noch keine Funktion. Vorgabe aus dem Mockup-Review: keine Schrift unter 11sp, Innenabstand in Karten und Chips mindestens 8dp (Mockup `docs/mockups/app-konzept.html` nutzt noch 9–10px).
 - [ ] **2. Navigation und Phasen-Startseite** – Tabs Heute · Entdecken · Tagebuch; Startseite je nach `TripPhase` (vorher / auf Kos / danach).
 - [ ] **3. Entdecken** – Kompass und Reise zu einer Seite mit Kategorien; gemerkte Tipps einem Tag zuordnen (Grundlage für den Tagesplan).
 - [ ] **4. Tagebuch und Rückblick** – Tagebuch im Postkarten-Look, Rückblick am Ende der Reise.
