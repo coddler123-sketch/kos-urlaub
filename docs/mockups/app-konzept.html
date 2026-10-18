@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kos Urlaub – App-Konzept Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,400&family=Oswald:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f6f0e4;--paper2:#efe6d0;--ink:#2b3a30;--soft:#2b3a30e0;--line:#2b3a3026;--red:#b8432f;--teal:#1f5f7a;--sea:#0e8fa3;--dark:#1e2a26}
+*{box-sizing:border-box;margin:0}
+body{font-family:Inter,system-ui,sans-serif;background:#e4dfd3;color:var(--ink);padding:28px 20px 60px}
+h1{font-family:Fraunces,Georgia,serif;font-size:28px;margin-bottom:6px}
+.lead{max-width:760px;opacity:.85;line-height:1.5;margin-bottom:26px}
+.row{display:flex;gap:30px;overflow-x:auto;padding:6px 6px 20px}
+.fig{flex:0 0 330px}
+.cap{text-align:center;font-size:13px;margin-top:10px;opacity:.85;line-height:1.4}
+.cap b{display:block;opacity:1;font-family:Oswald,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.phone{height:690px;border-radius:38px;border:9px solid #111;background:var(--paper);overflow:hidden;position:relative;box-shadow:0 14px 40px #0004;display:flex;flex-direction:column}
+.sb{height:26px;font-size:11px;font-weight:600;display:flex;justify-content:space-between;padding:8px 18px 0;flex:0 0 auto;z-index:3}
+.scroll{flex:1;overflow:hidden;position:relative}
+.cond{white-space:nowrap;font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.08em}
+.serif{font-family:Fraunces,Georgia,serif}
+.photo{position:relative;background-size:cover;background-position:center}
+.perf{position:absolute;left:0;right:0;bottom:-3px;height:6px;background:repeating-linear-gradient(90deg,var(--paper) 0 7px,transparent 7px 12px)}
+.flip{display:flex;gap:4px;align-items:center}
+.flip i{font-style:normal;width:34px;height:46px;border-radius:7px;background:linear-gradient(#2c3733,#111815);color:var(--paper);font:700 35px/46px Oswald,sans-serif;text-align:center;position:relative}
+.flip i:after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:#0009}
+.chip{background:var(--paper);border-radius:4px;padding:3px 6px;font:700 11px Oswald;letter-spacing:.14em;color:var(--ink)}
+.stamp{position:absolute;width:44px;height:44px;border-radius:50%;background:#f6f0e4f2;border:1px dashed var(--red);color:var(--red);display:flex;flex-direction:column;align-items:center;justify-content:center;font:700 12px Oswald;line-height:1.1}
+.stamp small{font-size:13px}
+.card{background:#fff;border-radius:16px;border:1px solid var(--line);padding:11px 13px;margin:0 14px 10px;box-shadow:0 2px 6px #0000000d}
+.label{font:700 10px Oswald;letter-spacing:.16em;color:var(--soft);text-transform:uppercase;margin-bottom:6px}
+.bar{height:3px;background:#00000022;border-radius:2px;position:relative}
+.bar b{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:var(--red)}
+.tabs{flex:0 0 58px;background:var(--paper);border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center;font:600 10px Inter;color:var(--soft);z-index:3}
+.tabs div{text-align:center;padding:6px 14px;border-radius:14px}
+.tabs div.on{background:var(--paper2);color:var(--ink)}
+.tabs span{display:block;font-size:17px;line-height:1.1}
+.sos{position:absolute;right:14px;bottom:70px;width:44px;height:44px;border-radius:50%;background:var(--red);color:#fff;font:700 12px Oswald;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px #0005;z-index:4}
+.row2{display:flex;gap:10px;align-items:center}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:4px 10px;font-size:11px;background:#fff}
+.pill.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.tl{position:relative;padding-left:16px}
+.tl:before{content:"";position:absolute;left:4px;top:6px;bottom:6px;border-left:1.5px dashed var(--red)}
+.tl div{position:relative;margin-bottom:8px;font-size:12px}
+.tl div:before{content:"";position:absolute;left:-16px;top:4px;width:9px;height:9px;border-radius:50%;background:var(--paper);border:2px solid var(--red)}
+.tl b{font-family:Oswald;letter-spacing:.05em;margin-right:6px}
+.pol{background:#fff;padding:6px 6px 18px;box-shadow:0 5px 12px #0003;position:absolute}
+.pol div{background-size:cover;background-position:center}
+.note{font-size:12px;opacity:.85;margin-top:22px;max-width:760px;line-height:1.5}
+</style>
+</head>
+<body>
+<h1>App-Konzept: Phasen-App im Postkarten-Look</h1>
+<p class="lead">Drei Tabs (Heute · Entdecken · Tagebuch). Die Startseite „Heute“ ändert sich je nach Reisephase. Alle Inhalte sind Beispieldaten für die Optik, nicht die fertige App.</p>
+
+<div class="row">
+
+<!-- 1 VORHER -->
+<div class="fig"><div class="phone">
+  <div class="sb"><span>09:41</span><span>▮▮▮</span></div>
+  <div class="scroll">
+    <div class="photo" style="height:200px;background-image:url(../../app/src/main/res/drawable-nodpi/kos_rot_11.webp)">
+      <div style="position:absolute;left:14px;top:12px" class="flip"><i>3</i><i>3</i><i>0</i><span class="chip" style="margin-left:6px">TAGE</span></div>
+      <div class="stamp" style="right:12px;top:12px">☀<small>28°</small></div>
+      <div class="perf"></div>
+    </div>
+    <div style="padding:10px 18px 4px">
+      <div class="row2" style="justify-content:space-between;align-items:flex-end">
+        <div class="cond" style="font-size:18px;font-weight:700">Hamburg → Kos</div>
+        <div class="cond" style="font-size:18px;font-weight:700">03 <small style="font-size:9px;opacity:.6">Std</small> 44 <small style="font-size:9px;opacity:.6">Min</small></div>
+      </div>
+      <div class="cond" style="font-size:10px;opacity:.85;margin:2px 0 6px">Bis zu unserem Abflug · DE 1640</div>
+      <div class="bar"><b style="width:10%"></b></div>
+      <p class="serif" style="font-style:italic;font-size:13px;margin:7px 0 10px">Jeden Tag ein Stück näher ans Meer.</p>
+    </div>
+    <div class="card"><div class="label">Flug &amp; Hotel</div>
+      <div style="font-size:12.5px;line-height:1.45"><b>Mo 13.09.</b> · 13:25 HAM → 17:45 KGS<br><span style="opacity:.85">ILIOS.K Village Resort · Tigaki</span></div></div>
+    <div class="card"><div class="label">Gemerkt · 4 Tipps</div>
+      <div class="row2"><div style="width:62px;height:46px;border-radius:8px;background:url(../../app/src/main/res/drawable-nodpi/excursion_old_town.webp) center/cover"></div>
+      <div style="width:62px;height:46px;border-radius:8px;background:url(../../app/src/main/res/drawable-nodpi/excursion_seven_springs.webp) center/cover"></div>
+      <div style="width:62px;height:46px;border-radius:8px;background:url(../../app/src/main/res/drawable-nodpi/excursion_marmari.webp) center/cover"></div>
+      <span style="font-size:12px;opacity:.85">+1</span></div></div>
+    <div class="card"><div class="label">Kos im September</div><div style="font-size:12.5px">Tagsüber um 28° · Meer um 24° · kaum Regen</div></div>
+  </div>
+  <div class="tabs"><div class="on"><span>◐</span>Heute</div><div><span>✦</span>Entdecken</div><div><span>✎</span>Tagebuch</div></div>
+</div><div class="cap"><b>Vor dem Abflug</b>Abflugtafel als Held, Vorfreude-Karten darunter</div></div>
+
+<!-- 2 AUF KOS -->
+<div class="fig"><div class="phone">
+  <div class="sb"><span>10:12</span><span>▮▮▮</span></div>
+  <div class="scroll">
+    <div class="photo" style="height:150px;background-image:url(../../app/src/main/res/drawable-nodpi/kos_rot_03.webp)">
+      <div style="position:absolute;inset:0;background:linear-gradient(#0000,#0008)"></div>
+      <div style="position:absolute;left:16px;bottom:12px;color:#fff">
+        <div class="serif" style="font-size:28px;font-weight:700;text-shadow:0 1px 6px #0008">Kalimera!</div>
+        <div class="cond" style="font-size:11px;opacity:.9">Donnerstag, 16. September</div></div>
+      <div class="stamp" style="right:14px;bottom:12px;width:50px;height:50px"><small style="font-size:9px">TAG</small><small style="font-size:16px">4/16</small></div>
+      <div class="perf"></div>
+    </div>
+    <div style="padding:12px 14px 6px"><div class="row2" style="justify-content:space-between">
+      <div style="text-align:center"><div class="cond" style="font-size:20px;font-weight:700">28°</div><div class="label" style="margin:0">Luft</div></div>
+      <div style="text-align:center"><div class="cond" style="font-size:20px;font-weight:700">24°</div><div class="label" style="margin:0">Meer</div></div>
+      <div style="text-align:center"><div class="cond" style="font-size:20px;font-weight:700">3 Bft</div><div class="label" style="margin:0">Wind</div></div>
+      <div style="text-align:center"><div class="cond" style="font-size:20px;font-weight:700">19:42</div><div class="label" style="margin:0">Sonne ↓</div></div>
+    </div></div>
+    <div class="card"><div class="label">Heute vor</div>
+      <div class="tl">
+        <div><b>10:30</b>Strand Tigaki</div>
+        <div><b>13:30</b>Mittag in der Taverne</div>
+        <div><b>18:30</b>Sonnenuntergang am Meer</div>
+      </div></div>
+    <div class="card" style="display:flex;justify-content:space-between;align-items:center"><div><div class="label">Nächster Bus</div><div style="font-size:13px"><b>Tigaki → Kos-Stadt</b></div></div><div class="cond" style="font-size:22px;color:var(--red);font-weight:700">12 Min</div></div>
+    <div class="card" style="display:flex;gap:10px;align-items:center"><div style="width:58px;height:58px;border-radius:10px;background:url(../../app/src/main/res/drawable-nodpi/excursion_seven_springs.webp) center/cover;flex:0 0 auto"></div><div><div class="label" style="margin-bottom:2px">Tipp des Tages</div><div style="font-size:12.5px;line-height:1.35">Ruhiger Windtag: passt zu einem Ausflug.</div></div></div>
+  </div>
+  <div class="sos">SOS</div>
+  <div class="tabs"><div class="on"><span>◐</span>Heute</div><div><span>✦</span>Entdecken</div><div><span>✎</span>Tagebuch</div></div>
+</div><div class="cap"><b>Auf Kos</b>Wetter und Meer, Tagesplan, Bus, Tipp, SOS immer erreichbar</div></div>
+
+<!-- 3 ENTDECKEN -->
+<div class="fig"><div class="phone">
+  <div class="sb"><span>10:14</span><span>▮▮▮</span></div>
+  <div class="scroll">
+    <div style="padding:10px 16px 2px"><div class="serif" style="font-size:26px;font-weight:700">Entdecken</div>
+      <div style="font-size:12px;opacity:.85;margin-top:2px">Tipps, Reisehilfe und Orientierung an einem Ort</div></div>
+    <div style="padding:8px 14px;display:flex;gap:6px;flex-wrap:wrap">
+      <span class="pill on">Alle</span><span class="pill">Essen</span><span class="pill">Strände</span><span class="pill">Ausflüge</span><span class="pill">Fotospots</span><span class="pill">Bus</span><span class="pill">Sprache</span><span class="pill">Hotel</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:2px 14px">
+      <div class="photo" style="height:128px;border-radius:14px;background-image:url(../../app/src/main/res/drawable-nodpi/excursion_old_town.webp)"><div style="position:absolute;inset:0;border-radius:14px;background:linear-gradient(#0000,#000a)"></div><div style="position:absolute;left:10px;bottom:8px;color:#fff"><div class="serif" style="font-weight:700;font-size:14px">Altstadt</div><div style="font-size:10px;opacity:.85">Ausflug · gemerkt ♥</div></div></div>
+      <div class="photo" style="height:128px;border-radius:14px;background-image:url(../../app/src/main/res/drawable-nodpi/excursion_seven_springs.webp)"><div style="position:absolute;inset:0;border-radius:14px;background:linear-gradient(#0000,#000a)"></div><div style="position:absolute;left:10px;bottom:8px;color:#fff"><div class="serif" style="font-weight:700;font-size:14px">Sieben Quellen</div><div style="font-size:10px;opacity:.85">Ausflug</div></div></div>
+      <div class="photo" style="height:128px;border-radius:14px;background-image:url(../../app/src/main/res/drawable-nodpi/excursion_marmari.webp)"><div style="position:absolute;inset:0;border-radius:14px;background:linear-gradient(#0000,#000a)"></div><div style="position:absolute;left:10px;bottom:8px;color:#fff"><div class="serif" style="font-weight:700;font-size:14px">Marmari</div><div style="font-size:10px;opacity:.85">Strand · besucht ✓</div></div></div>
+      <div class="photo" style="height:128px;border-radius:14px;background-image:url(../../app/src/main/res/drawable-nodpi/category_greek_food.webp)"><div style="position:absolute;inset:0;border-radius:14px;background:linear-gradient(#0000,#000a)"></div><div style="position:absolute;left:10px;bottom:8px;color:#fff"><div class="serif" style="font-weight:700;font-size:14px">Essen</div><div style="font-size:10px;opacity:.85">Kategorie</div></div></div>
+    </div>
+    <div class="card" style="margin-top:10px"><div class="label">Reisehilfe</div>
+      <div class="row2" style="flex-wrap:wrap;font-size:12px"><span class="pill">🚌 Bus</span><span class="pill">🗣 Sprachführer</span><span class="pill">🏨 Hotel</span><span class="pill">🚑 Notfall</span></div></div>
+  </div>
+  <div class="tabs"><div><span>◐</span>Heute</div><div class="on"><span>✦</span>Entdecken</div><div><span>✎</span>Tagebuch</div></div>
+</div><div class="cap"><b>Entdecken</b>Kompass und Reise in einer Seite, Tipps als Foto-Karten</div></div>
+
+<!-- 4 RUECKBLICK -->
+<div class="fig"><div class="phone">
+  <div class="sb"><span>18:05</span><span>▮▮▮</span></div>
+  <div class="scroll">
+    <div style="padding:14px 18px 0;text-align:center">
+      <div class="cond" style="font-size:11px;color:var(--soft)">13.–28. September 2027</div>
+      <div class="serif" style="font-size:32px;font-weight:700;margin:4px 0">Schön war es.</div>
+    </div>
+    <div style="position:relative;height:236px;margin:6px 0 4px">
+      <div class="pol" style="left:26px;top:10px;width:150px;transform:rotate(-5deg)"><div style="height:118px;background-image:url(../../app/src/main/res/drawable-nodpi/kos_rot_03.webp)"></div></div>
+      <div class="pol" style="right:22px;top:2px;width:140px;transform:rotate(4deg)"><div style="height:108px;background-image:url(../../app/src/main/res/drawable-nodpi/excursion_marmari.webp)"></div></div>
+      <div class="pol" style="left:92px;top:96px;width:150px;transform:rotate(-1.5deg)"><div style="height:118px;background-image:url(../../app/src/main/res/drawable-nodpi/excursion_old_town.webp)"></div></div>
+    </div>
+    <div style="display:flex;justify-content:space-around;padding:6px 10px 10px;text-align:center">
+      <div><div class="cond" style="font-size:28px;font-weight:700;color:var(--teal)">16</div><div class="label">Tage</div></div>
+      <div><div class="cond" style="font-size:28px;font-weight:700;color:var(--teal)">23</div><div class="label">Tipps besucht</div></div>
+      <div><div class="cond" style="font-size:28px;font-weight:700;color:var(--teal)">12</div><div class="label">Einträge</div></div>
+    </div>
+    <div class="card"><div class="label">Aus dem Tagebuch</div><p class="serif" style="font-style:italic;font-size:13.5px;line-height:1.4">„Sonnenuntergang in Tigaki, die Füße im Wasser. Mehr braucht es nicht.“</p></div>
+    <div class="card" style="text-align:center;font-size:12.5px"><b>Nächstes Mal?</b> <span style="opacity:.85">Tipps für die nächste Reise merken</span></div>
+  </div>
+  <div class="tabs"><div class="on"><span>◐</span>Heute</div><div><span>✦</span>Entdecken</div><div><span>✎</span>Tagebuch</div></div>
+</div><div class="cap"><b>Nach dem Urlaub</b>Rückblick mit Zahlen, Fotos und Tagebuch-Zitat</div></div>
+
+</div>
+<p class="note">Bilder: die vorhandenen Fotos der App. Schriften im Mockup: Fraunces (Titel), Oswald (Zahlen und Etiketten), Inter (Text). In der App werden Serife und Schmalschrift aus den App-Schriften umgesetzt. Tagesplan, Bus-Zeit und Tagebuch-Zitat sind Platzhalter.</p>
+</body>
+</html>
