@@ -57,7 +57,6 @@ internal val compassTipIds = listOf(
     "tigaki-alikes-salt-lake",
     "mobility-bus-tigaki-kos-town",
     "mobility-plan-return-first",
-    "food-greek-classics",
     "food-aliada",
     "food-brusko",
     "food-nisiotiko",

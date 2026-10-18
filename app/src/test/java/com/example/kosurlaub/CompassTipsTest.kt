@@ -17,7 +17,7 @@ import org.junit.Test
 class CompassTipsTest {
     @Test
     fun `tip collection has one stable id per tip`() {
-        assertEquals(21, compassTips.size)
+        assertEquals(20, compassTips.size)
         assertEquals(compassTips.size, compassTips.map { it.id }.distinct().size)
         assertTrue(compassTips.all { it.id.isNotBlank() && it.id != it.title })
         assertTrue(compassTips.all { it.source == CompassTipSource.RESEARCHED })
@@ -78,7 +78,7 @@ class CompassTipsTest {
     @Test
     fun `quick filters use editorial travel details`() {
         val busTip = compassTips.first { it.title == "Bus ab Tigaki nach Kos-Stadt (KTEL Kos)" }
-        val food = compassTips.first { it.title == "Griechische Klassiker probieren" }
+        val food = compassTips.first { it.category == "Essen" }
 
         assertTrue(matchesCompassQuickFilter(busTip, "15–30 Min Bus/Taxi"))
         assertTrue(matchesCompassQuickFilter(food, "Essen"))

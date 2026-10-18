@@ -43,7 +43,6 @@ private val tipImages = mapOf(
     "tigaki-alikes-salt-lake" to R.drawable.excursion_seven_springs,
     "mobility-bus-tigaki-kos-town" to R.drawable.kos_rot_19,
     "mobility-plan-return-first" to R.drawable.kos_rot_04,
-    "food-greek-classics" to R.drawable.category_greek_food,
     "food-aliada" to R.drawable.kos_rot_15,
     "food-brusko" to R.drawable.kos_rot_26,
     "food-nisiotiko" to R.drawable.kos_rot_12,

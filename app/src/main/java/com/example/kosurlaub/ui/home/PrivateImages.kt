@@ -37,7 +37,6 @@ object PrivateImages {
         "beach-tigaki" to "kosurlaub-de/04.jpg",
         "beach-marmari" to "kosurlaub-de/12.jpg",
         "tigaki-alikes-salt-lake" to "kosurlaub-de/03.jpg",
-        "food-greek-classics" to "restaurants/alikes/3.jpg",
         "food-aliada" to "restaurants/aliada/1.jpg",
         "food-brusko" to "restaurants/brusko/1.jpg",
         "food-nisiotiko" to "restaurants/nisiotiko/1.jpg",

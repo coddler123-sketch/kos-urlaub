@@ -164,16 +164,6 @@ internal val compassTips = listOf(
     ),
     CompassTip(
         category = "Essen",
-        title = "Griechische Klassiker probieren",
-        description = "Gyros, Saganaki, gegrillter Oktopus und griechischer Joghurt mit Honig gehören zu den Klassikern, die sich in Tavernen vor Ort finden lassen.",
-        note = "Konkrete Lokale mit Bewertung stehen in den Tipps darunter",
-        location = "Tigaki & Umgebung",
-        journey = "zu Fuß oder kurze Fahrt",
-        tags = listOf("Essen", "Taverne"),
-        source = CompassTipSource.RESEARCHED
-    ),
-    CompassTip(
-        category = "Essen",
         title = "Aliada",
         description = "Griechische Taverne in Tigaki. Gäste loben große Portionen, vegetarische Moussaka und gemischten Grillteller. Etwa 20–25 € pro Person laut Google.",
         note = "Öffnungszeiten vorab im Maps-Link prüfen, Telefon +30 2242 302662",
