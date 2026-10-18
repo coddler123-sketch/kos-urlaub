@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:importantForAccessibility="no"
         android:scaleType="fitXY"
-        android:src="@drawable/widget_side_scrim" />
+        android:src="@drawable/widget_glass_scrim" />
 
     <!-- Countdown links -->
     <LinearLayout
@@ -35,6 +35,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:shadowColor="#B3000000"
+            android:shadowRadius="4"
+            android:shadowDy="1"
             android:includeFontPadding="false"
             android:letterSpacing="0.12"
             android:maxLines="1"
@@ -53,6 +56,9 @@
             android:autoSizeMinTextSize="18sp"
             android:autoSizeStepGranularity="1sp"
             android:autoSizeTextType="uniform"
+            android:shadowColor="#B3000000"
+            android:shadowRadius="4"
+            android:shadowDy="1"
             android:includeFontPadding="false"
             android:maxLines="1"
             android:text="Noch 125 Tage"
@@ -65,11 +71,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:shadowColor="#B3000000"
+            android:shadowRadius="4"
+            android:shadowDy="1"
             android:includeFontPadding="false"
             android:maxLines="1"
             android:text="12 Std · 35 Min"
-            android:textColor="@color/widget_on_photo_soft"
-            android:textSize="13sp" />
+            android:textColor="@color/widget_on_photo"
+            android:textSize="14sp" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -94,11 +103,15 @@
                 android:id="@+id/widget_glass_departure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:includeFontPadding="false"
+                android:shadowColor="#B3000000"
+            android:shadowRadius="4"
+            android:shadowDy="1"
+            android:includeFontPadding="false"
                 android:maxLines="1"
                 android:text="Abflug: 13. September"
-                android:textColor="@color/widget_on_photo_soft"
-                android:textSize="12sp" />
+                android:textColor="@color/widget_on_photo"
+                android:textSize="13sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
@@ -121,6 +134,9 @@
             android:autoSizeMinTextSize="18sp"
             android:autoSizeStepGranularity="1sp"
             android:autoSizeTextType="uniform"
+            android:shadowColor="#B3000000"
+            android:shadowRadius="4"
+            android:shadowDy="1"
             android:includeFontPadding="false"
             android:maxLines="2"
             android:text="@string/widget_arrival_message"
@@ -133,6 +149,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:shadowColor="#B3000000"
+            android:shadowRadius="4"
+            android:shadowDy="1"
             android:includeFontPadding="false"
             android:maxLines="2"
             android:text="@string/widget_vacation_line2"
@@ -175,7 +194,10 @@
                 android:id="@+id/widget_weather_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:includeFontPadding="false"
+                android:shadowColor="#B3000000"
+            android:shadowRadius="4"
+            android:shadowDy="1"
+            android:includeFontPadding="false"
                 android:text="@string/widget_weather_temp"
                 android:textColor="@color/widget_gold"
                 android:textSize="22sp"
@@ -198,11 +220,15 @@
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_horizontal"
-                android:includeFontPadding="false"
+                android:shadowColor="#B3000000"
+            android:shadowRadius="4"
+            android:shadowDy="1"
+            android:includeFontPadding="false"
                 android:maxLines="3"
                 android:text="@string/widget_phrase"
-                android:textColor="@color/widget_gold"
-                android:textSize="12sp" />
+                android:textColor="@color/widget_on_photo"
+                android:textSize="12sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
