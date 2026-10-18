@@ -198,13 +198,13 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
                     views.setImageViewResource(R.id.widget_background_image, ARRIVAL_BACKGROUND)
                 }
                 else -> {
-                    bindCountdownTexts(context, views, remaining)
+                    bindCountdownTexts(context, views, style, remaining)
                     applyDayImage(context, views)
                 }
             }
         }
 
-        private fun bindCountdownTexts(context: Context, views: RemoteViews, remaining: RemainingTime) {
+        private fun bindCountdownTexts(context: Context, views: RemoteViews, style: WidgetStyle, remaining: RemainingTime) {
             val days = remaining.days.toInt()
             val hours = remaining.hours.toString().padStart(2, '0')
             val minutes = remaining.minutes.toString().padStart(2, '0')
@@ -216,7 +216,8 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
             views.setTextViewText(R.id.widget_minutes, minutes)
             views.setTextViewText(R.id.widget_hm_text, context.getString(R.string.widget_hm_format, hours, minutes))
             views.setTextViewText(R.id.widget_days_headline, res.getQuantityString(R.plurals.widget_days_remaining, days, days))
-            views.setTextViewText(R.id.widget_days_unit, res.getQuantityString(R.plurals.widget_days_unit, days))
+            val unitPlural = if (style == WidgetStyle.POSTCARD) R.plurals.widget_days_until else R.plurals.widget_days_unit
+            views.setTextViewText(R.id.widget_days_unit, res.getQuantityString(unitPlural, days))
 
             val digits = days.coerceAtMost(999).toString().padStart(3, '0')
             views.setTextViewText(R.id.widget_digit_1, digits[0].toString())

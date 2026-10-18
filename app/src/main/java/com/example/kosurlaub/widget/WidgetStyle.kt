@@ -14,7 +14,8 @@ enum class WidgetStyle(
     BOARD("board", R.layout.kos_widget_board, R.string.widget_style_board, R.string.widget_style_board_desc),
     GLASS("glass", R.layout.kos_widget_glass, R.string.widget_style_glass, R.string.widget_style_glass_desc),
     TILE("tile", R.layout.kos_widget_tile, R.string.widget_style_tile, R.string.widget_style_tile_desc),
-    COMPACT("compact", R.layout.kos_widget_compact, R.string.widget_style_compact, R.string.widget_style_compact_desc);
+    COMPACT("compact", R.layout.kos_widget_compact, R.string.widget_style_compact, R.string.widget_style_compact_desc),
+    POSTCARD("postcard", R.layout.kos_widget_postcard, R.string.widget_style_postcard, R.string.widget_style_postcard_desc);
 
     companion object {
         private const val PREFS = "kos_widget_style"

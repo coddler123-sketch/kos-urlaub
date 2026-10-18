@@ -139,6 +139,8 @@
     <string name="widget_style_tile_desc">Foto links, Countdown-Kachel rechts</string>
     <string name="widget_style_compact">Kompakt-Info</string>
     <string name="widget_style_compact_desc">Foto mit Flugbogen-Karte</string>
+    <string name="widget_style_postcard">Postkarte</string>
+    <string name="widget_style_postcard_desc">Serifen-Titel, große Zahl, Wetterblase</string>
     <string name="widget_board_subtitle">Bis zu unserem Abflug · %1$s</string>
     <string name="widget_glass_place">Kos, Griechenland</string>
     <string name="widget_glass_departure">Abflug: %1$s</string>
@@ -150,6 +152,10 @@
     <plurals name="widget_days_remaining">
         <item quantity="one">Noch %d Tag</item>
         <item quantity="other">Noch %d Tage</item>
+    </plurals>
+    <plurals name="widget_days_until">
+        <item quantity="one">Tag bis zum Abflug</item>
+        <item quantity="other">Tage bis zum Abflug</item>
     </plurals>
     <plurals name="widget_days_unit">
         <item quantity="one">TAG</item>
