@@ -16,10 +16,12 @@
         android:src="@drawable/kos_rot_11" />
 
     <!-- Scrim: oben leicht, unten kraeftig fuer Lesbarkeit -->
-    <View
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/widget_photo_scrim" />
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY"
+        android:src="@drawable/widget_photo_scrim" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,7 +60,7 @@
                 android:src="@drawable/ic_heart_outline"
                 android:tint="@color/widget_on_photo" />
 
-            <View
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1" />
@@ -107,7 +109,7 @@
         </LinearLayout>
 
         <!-- Platz: Foto bleibt sichtbar -->
-        <View
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
