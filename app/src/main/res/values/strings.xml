@@ -1,0 +1,305 @@
+<resources>
+    <string name="app_name">Kos Urlaub</string>
+    <string name="main_nav_home">Home</string>
+    <string name="main_nav_compass">Ideen</string>
+    <string name="main_nav_diary">Tagebuch</string>
+    <string name="main_nav_travel">Vor Ort &amp; SOS</string>
+    <string name="community_title">Kos-Gruppen auf Facebook</string>
+    <string name="community_label">FACEBOOK-GRUPPE</string>
+    <string name="community_description">Reisetipps und Erfahrungen austauschen</string>
+    <string name="community_action">Gruppen suchen</string>
+
+    <!-- Urlaubshelfer -->
+    <string name="travel_card_label">URLAUBSHELFER</string>
+    <string name="travel_card_title">Unterwegs auf Kos</string>
+    <string name="travel_card_description">Busse, Ausflüge und Hilfe vor Ort</string>
+    <string name="travel_back">‹ Zurück</string>
+    <string name="travel_screen_label">NACHSCHLAGEN VOR ORT</string>
+    <string name="travel_screen_title">Vor Ort</string>
+    <string name="travel_screen_intro">Alles Wichtige für unterwegs – kompakt nach Themen sortiert.</string>
+    <string name="travel_area_today">Heute wichtig</string>
+    <string name="travel_area_today_description">Wetter, Meer und wichtige Hinweise für den Tag.</string>
+    <string name="travel_area_mobility">Busse &amp; Mobilität</string>
+    <string name="travel_area_mobility_description">Busfahrpläne und Verbindungen ab Tigaki.</string>
+    <string name="travel_area_explore">Entdecken</string>
+    <string name="travel_area_explore_description">Veranstaltungen und Ideen für Ausflüge.</string>
+    <string name="travel_area_help">Hilfe &amp; Vorbereitung</string>
+    <string name="travel_area_help_description">Notfallkontakte, Orientierung und eure Urlaubsliste.</string>
+    <string name="travel_more_mobility_sources">Weitere Verkehrsquellen</string>
+    <string name="travel_more_ferry_sources">Fähren und weitere offizielle Quellen</string>
+    <string name="travel_more_help">Weitere Hilfe vor Ort</string>
+    <string name="travel_area_open">Öffnen ›</string>
+    <string name="travel_bus_intro">Direkte oder praktische Verbindungen zu den wichtigsten Zielen:</string>
+    <string name="travel_bus_kos">Kos-Stadt</string>
+    <string name="travel_bus_antimachia">Antimachia</string>
+    <string name="travel_bus_marmari">Marmari-Strand</string>
+    <string name="travel_bus_seven_springs">Alikes Salzsee</string>
+    <string name="travel_bus_embros">Therme Embros</string>
+    <string name="travel_sources_hint">Die offiziellen PDFs werden bei jeder Aktualisierung neu geprüft und auf dem Gerät gespeichert. Kurzfristige Änderungen bitte zusätzlich vor Ort beachten.</string>
+    <string name="travel_kos_gr_title">kos.gr – Gemeinde Kos</string>
+    <string name="travel_kos_gr_description">Allgemeine Infos der Gemeinde; keine garantiert aktuelle Fahrplanquelle</string>
+    <string name="travel_open_source">Offizielle Quelle öffnen ↗</string>
+    <string name="travel_kosStadt_title">Kos-Stadt &amp; Asklepieion</string>
+    <string name="travel_kosStadt_meta">Bus · etwa ein halber Tag</string>
+    <string name="travel_kosStadt_description">Früh starten, bevor es in Burg, Altstadt und Asklepieion voll und heiß wird. Feste Schuhe und Wasser mitnehmen.</string>
+    <string name="travel_old_town_title">Kos-Altstadt</string>
+    <string name="travel_old_town_meta">Bus · halber oder ganzer Tag</string>
+    <string name="travel_old_town_description">Burg Nerantzia, Hippokratesplatane und Hafen lassen sich gut zu Fuß verbinden.</string>
+    <string name="travel_alikes_title">Alikes Salzsee</string>
+    <string name="travel_alikes_meta">Zu Fuß ab Tigaki · 1 bis 2 Stunden</string>
+    <string name="travel_alikes_description">Ruhiges Naturschutzgebiet direkt neben Tigaki, gut für einen Spaziergang.</string>
+    <string name="travel_marmari_title">Marmari-Strand</string>
+    <string name="travel_marmari_meta">Auto oder Taxi · Strandtag</string>
+    <string name="travel_marmari_description">Breiter Sandstrand in der Nähe von Tigaki. Sonnenschutz und Rückfahrt vorab einplanen.</string>
+    <string name="travel_more_information">Mehr Informationen ↗</string>
+    <string name="travel_emergency_title">Europäischer Notruf 112</string>
+    <string name="travel_emergency_description">Kostenlos für Polizei, Feuerwehr und medizinische Notfälle. Funktioniert auch ohne Guthaben.</string>
+    <string name="travel_emergency_action">112 anrufen</string>
+    <string name="travel_emergency_disclaimer">Im Notfall zuerst 112 anrufen und den eigenen Standort so genau wie möglich nennen.</string>
+    <string name="travel_marine_title">Meer bei Tigaki</string>
+    <string name="travel_marine_loading">Meerdaten werden geladen …</string>
+    <string name="travel_marine_unavailable">Keine aktuellen Meerdaten. Zuletzt gespeicherte Werte werden automatisch verwendet, sobald sie vorhanden sind.</string>
+    <string name="travel_marine_cached">Aktualisierung nicht möglich – gespeicherte Werte werden angezeigt.</string>
+    <string name="travel_marine_refresh">Aktualisieren</string>
+    <string name="travel_marine_water">Wasser</string>
+    <string name="travel_marine_waves">Wellen</string>
+    <string name="travel_marine_period">Periode</string>
+    <string name="travel_marine_uv">UV-Index</string>
+    <string name="travel_marine_wind">Wind</string>
+    <string name="travel_marine_water_value">%1$.1f °C</string>
+    <string name="travel_marine_wave_value">%1$.1f m</string>
+    <string name="travel_marine_period_value">%1$.0f s</string>
+    <string name="travel_marine_uv_value">%1$.1f</string>
+    <string name="travel_marine_wind_value">%1$d km/h</string>
+    <string name="travel_value_unknown">–</string>
+    <string name="travel_marine_updated">Zuletzt geladen: %1$s</string>
+    <string name="travel_marine_calm">Ruhige Bedingungen für einen Strandtag.</string>
+    <string name="travel_marine_caution">Wind und Wellen vor Ort besonders beachten.</string>
+    <string name="travel_dodekanisos_title">Boot nach Nisyros</string>
+    <string name="travel_dodekanisos_description">Dodekanisos Seaways: Fahrplan und Tickets, auch Kos–Nisyros</string>
+    <string name="travel_bodrum_title">Boot nach Bodrum</string>
+    <string name="travel_bodrum_description">Bodrum Express Lines: Überfahrt Kos–Bodrum, Zeiten beim Anbieter prüfen</string>
+    <string name="travel_events_title">Gemeinde Kos</string>
+    <string name="travel_events_description">Offizielle Seite der Gemeinde Kos mit Neuigkeiten</string>
+    <string name="travel_favorite_add">Merken</string>
+    <string name="travel_favorite_remove">Gemerkt</string>
+    <string name="travel_map_action">Auf Karte öffnen</string>
+    <string name="travel_offline_hint">Beschreibung und Favorit funktionieren ohne Internet; für die Karte wird eine installierte Karten-App benötigt.</string>
+    <string name="travel_help_more">WEITERE HILFE</string>
+    <string name="travel_police">Polizei</string>
+    <string name="travel_ambulance">Rettungsdienst</string>
+    <string name="travel_fire">Feuerwehr</string>
+    <string name="travel_coast_guard">Küstenwache</string>
+    <string name="travel_call_number">%1$s anrufen</string>
+    <string name="travel_hospital_title">Krankenhaus Kos</string>
+    <string name="travel_hospital_description">Allgemeines Krankenhaus auf der Karte suchen</string>
+    <string name="travel_pharmacy_title">Apotheke in der Nähe</string>
+    <string name="travel_pharmacy_description">Geöffnete Apotheken mit der Karten-App suchen</string>
+    <string name="travel_list_progress">%1$d von %2$d erledigt</string>
+    <string name="travel_check_documents">Ausweise und Reiseunterlagen</string>
+    <string name="travel_check_insurance">Versicherung und Gesundheitskarte</string>
+    <string name="travel_check_booking">Buchungsbestätigungen auf dem Gerät speichern</string>
+    <string name="travel_check_driving">Führerschein und Mietwagenunterlagen</string>
+    <string name="travel_check_sun">Sonnenschutz und Kopfbedeckung</string>
+    <string name="travel_check_charger">Ladegeräte und Powerbank</string>
+    <string name="travel_check_medicine">Medikamente und kleine Reiseapotheke</string>
+    <string name="travel_notes_label">Eigene Notizen</string>
+    <string name="travel_notes_placeholder">Reservierungen, Treffpunkte oder wichtige Hinweise …</string>
+    <string name="travel_notes_saved">Notizen werden automatisch nur auf diesem Gerät gespeichert.</string>
+
+    <!-- 4x2-Widget -->
+    <string name="widget_large_name">Kos 4x2 Groß</string>
+    <string name="widget_large_description">Großes 4x2-Widget für den Kos-Urlaub</string>
+    <string name="widget_large_title">KOS</string>
+    <string name="widget_subtitle">Bis zu unserem Abflug</string>
+    <string name="widget_background_description">Kos-Bild</string>
+    <string name="widget_favorite_description">Favorit</string>
+    <string name="widget_weather_description">Wetter</string>
+    <string name="widget_refresh_description">Wetter aktualisieren</string>
+    <string name="widget_weather_temp">28°</string>
+    <string name="widget_days_label">TAGE</string>
+    <string name="widget_hours_label">STD.</string>
+    <string name="widget_minutes_label">MIN.</string>
+    <string name="widget_phrase_description">Spruch des Tages</string>
+    <string name="widget_phrase">Jeden Tag ein Stück näher ans Meer.</string>
+    <string name="widget_over_message">Schön war es! 🌅</string>
+    <string name="widget_arrival_message">Es ist soweit!</string>
+    <string name="widget_vacation_line1">Ihr seid auf Kos. 🌊</string>
+    <string name="widget_vacation_line2">Genießt jeden Augenblick.</string>
+
+    <!-- Spruch des Tages, sortiert nach verbleibenden Tagen bis zum Abflug.
+         Index 0 = 101 Tage vorher, letzter Index = Reisetag. -->
+    <string-array name="widget_phrases_daily">
+        <item>Heute schon an Kos gedacht? Wir schon.</item>
+        <item>Jeder Tag bringt uns dem Meer näher.</item>
+        <item>Noch ein Tag, noch ein Schritt Richtung Ägäis.</item>
+        <item>Irgendwo wartet eine Liege mit unserem Namen.</item>
+        <item>Die Sonne übt schon für uns.</item>
+        <item>Griechischer Salat in Sicht.</item>
+        <item>Bald riecht es nach Meer und Sonnencreme.</item>
+        <item>Tigaki wartet geduldig.</item>
+        <item>Der Alltag darf heute gern etwas leiser sein.</item>
+        <item>Noch ein Tag, an dem Kos ein Stück näher rückt.</item>
+        <item>Heute ist ein guter Tag für Vorfreude.</item>
+        <item>Zeit zählt, Urlaub gewinnt.</item>
+        <item>Die Ägäis hat Zeit, wir bald auch.</item>
+        <item>Aus der Ferne: ein sanftes Rauschen.</item>
+        <item>Bald nur noch Sandalen.</item>
+        <item>Noch ein Tag auf dem Weg zum Meerblick.</item>
+        <item>Wer wartet, bekommt Sonnenuntergänge.</item>
+        <item>Ein bisschen Kos steckt schon im Kopf.</item>
+        <item>Die Koffer sind noch leer, die Vorfreude voll.</item>
+        <item>Tag für Tag Richtung Strand.</item>
+        <item>Kos braucht nur noch uns.</item>
+        <item>Heute: Fernweh auf Sparflamme, bald auf Vollgas.</item>
+        <item>Der Sommer kommt, auch wenn er sich Zeit lässt.</item>
+        <item>Ouzo, Meer und wir zwei. Bald.</item>
+        <item>Noch ein Morgen weniger bis zum Meer.</item>
+        <item>Gemeinsam zählen macht die Tage kürzer.</item>
+        <item>Kleine Pause vom Alltag: einmal tief durchatmen, Meer vorstellen.</item>
+        <item>Der Strand wartet, die Sonne auch.</item>
+        <item>Wellen kennen keinen Montag.</item>
+        <item>Bald ist jeden Tag Wochenende am Meer.</item>
+        <item>Stell dir das Meeresrauschen vor, es klappt fast.</item>
+        <item>Ein Tag mehr Vorfreude, ein Tag weniger bis Kos.</item>
+        <item>Auf Kos ist die Uhr ein bisschen entspannter.</item>
+        <item>Das Meer zählt nicht mit, wir schon.</item>
+        <item>Griechische Abende sind lang. Unsere Vorfreude auch.</item>
+        <item>Etwas Geduld, dann gibt es Meer.</item>
+        <item>Der Urlaub klopft leise an.</item>
+        <item>Heute schon Sonne im Herzen, bald auch auf der Haut.</item>
+        <item>Noch ein Tag Alltag, dann ein Tag näher am Strand.</item>
+        <item>Bald zeigt die Uhr: Inselzeit.</item>
+        <item>Das Beste kommt noch: Kos.</item>
+        <item>Wir packen im Kopf schon mal vor.</item>
+        <item>Aus Vorfreude wird bald Urlaub.</item>
+        <item>Fernweh ist nur Vorfreude mit Geduld.</item>
+        <item>Auf nach Tigaki, aber noch nicht heute.</item>
+        <item>Der Hafen wartet, das Boot auch.</item>
+        <item>Ein ruhiger Tag mit Kos im Hinterkopf.</item>
+        <item>Noch ein paar Sonnenaufgänge, dann am Meer.</item>
+        <item>Erst zählen, dann sonnen.</item>
+        <item>Vorfreude ist die schönste Zwischenstation.</item>
+        <item>Die Insel wartet, ohne Hast.</item>
+        <item>Bald gibt es Sand zwischen den Zehen.</item>
+        <item>Heute noch Termine, bald nur noch Meer.</item>
+        <item>Jeder Tag ein Pinselstrich im Urlaubsbild.</item>
+        <item>Das nächste Kapitel heißt Kos.</item>
+        <item>Abheben ist nicht mehr weit.</item>
+        <item>Bald klingt der Wecker nach Wellen.</item>
+        <item>Noch ein Schritt, noch ein Tag, noch ein Lächeln.</item>
+        <item>Reisefieber im Anflug.</item>
+        <item>Bald fliegen wir nach Griechenland.</item>
+        <item>Zwei Wochen Meer sind unterwegs zu uns.</item>
+        <item>Unser Urlaub trainiert schon für den Start.</item>
+    </string-array>
+    <string-array name="widget_phrases">
+        <!-- 101 Tage -->
+        <item>Kos rückt näher.</item>
+        <item>Die Insel lockt.</item>
+        <item>Vorfreude wächst.</item>
+        <item>Die Ägäis wartet.</item>
+        <item>Zeit für Inselträume.</item>
+        <item>Sommer wartet auf uns.</item>
+        <item>Sonne in Sicht.</item>
+        <item>Die Tage sind gezählt.</item>
+        <item>Urlaub wird geladen.</item>
+        <item>Die Auszeit kommt.</item>
+        <item>Das Meer ruft.</item>
+        <item>Noch näher ans Meer.</item>
+        <item>Fast am Ziel.</item>
+        <item>Kos zählt mit.</item>
+        <item>Bald unter Palmen.</item>
+        <item>Die Koffer träumen schon.</item>
+        <item>Urlaub naht.</item>
+        <item>Inselträume beginnen.</item>
+        <item>Die Insel wartet.</item>
+        <item>Urlaubshorizont voraus.</item>
+        <item>Der Sommer ruft.</item>
+        <item>Bald beginnt die Auszeit.</item>
+        <item>Die Insel lächelt schon.</item>
+        <item>Kos ist nicht mehr fern.</item>
+        <item>Fast Inselzeit.</item>
+        <item>Inselzauber wartet.</item>
+        <item>Die Vorfreude siegt.</item>
+        <item>Morgen wieder näher dran.</item>
+        <item>Sonne, wir kommen.</item>
+        <item>Meerzeit voraus.</item>
+        <item>Bald wieder Inselzeit.</item>
+        <!-- 70 Tage -->
+        <item>Meerblick voraus.</item>
+        <item>Bald am Strand.</item>
+        <item>Bald wieder Meeresluft.</item>
+        <item>Inselmodus lädt ...</item>
+        <item>Das Meer kommt näher.</item>
+        <item>Wellen in Sicht.</item>
+        <item>Salzige Luft voraus.</item>
+        <item>Meerrauschen wartet.</item>
+        <item>Bald wieder Meerblick.</item>
+        <item>Die nächste Welle naht.</item>
+        <item>Sonnenlicht voraus.</item>
+        <item>Bald unter blauem Himmel.</item>
+        <item>Sonnenuntergänge warten.</item>
+        <item>Goldene Stunden voraus.</item>
+        <item>Abendlicht am Meer.</item>
+        <item>Die Sonne wartet.</item>
+        <item>Der Strand zählt mit.</item>
+        <item>Inselmomente voraus.</item>
+        <item>Die Insel ruft uns.</item>
+        <item>Bald nur noch entspannen.</item>
+        <item>Meerzeit kommt näher.</item>
+        <item>Die Ägäis glitzert schon.</item>
+        <item>Inselabende kommen.</item>
+        <item>Meerblick kommt näher.</item>
+        <item>Inselglück voraus.</item>
+        <item>Die Sonne wird wärmer.</item>
+        <item>Meer statt Termine.</item>
+        <item>Sonne statt To-do-Liste.</item>
+        <item>Inselenergie voraus.</item>
+        <item>Bald nur noch Meer.</item>
+        <!-- 40 Tage -->
+        <item>Gemeinsam ans Meer.</item>
+        <item>Unsere Insel wartet.</item>
+        <item>Bald wieder Zeit für uns.</item>
+        <item>Vorfreude zu zweit.</item>
+        <item>Gemeinsam Richtung Sonne.</item>
+        <item>Bald neue Erinnerungen.</item>
+        <item>Noch ein Stück näher.</item>
+        <item>Unsere Auszeit kommt.</item>
+        <item>Bald wieder wir zwei.</item>
+        <item>Die besten Tage warten.</item>
+        <item>Sonne für uns reserviert.</item>
+        <item>Gemeinsam Richtung Kos.</item>
+        <item>Das Abenteuer naht.</item>
+        <item>Noch näher an der Auszeit.</item>
+        <item>Urlaub für zwei.</item>
+        <item>Bald am Lieblingsort.</item>
+        <item>Inselträume werden wahr.</item>
+        <item>Vorfreude geteilt.</item>
+        <item>Bald wieder unterwegs.</item>
+        <item>Gemeinsam dem Alltag davon.</item>
+        <item>Unsere Reise kommt.</item>
+        <item>Die Flip-Flops warten.</item>
+        <item>Cocktails in Bereitschaft.</item>
+        <item>Sonnencreme wird nervös.</item>
+        <item>Der Alltag verliert.</item>
+        <item>Koffer gedanklich gepackt.</item>
+        <item>Der Strand reserviert Plätze.</item>
+        <item>Urlaub gewinnt.</item>
+        <item>Kos hält durch.</item>
+        <item>Fast bereit zum Abflug.</item>
+        <!-- 10 Tage -->
+        <item>Noch etwas Geduld.</item>
+        <item>Der Urlaub klopft an.</item>
+        <item>Die Liegen sind frei.</item>
+        <item>Urlaub statt Alltag.</item>
+        <item>Die Insel wird größer.</item>
+        <item>Nur noch wenige Schritte.</item>
+        <item>Bald geht\'s los.</item>
+        <item>Fast geschafft.</item>
+        <item>Noch zwei Nächte.</item>
+        <item>Morgen sehen wir Kos.</item>
+        <!-- Reisetag -->
+        <item>Tigaki, wir kommen.</item>
+    </string-array>
+</resources>
