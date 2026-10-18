@@ -13,4 +13,6 @@
     <color name="widget_line">#332B3A30</color>
     <color name="widget_chip">#FFEFE6D0</color>
     <color name="widget_accent">#FF1F5F7A</color>
+    <color name="widget_on_photo">#FFFFFFFF</color>
+    <color name="widget_on_photo_soft">#D9FFFFFF</color>
 </resources>
