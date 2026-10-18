@@ -15,4 +15,12 @@
     <color name="widget_accent">#FF1F5F7A</color>
     <color name="widget_on_photo">#FFFFFFFF</color>
     <color name="widget_on_photo_soft">#D9FFFFFF</color>
+    <color name="widget_board_ink">#FF1E2A26</color>
+    <color name="widget_board_digit">#FFF6F0E4</color>
+    <color name="widget_board_ink_soft">#CC1E2A26</color>
+    <color name="widget_board_red">#FFB8432F</color>
+    <color name="widget_gold">#FFF3D58A</color>
+    <color name="widget_tile_panel">#FFE3F4F8</color>
+    <color name="widget_tile_teal">#FF0E8FA3</color>
+    <color name="widget_tile_orange">#FFF08A24</color>
 </resources>

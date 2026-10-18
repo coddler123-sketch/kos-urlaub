@@ -42,6 +42,16 @@
                 android:resource="@xml/kos_countdown_large_widget_info" />
         </receiver>
 
+        <activity
+            android:name=".widget.KosWidgetConfigActivity"
+            android:exported="true"
+            android:label="@string/widget_config_title"
+            android:theme="@style/Theme.KosWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
         <receiver
             android:name=".widget.KosWidgetAlarmReceiver"
             android:exported="false" />

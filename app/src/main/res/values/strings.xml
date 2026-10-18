@@ -127,6 +127,36 @@
     <string name="widget_vacation_line1">Ihr seid auf Kos. 🌊</string>
     <string name="widget_vacation_line2">Genießt jeden Augenblick.</string>
 
+    <!-- Widget-Stile -->
+    <string name="widget_config_title">Widget-Stil wählen</string>
+    <string name="widget_style_island">Insel-Fokus</string>
+    <string name="widget_style_island_desc">Vollbild-Foto, große Tageszahl, Spruch</string>
+    <string name="widget_style_board">Abflugtafel</string>
+    <string name="widget_style_board_desc">Klappzahlen auf Papier mit Flugroute</string>
+    <string name="widget_style_glass">Glas</string>
+    <string name="widget_style_glass_desc">Foto mit Glas-Karte für Wetter und Spruch</string>
+    <string name="widget_style_tile">Kachel</string>
+    <string name="widget_style_tile_desc">Foto links, Countdown-Kachel rechts</string>
+    <string name="widget_style_compact">Kompakt-Info</string>
+    <string name="widget_style_compact_desc">Foto mit Flugbogen-Karte</string>
+    <string name="widget_board_subtitle">Bis zu unserem Abflug · %1$s</string>
+    <string name="widget_glass_place">Kos, Griechenland</string>
+    <string name="widget_glass_departure">Abflug: %1$s</string>
+    <string name="widget_hm_format">%1$s Std · %2$s Min</string>
+    <string name="widget_tile_title">Abflug Kos</string>
+    <string name="widget_tile_footer_label">Vorfreude:</string>
+    <string name="widget_compact_noch">Noch</string>
+    <string name="widget_compact_ready">Flug &amp; Hotel bereit!</string>
+    <plurals name="widget_days_remaining">
+        <item quantity="one">Noch %d Tag</item>
+        <item quantity="other">Noch %d Tage</item>
+    </plurals>
+    <plurals name="widget_days_unit">
+        <item quantity="one">TAG</item>
+        <item quantity="other">TAGE</item>
+    </plurals>
+    <string name="widget_config_hint">Du kannst den Stil später über langes Drücken auf das Widget ändern.</string>
+
     <!-- Spruch des Tages, sortiert nach verbleibenden Tagen bis zum Abflug.
          Index 0 = 101 Tage vorher, letzter Index = Reisetag. -->
     <string-array name="widget_phrases_daily">

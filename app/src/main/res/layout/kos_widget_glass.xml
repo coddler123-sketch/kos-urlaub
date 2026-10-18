@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_dark_background"
+    android:clipToOutline="true">
+
+    <ImageView
+        android:id="@+id/widget_background_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/widget_background_description"
+        android:scaleType="centerCrop"
+        android:src="@drawable/kos_rot_11" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY"
+        android:src="@drawable/widget_side_scrim" />
+
+    <!-- Countdown links -->
+    <LinearLayout
+        android:id="@+id/widget_countdown_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="128dp"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:letterSpacing="0.12"
+            android:maxLines="1"
+            android:text="@string/widget_glass_place"
+            android:textAllCaps="true"
+            android:textColor="@color/widget_gold"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/widget_days_headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:autoSizeMaxTextSize="30sp"
+            android:autoSizeMinTextSize="18sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="Noch 125 Tage"
+            android:textColor="@color/widget_on_photo"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/widget_hm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="12 Std · 35 Min"
+            android:textColor="@color/widget_on_photo_soft"
+            android:textSize="13sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginRight="6dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_plane"
+                android:tint="@color/widget_on_photo_soft" />
+
+            <TextView
+                android:id="@+id/widget_glass_departure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="Abflug: 13. September"
+                android:textColor="@color/widget_on_photo_soft"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/widget_message_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="14dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/widget_arrival_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoSizeMaxTextSize="27sp"
+            android:autoSizeMinTextSize="18sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:text="@string/widget_arrival_message"
+            android:textColor="@color/widget_on_photo"
+            android:textSize="27sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/widget_vacation_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:text="@string/widget_vacation_line2"
+            android:textColor="@color/widget_on_photo_soft"
+            android:textSize="15sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Glas-Karte rechts -->
+    <LinearLayout
+        android:id="@+id/widget_weather_pill"
+        android:layout_width="116dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/widget_glass_panel"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingTop="10dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/widget_weather_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="5dp"
+                android:contentDescription="@string/widget_weather_description"
+                android:src="@drawable/ic_sun"
+                android:tint="@color/widget_gold" />
+
+            <TextView
+                android:id="@+id/widget_weather_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/widget_weather_temp"
+                android:textColor="@color/widget_gold"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/widget_phrase_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/widget_phrase_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoSizeMaxTextSize="12sp"
+                android:autoSizeMinTextSize="9sp"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:maxLines="3"
+                android:text="@string/widget_phrase"
+                android:textColor="@color/widget_gold"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

@@ -16,8 +16,11 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import android.widget.RemoteViews
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 /**
  * 4x2-Widget: Countdown auf das fixe Abflugdatum, Hintergrundbild und Spruch
@@ -38,6 +41,19 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
             context = context,
             requestRefresh = true
         )
+    }
+
+    override fun onAppWidgetOptionsChanged(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int,
+        newOptions: Bundle
+    ) {
+        updateLargeWidget(context, appWidgetManager, appWidgetId)
+    }
+
+    override fun onDeleted(context: Context, appWidgetIds: IntArray) {
+        WidgetStyle.forget(context, appWidgetIds)
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -63,11 +79,31 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int
         ) {
+            val heightDp = appWidgetManager.getAppWidgetOptions(appWidgetId)
+                .getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, 0)
+            val views = buildViews(context, WidgetStyle.of(context, appWidgetId), heightDp)
+            appWidgetManager.updateAppWidget(appWidgetId, views)
+        }
+
+        /** Baut die Widget-Ansicht im gewaehlten Stil; [heightDp] = 0 heisst unbekannt. */
+        fun buildViews(context: Context, style: WidgetStyle, heightDp: Int = 0): RemoteViews {
             val remaining = calculateRemainingTime()
-            val views = RemoteViews(context.packageName, R.layout.kos_countdown_widget_large)
-
+            val views = RemoteViews(context.packageName, style.layout)
             views.setTextViewText(R.id.widget_phrase_value, phraseOfTheDay(context))
+            if (style == WidgetStyle.ISLAND) {
+                bindIsland(context, views, remaining)
+            } else {
+                bindStyled(context, views, style, remaining, heightDp)
+            }
+            applyWeather(context, views)
 
+            views.setOnClickPendingIntent(R.id.widget_root, openAppIntent(context))
+            views.setOnClickPendingIntent(R.id.widget_large_title, refreshIntent(context))
+            views.setOnClickPendingIntent(R.id.widget_weather_pill, refreshIntent(context))
+            return views
+        }
+
+        private fun bindIsland(context: Context, views: RemoteViews, remaining: RemainingTime) {
             views.setViewVisibility(R.id.widget_subtitle, if (remaining.isReached) View.GONE else View.VISIBLE)
             when {
                 remaining.isOver -> {
@@ -120,13 +156,95 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
                     views.setViewVisibility(R.id.widget_progress_bar, View.VISIBLE)
                 }
             }
-            applyWeather(context, views)
-
-            views.setOnClickPendingIntent(R.id.widget_root, openAppIntent(context))
-            views.setOnClickPendingIntent(R.id.widget_large_title, refreshIntent(context))
-            views.setOnClickPendingIntent(R.id.widget_weather_pill, refreshIntent(context))
-            appWidgetManager.updateAppWidget(appWidgetId, views)
         }
+
+        /**
+         * Gemeinsame Bindung fuer Abflugtafel, Glas, Kachel und Kompakt. Jedes Layout
+         * enthaelt nur die IDs, die es braucht; RemoteViews ignoriert fehlende IDs.
+         */
+        private fun bindStyled(
+            context: Context,
+            views: RemoteViews,
+            style: WidgetStyle,
+            remaining: RemainingTime,
+            heightDp: Int
+        ) {
+            val showMessage = remaining.isOver || remaining.isOnVacation || remaining.isReached
+            views.setViewVisibility(R.id.widget_countdown_content, if (showMessage) View.GONE else View.VISIBLE)
+            views.setViewVisibility(R.id.widget_message_content, if (showMessage) View.VISIBLE else View.GONE)
+            views.setViewVisibility(R.id.widget_vacation_subtitle, if (remaining.isOnVacation) View.VISIBLE else View.GONE)
+
+            val phraseFits = style != WidgetStyle.BOARD || heightDp == 0 || heightDp >= BOARD_PHRASE_MIN_HEIGHT_DP
+            views.setViewVisibility(
+                R.id.widget_phrase_container,
+                if (!showMessage && phraseFits && shouldShowWidgetPhrase(context.resources.configuration.fontScale)) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            )
+
+            when {
+                remaining.isOver -> {
+                    views.setTextViewText(R.id.widget_arrival_message, context.getString(R.string.widget_over_message))
+                    applyDayImage(context, views)
+                }
+                remaining.isOnVacation -> {
+                    views.setTextViewText(R.id.widget_arrival_message, context.getString(R.string.widget_vacation_line1))
+                    applyDayImage(context, views)
+                }
+                remaining.isReached -> {
+                    views.setTextViewText(R.id.widget_arrival_message, context.getString(R.string.widget_arrival_message))
+                    views.setImageViewResource(R.id.widget_background_image, ARRIVAL_BACKGROUND)
+                }
+                else -> {
+                    bindCountdownTexts(context, views, remaining)
+                    applyDayImage(context, views)
+                }
+            }
+        }
+
+        private fun bindCountdownTexts(context: Context, views: RemoteViews, remaining: RemainingTime) {
+            val days = remaining.days.toInt()
+            val hours = remaining.hours.toString().padStart(2, '0')
+            val minutes = remaining.minutes.toString().padStart(2, '0')
+            val res = context.resources
+            val flight = TripData.outbound
+
+            views.setTextViewText(R.id.widget_days, days.toString())
+            views.setTextViewText(R.id.widget_hours, hours)
+            views.setTextViewText(R.id.widget_minutes, minutes)
+            views.setTextViewText(R.id.widget_hm_text, context.getString(R.string.widget_hm_format, hours, minutes))
+            views.setTextViewText(R.id.widget_days_headline, res.getQuantityString(R.plurals.widget_days_remaining, days, days))
+            views.setTextViewText(R.id.widget_days_unit, res.getQuantityString(R.plurals.widget_days_unit, days))
+
+            val digits = days.coerceAtMost(999).toString().padStart(3, '0')
+            views.setTextViewText(R.id.widget_digit_1, digits[0].toString())
+            views.setTextViewText(R.id.widget_digit_2, digits[1].toString())
+            views.setTextViewText(R.id.widget_digit_3, digits[2].toString())
+
+            views.setTextViewText(R.id.widget_route, "${flight.fromCity} → ${flight.toCity}".uppercase(Locale.GERMAN))
+            views.setTextViewText(
+                R.id.widget_flight_sub,
+                context.getString(R.string.widget_board_subtitle, flight.number.replace(Regex("^([A-Z]+)(\\d+)$"), "$1 $2"))
+            )
+            views.setTextViewText(R.id.widget_from_code, flight.fromAirport)
+            views.setTextViewText(R.id.widget_to_code, flight.toAirport)
+
+            val departure = CountdownCalculator.departureCalendar()
+            val dateLabel = SimpleDateFormat("d. MMMM", Locale.GERMAN)
+                .apply { timeZone = departure.timeZone }
+                .format(departure.time)
+            views.setTextViewText(R.id.widget_date_text, dateLabel)
+            views.setTextViewText(R.id.widget_glass_departure, context.getString(R.string.widget_glass_departure, dateLabel))
+
+            views.setProgressBar(
+                R.id.widget_progress_bar, 1000,
+                widgetProgressValue(CountdownCalculator.progressFraction()), false
+            )
+        }
+
+        private const val BOARD_PHRASE_MIN_HEIGHT_DP = 140
 
         /** Aktualisiert alle platzierten 4x2-Widgets (z. B. nach einem Wetter-Abruf). */
         fun updateAllLargeWidgets(context: Context) {
