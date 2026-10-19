@@ -339,4 +339,9 @@
         <!-- Reisetag -->
         <item>Tigaki, wir kommen.</item>
     </string-array>
+    <string name="today_before_flight_hotel">Flug &amp; Hotel</string>
+    <string name="today_before_saved">Gemerkte Tipps</string>
+    <string name="today_before_saved_empty">Noch nichts gemerkt. Schau bei Entdecken vorbei.</string>
+    <string name="today_before_weather">Kos jetzt</string>
+    <string name="today_open_ideas">Entdecken</string>
 </resources>
