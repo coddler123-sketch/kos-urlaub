@@ -17,24 +17,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -50,7 +44,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -74,207 +67,13 @@ internal data class CompassCategory(
 
 @Composable
 internal fun CompassOverviewHeader(count: Int, onRandomTip: () -> Unit = {}) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Box(
-            modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(HomeAccent.copy(alpha = 0.15f))
-                .border(1.dp, HomeAccent.copy(alpha = 0.4f), RoundedCornerShape(12.dp))
-                .testTag("compass-random-tip-button")
-                .clickable { onRandomTip() }
-                .padding(horizontal = 10.dp, vertical = 6.dp)
-        ) {
-            Text(
-                "🎲 Überrascht uns!",
-                color = HomeAccent,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = KosSans
-            )
+    Row(verticalAlignment = Alignment.Bottom) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text("Ideen & Orte", style = PostcardType.Title, color = KosInk)
+            PostcardLabel("$count ausgewählte Tipps")
         }
-        Spacer(Modifier.weight(1f))
-        Text("$count AUSGEWÄHLTE TIPPS", color = HomeAccent, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+        PostcardChip("Überrascht uns!", false, onRandomTip, Modifier.testTag("compass-random-tip-button"))
     }
-    Spacer(Modifier.height(6.dp))
-    Text("Ideen & Orte", color = KosInk, fontSize = 28.sp, fontWeight = FontWeight.Bold, fontFamily = KosSerif)
-    Text(
-        "Wähle ein Thema für Empfehlungen und persönliche Erfahrungen.",
-        color = KosInk.copy(alpha = 0.75f), fontSize = 12.sp, lineHeight = 18.sp, fontFamily = KosSans
-    )
-}
-
-@Composable
-internal fun CompassHeroCard(
-    tip: CompassTip,
-    isSaved: Boolean,
-    onToggleSaved: () -> Unit,
-    onOpen: () -> Unit
-) {
-    val editorial = editorialFor(tip)
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(224.dp)
-            .clip(HomeCardShape)
-            .border(1.dp, HomeCardBorder, HomeCardShape)
-            .clickable(onClick = onOpen)
-            .testTag("compass-featured-tip")
-    ) {
-        Image(
-            painter = tipPainter(tip, editorial.imageRes),
-            contentDescription = tip.title,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        listOf(Color(0x14000000), Color(0xE6000000))
-                    )
-                )
-        )
-        Column(
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(18.dp)
-        ) {
-            Text(
-                "FÜR EUCH EMPFOHLEN",
-                color = Color(0xFF9ED6E6),
-                fontSize = 10.sp,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 0.8.sp
-            )
-            Spacer(Modifier.height(5.dp))
-            Text(
-                tip.title,
-                color = Color.White,
-                fontSize = 21.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = KosSans
-            )
-            Spacer(Modifier.height(5.dp))
-            Text(
-                "${editorial.fromHotel} · ${editorial.bestTime}",
-                color = Color.White.copy(alpha = 0.9f),
-                fontSize = 11.sp,
-                fontFamily = KosSans
-            )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Details ansehen  ›", color = Color(0xFF9ED6E6), fontSize = 11.sp, fontWeight = FontWeight.Bold)
-                TextButton(onClick = onToggleSaved) {
-                    Text(
-                        if (isSaved) "♥ GEMERKT" else "♡ MERKEN",
-                        color = Color.White,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-internal fun CompassQuickFilters(
-    selected: String?,
-    onSelected: (String) -> Unit
-) {
-    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        items(
-            listOf(
-                "📍 Tigaki",
-                "🏛️ Kos-Stadt",
-                "🏰 Süden & Inland",
-                "🚤 Bootsausflüge",
-                "Rund ums Hotel",
-                "Zu Fuß",
-                "15–30 Min Bus/Taxi",
-                "Tagesausflug",
-                "Ohne Auto",
-                "Halber Tag",
-                "Ruhig",
-                "Essen"
-            )
-        ) { filter ->
-            FilterChip(
-                selected = selected == filter,
-                onClick = { onSelected(filter) },
-                label = { Text(filter, fontSize = 10.sp, fontFamily = KosSans) },
-                colors = FilterChipDefaults.filterChipColors(
-                    containerColor = HomeCardColor,
-                    labelColor = KosInk.copy(alpha = 0.8f),
-                    selectedContainerColor = HomeAccent.copy(alpha = 0.22f),
-                    selectedLabelColor = HomeAccent
-                ),
-                border = FilterChipDefaults.filterChipBorder(
-                    enabled = true,
-                    selected = selected == filter,
-                    borderColor = HomeCardBorder,
-                    selectedBorderColor = HomeAccent
-                )
-            )
-        }
-    }
-}
-
-@Composable
-internal fun CompassCategoryFilters(
-    categories: List<CompassCategory>,
-    selected: String?,
-    onSelected: (String?) -> Unit
-) {
-    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        item {
-            CompassCategoryFilterChip(
-                label = "Alle",
-                selected = selected == null,
-                testTag = "compass-category-filter-all",
-                onClick = { onSelected(null) }
-            )
-        }
-        items(categories, key = { it.title }) { category ->
-            CompassCategoryFilterChip(
-                label = category.title,
-                selected = selected == category.title,
-                testTag = "compass-category-filter-${category.title}",
-                onClick = { onSelected(category.title) }
-            )
-        }
-    }
-}
-
-@Composable
-private fun CompassCategoryFilterChip(
-    label: String,
-    selected: Boolean,
-    testTag: String,
-    onClick: () -> Unit
-) {
-    FilterChip(
-        selected = selected,
-        onClick = onClick,
-        label = { Text(label, fontSize = 10.sp, fontFamily = KosSans) },
-        modifier = Modifier.testTag(testTag),
-        colors = FilterChipDefaults.filterChipColors(
-            containerColor = HomeCardColor,
-            labelColor = KosInk.copy(alpha = 0.8f),
-            selectedContainerColor = HomeAccent.copy(alpha = 0.22f),
-            selectedLabelColor = HomeAccent
-        ),
-        border = FilterChipDefaults.filterChipBorder(
-            enabled = true,
-            selected = selected,
-            borderColor = HomeCardBorder,
-            selectedBorderColor = HomeAccent
-        )
-    )
 }
 
 @Composable
@@ -327,82 +126,25 @@ internal fun CompassSearchField(
                         .semantics { contentDescription = "Suche leeren" },
                     contentPadding = PaddingValues(0.dp)
                 ) {
-                    Text("×", color = HomeAccent, fontSize = 22.sp)
+                    Text("×", color = KosInk, fontSize = 22.sp)
                 }
             }
         },
         colors = OutlinedTextFieldDefaults.colors(
             focusedTextColor = KosInk,
             unfocusedTextColor = KosInk,
-            focusedBorderColor = HomeAccent,
+            focusedBorderColor = KosInk,
             unfocusedBorderColor = HomeCardBorder,
-            focusedLabelColor = HomeAccent,
+            focusedLabelColor = KosInk,
             unfocusedLabelColor = KosInk.copy(alpha = 0.75f),
             focusedPlaceholderColor = KosInk.copy(alpha = 0.5f),
             unfocusedPlaceholderColor = KosInk.copy(alpha = 0.5f),
-            cursorColor = HomeAccent
+            cursorColor = KosInk
         ),
         shape = HomeCardShape
     )
 }
 
-@Composable
-internal fun CompassCategoryCard(
-    category: CompassCategory,
-    count: Int,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
-    Box(
-        modifier = modifier
-            .height(198.dp)
-            .clip(HomeCardShape)
-            .border(1.dp, categoryColor(category.title).copy(alpha = 0.55f), HomeCardShape)
-            .clickable(onClick = onClick)
-            .testTag("compass-category-${category.title}")
-    ) {
-        Image(
-            painter = painterResource(category.imageRes),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        0f to Color(0x42000000),
-                        0.42f to Color(0x8F000000),
-                        1f to Color(0xF5000000)
-                    )
-                )
-        )
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(14.dp),
-            verticalArrangement = Arrangement.Bottom
-        ) {
-            Text(
-                "$count TIPPS",
-                color = categoryColor(category.title),
-                fontSize = 10.sp,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 0.5.sp,
-                modifier = Modifier
-                    .background(Color(0xB3000000), RoundedCornerShape(50))
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
-            )
-            Spacer(Modifier.height(7.dp))
-            Text(category.title, color = Color.White, fontSize = 17.sp, fontWeight = FontWeight.Bold, fontFamily = KosSans)
-            Spacer(Modifier.height(4.dp))
-            Text(category.description, color = Color.White, fontSize = 11.sp, lineHeight = 15.sp, fontWeight = FontWeight.Medium, fontFamily = KosSans, maxLines = 2, overflow = TextOverflow.Ellipsis)
-            Spacer(Modifier.height(9.dp))
-            Text("ANSEHEN  ›", color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.Bold)
-        }
-    }
-}
 @Composable
 internal fun CompassCommunityCard(
     modifier: Modifier = Modifier,

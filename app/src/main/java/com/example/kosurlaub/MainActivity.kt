@@ -41,7 +41,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.NavigationBar
@@ -266,10 +265,10 @@ private fun DiscoverScreen(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             listOf("TIPS" to R.string.discover_tab_tips, "TRAVEL" to R.string.discover_tab_travel).forEach { (key, label) ->
-                FilterChip(
+                PostcardChip(
+                    label = stringResource(label),
                     selected = tab == key,
                     onClick = { onTab(key) },
-                    label = { Text(stringResource(label)) },
                     modifier = Modifier.testTag("discover-tab-${key.lowercase()}")
                 )
             }
