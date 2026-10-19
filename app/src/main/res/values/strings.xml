@@ -344,4 +344,16 @@
     <string name="today_before_saved_empty">Noch nichts gemerkt. Schau bei Entdecken vorbei.</string>
     <string name="today_before_weather">Kos jetzt</string>
     <string name="today_open_ideas">Entdecken</string>
+    <string name="today_greeting">Kalimera!</string>
+    <string name="today_air">Luft</string>
+    <string name="today_sea">Meer</string>
+    <string name="today_wind">Wind</string>
+    <string name="today_sunset">Sonne ↓</string>
+    <string name="today_plan">Heute vor</string>
+    <string name="today_plan_empty">Noch nichts gemerkt. Tipps findest du bei Entdecken.</string>
+    <string name="today_next_bus">Nächster Bus</string>
+    <string name="today_bus_none">Heute keine Abfahrt mehr</string>
+    <string name="today_bus_source">Referenzfahrplan, Stand %1$s</string>
+    <string name="today_tip">Tipp des Tages</string>
+    <string name="today_sos">SOS</string>
 </resources>
