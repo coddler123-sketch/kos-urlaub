@@ -152,7 +152,7 @@ private fun KosApp(
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize().kosMeshBackground(),
+        modifier = Modifier.fillMaxSize().background(KosBg),
         containerColor = Color.Transparent,
         bottomBar = {
             if (!nestedDetailVisible.value) {
@@ -237,9 +237,9 @@ private fun MainNavigationBar(
                 label = { Text(stringResource(labelRes)) },
                 modifier = Modifier.testTag("main-nav-${destination.name.lowercase()}"),
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = KosOnAccent,
-                    selectedTextColor = HomeAccent,
-                    indicatorColor = HomeAccent,
+                    selectedIconColor = KosInk,
+                    selectedTextColor = KosInk,
+                    indicatorColor = KosPanelHigh,
                     unselectedIconColor = KosInk.copy(alpha = 0.7f),
                     unselectedTextColor = KosInk.copy(alpha = 0.7f)
                 )
@@ -392,7 +392,6 @@ private fun KosHome(
                 s = s,
                 onSettings = { showSettings.value = true }
             )
-            if (!s.isReached) CountdownProgress(s.progress)
             Spacer(Modifier.height(18.dp))
             if (selectedDay != null) {
                 DayPage(day = selectedDay, onOpenIdeas = onOpenIdeas)
@@ -720,20 +719,3 @@ private fun kosHighlightOfTheDay(): String {
 
 
 
-/** Mesh-Gradient: Meerblau, Petrol und Sand laufen auf KosBg ineinander. */
-@Composable
-private fun Modifier.kosMeshBackground(): Modifier {
-    val blue = HomeAccent
-    val teal = Color(0xFF1E7882)
-    val sand = Color(0xFFE2C896)
-    return background(KosBg).drawBehind {
-        val w = size.width
-        val h = size.height
-        fun glow(c: Color, a: Float, x: Float, y: Float, r: Float) =
-            drawRect(Brush.radialGradient(listOf(c.copy(alpha = a), Color.Transparent), center = Offset(w * x, h * y), radius = w * r))
-        glow(blue, 0.40f, 0.15f, 0.08f, 0.9f)
-        glow(teal, 0.40f, 0.85f, 0.35f, 1.0f)
-        glow(sand, 0.28f, 0.20f, 0.85f, 1.0f)
-        glow(blue, 0.30f, 0.90f, 0.95f, 0.9f)
-    }
-}

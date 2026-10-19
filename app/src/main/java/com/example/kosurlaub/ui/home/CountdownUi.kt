@@ -37,7 +37,7 @@ fun CountdownProgress(fraction: Float) {
             Text(
                 text = "VORFREUDE BIS ZUM ABFLUG",
                 color = KosInk.copy(alpha = 0.75f),
-                fontSize = 9.sp,
+                fontSize = 11.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = KosSans,
                 letterSpacing = 0.6.sp
@@ -46,7 +46,7 @@ fun CountdownProgress(fraction: Float) {
             Text(
                 text = "${(fraction * 100).roundToInt()} %",
                 color = KosInk.copy(alpha = 0.75f),
-                fontSize = 9.sp,
+                fontSize = 11.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = KosSans
             )
@@ -68,7 +68,7 @@ fun CountdownProgress(fraction: Float) {
                     .fillMaxWidth(fraction)
                     .fillMaxHeight()
                     .clip(RoundedCornerShape(2.dp))
-                    .background(HomeAccent)
+                    .background(KosStamp)
             )
         }
     }
