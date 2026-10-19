@@ -189,12 +189,12 @@ fun FlipDigits(value: Long, modifier: Modifier = Modifier) {
         digits.forEach { digit ->
             Box(
                 modifier = Modifier
-                    .size(width = 40.dp, height = 54.dp)
+                    .size(width = 50.dp, height = 68.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(Brush.verticalGradient(listOf(Color(0xFF2C3733), Color(0xFF111815)))),
                 contentAlignment = Alignment.Center
             ) {
-                Text(digit.toString(), style = PostcardType.Numeral.copy(fontSize = 40.sp), color = Color(0xFFF6F0E4))
+                Text(digit.toString(), style = PostcardType.Numeral.copy(fontSize = 50.sp), color = Color(0xFFF6F0E4))
                 Box(Modifier.fillMaxWidth().height(1.dp).background(Color(0x99000000)))
             }
         }
