@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
@@ -188,7 +189,12 @@ internal fun CompassTipPhotoCard(
                 .testTag("compass-save-${tip.id}"),
             contentAlignment = Alignment.Center
         ) {
-            Text(if (isSaved) "♥" else "♡", color = Color.White, fontSize = 22.sp)
+            Box(
+                modifier = Modifier.size(34.dp).background(Color.Black.copy(alpha = 0.4f), CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(if (isSaved) "♥" else "♡", color = Color.White, fontSize = 20.sp)
+            }
         }
     }
 }
