@@ -74,7 +74,7 @@ internal fun CompassChipRow(
     onOpenFilter: () -> Unit
 ) {
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        LazyRow(modifier = Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        LazyRow(modifier = Modifier.weight(1f).testTag("compass-category-row"), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             item {
                 PostcardChip("Alle", selected == null, { onSelected(null) }, Modifier.testTag("compass-category-filter-all"))
             }

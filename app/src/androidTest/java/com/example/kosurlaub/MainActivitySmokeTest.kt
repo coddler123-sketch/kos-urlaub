@@ -118,10 +118,14 @@ class MainActivitySmokeTest {
         composeRule.onNodeWithTag("compass-screen").performScrollToKey("community")
         composeRule.onNodeWithTag("community-link").assertIsDisplayed()
 
+        composeRule.onNodeWithTag("compass-screen").performScrollToIndex(0)
+        // Index 6: Alle, Tigaki, Essen, Strände, Ausflüge, Mobilität, Unterkünfte (LazyRow, außerhalb des Schirms)
+        composeRule.onNodeWithTag("compass-category-row").performScrollToIndex(6)
         composeRule.onNodeWithTag("compass-category-filter-Unterkünfte").performClick()
         composeRule.onNodeWithTag("compass-screen").assertIsDisplayed()
         composeRule.onNodeWithText("1 Treffer").assertIsDisplayed()
 
+        composeRule.onNodeWithTag("compass-category-row").performScrollToIndex(0)
         composeRule.onNodeWithTag("compass-category-filter-all").performClick()
         composeRule.onNodeWithText("${compassTipIds.size} AUSGEWÄHLTE TIPPS").assertIsDisplayed()
 
