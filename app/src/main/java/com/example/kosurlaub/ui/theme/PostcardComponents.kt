@@ -28,6 +28,8 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -67,6 +69,7 @@ fun StampBadge(top: String, bottom: String, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .size(56.dp)
+            .semantics(mergeDescendants = true) { contentDescription = "$top $bottom" }
             .clip(CircleShape)
             .background(KosBg.copy(alpha = 0.95f))
             .drawBehind {
