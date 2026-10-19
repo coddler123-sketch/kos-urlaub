@@ -5,15 +5,18 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -144,6 +147,30 @@ fun PostcardPhotoCard(
         ) {
             Text(title, style = PostcardType.Heading.copy(fontSize = PostcardMetrics.BODY_SP.sp), color = Color.White)
             Text(subtitle, style = PostcardType.Label, color = Color.White.copy(alpha = 0.9f))
+        }
+    }
+}
+
+/** Klappzahlen wie auf der Abflugtafel: drei Kacheln, Tage mit führenden Nullen. */
+@Composable
+fun FlipDigits(value: Long, modifier: Modifier = Modifier) {
+    val digits = value.coerceIn(0, 999).toString().padStart(3, '0')
+    Row(
+        modifier = modifier.semantics(mergeDescendants = true) { contentDescription = "$value" },
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        digits.forEach { digit ->
+            Box(
+                modifier = Modifier
+                    .size(width = 40.dp, height = 54.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Brush.verticalGradient(listOf(Color(0xFF2C3733), Color(0xFF111815)))),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(digit.toString(), style = PostcardType.Numeral.copy(fontSize = 40.sp), color = Color(0xFFF6F0E4))
+                Box(Modifier.fillMaxWidth().height(1.dp).background(Color(0x99000000)))
+            }
         }
     }
 }
