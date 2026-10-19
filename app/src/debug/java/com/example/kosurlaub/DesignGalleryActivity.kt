@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
@@ -41,7 +42,15 @@ class DesignGalleryActivity : ComponentActivity() {
                         StampChip("Tage")
                         StampBadge("TAG", "4/16")
                     }
-                    Box { PerforationEdge() }
+                    Box(modifier = Modifier.height(90.dp)) {
+                        androidx.compose.foundation.Image(
+                            painter = androidx.compose.ui.res.painterResource(R.drawable.kos_rot_11),
+                            contentDescription = null,
+                            contentScale = androidx.compose.ui.layout.ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                        PerforationEdge(modifier = Modifier.align(Alignment.BottomCenter))
+                    }
                     PaperPanel {
                         PostcardLabel("Flug & Hotel")
                         Text("Mo 13.09. · 13:25 HAM → 17:45 KGS", style = PostcardType.Body, color = KosInk)
