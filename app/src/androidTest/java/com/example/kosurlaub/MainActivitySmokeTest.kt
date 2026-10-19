@@ -17,6 +17,7 @@ import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -54,24 +55,27 @@ class MainActivitySmokeTest {
 
     @Test
     fun mainScreenShowsCoreCountdownContent() {
-        composeRule.onNodeWithText("KOS").assertIsDisplayed()
+        composeRule.onAllNodesWithText("KOS").onFirst().assertIsDisplayed()
         val beforeTrip = composeRule.onAllNodesWithText("Bis zu unserem Kos-Urlaub").fetchSemanticsNodes().isNotEmpty()
         composeRule.onNodeWithText(if (beforeTrip) "Bis zu unserem Kos-Urlaub" else "Unser Kos-Urlaub").assertIsDisplayed()
         if (composeRule.onAllNodesWithText("TAGE").fetchSemanticsNodes().isNotEmpty()) {
+            // Vor dem Abflug: TodayBefore zeigt TAGE als Stempel, STD./MIN. stehen im selben Text wie die Zahl.
             composeRule.onNodeWithText("TAGE").assertIsDisplayed()
-            composeRule.onNodeWithText("STD.").assertIsDisplayed()
-            composeRule.onNodeWithText("MIN.").assertIsDisplayed()
-            composeRule.onNodeWithText("SEK.").assertIsDisplayed()
+            composeRule.onNodeWithText("STD.", substring = true).assertIsDisplayed()
+            composeRule.onNodeWithText("MIN.", substring = true).assertIsDisplayed()
         } else {
-            // Ab dem Abflugtag ersetzt eine der drei Phasen-Karten den Countdown.
-            val phaseTexts = listOf("Es ist soweit!", "Euer Urlaub in Tigaki läuft!", "Schön war's!")
+            // Auf Kos und danach zeigt die Startseite andere Texte (Begrüßung bzw. Rückblick).
+            val phaseTexts = listOf("Kalimera!", "Schön war es.")
             val shown = phaseTexts.first { composeRule.onAllNodesWithText(it).fetchSemanticsNodes().isNotEmpty() }
             composeRule.onNodeWithText(shown).assertIsDisplayed()
         }
-        composeRule.onNodeWithTag("home-checklist").performScrollTo().assertIsDisplayed()
-        // Je nach Tag erscheint der Kos-Fakt oder der Highlight-Tipp.
-        val highlight = composeRule.onAllNodesWithText("TIPP FÜR EUREN URLAUB").fetchSemanticsNodes().isNotEmpty()
-        composeRule.onNodeWithText(if (highlight) "TIPP FÜR EUREN URLAUB" else "KOS-FAKT").performScrollTo().assertIsDisplayed()
+        // Checkliste, Kos-Fakt und Highlight gibt es nur vor dem Abflug.
+        if (composeRule.onAllNodesWithTag("home-checklist").fetchSemanticsNodes().isNotEmpty()) {
+            composeRule.onNodeWithTag("home-checklist").performScrollTo().assertIsDisplayed()
+            // Je nach Tag erscheint der Kos-Fakt oder der Highlight-Tipp.
+            val highlight = composeRule.onAllNodesWithText("TIPP FÜR EUREN URLAUB").fetchSemanticsNodes().isNotEmpty()
+            composeRule.onNodeWithText(if (highlight) "TIPP FÜR EUREN URLAUB" else "KOS-FAKT").performScrollTo().assertIsDisplayed()
+        }
     }
 
     @Test
@@ -93,7 +97,7 @@ class MainActivitySmokeTest {
         composeRule.onNodeWithTag("gallery-image-kos_rot_01").performClick()
         composeRule.onNodeWithTag("gallery-apply").performClick()
 
-        composeRule.onNodeWithText("KOS").assertIsDisplayed()
+        composeRule.onAllNodesWithText("KOS").onFirst().assertIsDisplayed()
         composeRule.onNodeWithText("Bis zu unserem Kos-Urlaub").assertIsDisplayed()
 
         val context = ApplicationProvider.getApplicationContext<Context>()
@@ -123,7 +127,7 @@ class MainActivitySmokeTest {
 
         pressBack()
 
-        composeRule.onNodeWithText("KOS").assertIsDisplayed()
+        composeRule.onAllNodesWithText("KOS").onFirst().assertIsDisplayed()
     }
 
     @Test
@@ -188,7 +192,7 @@ class MainActivitySmokeTest {
         composeRule.onNodeWithTag("compass-screen").assertIsDisplayed()
 
         composeRule.onNodeWithTag("main-nav-today").performClick().assertIsSelected()
-        composeRule.onNodeWithText("KOS").assertIsDisplayed()
+        composeRule.onAllNodesWithText("KOS").onFirst().assertIsDisplayed()
     }
 
     @Test

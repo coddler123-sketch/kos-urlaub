@@ -3,6 +3,7 @@ package com.example.kosurlaub
 import com.example.kosurlaub.R
 import com.example.kosurlaub.MainActivity
 import com.example.kosurlaub.ui.home.*
+import com.example.kosurlaub.ui.home.today.*
 import com.example.kosurlaub.ui.compass.*
 import com.example.kosurlaub.ui.travel.*
 import com.example.kosurlaub.ui.weather.*
@@ -396,59 +397,67 @@ private fun KosHome(
             if (selectedDay != null) {
                 DayPage(day = selectedDay, onOpenIdeas = onOpenIdeas)
             } else {
+            val phase = TripPhase.of(AppClock.nowMillis())
             val privatePath = remember(PrivateImages.version.intValue, s.backgroundRes) {
                 Images.privatePathOfTheDay(context)
             }
-            val privatePhoto = remember(privatePath) {
+            val heroPhoto = remember(privatePath) {
                 privatePath?.let { PrivateImages.bitmap(context, it, 1200)?.asImageBitmap() }
             }
-            PolaroidPhoto(
-                imageRes = s.backgroundRes,
-                caption = if (privatePhoto != null) "Kos Impression" else Images.displayNameOf(Images.currentImageName(context)),
-                photo = privatePhoto
-            )
-            Spacer(Modifier.height(20.dp))
-            CountdownSection(s)
-            Spacer(Modifier.height(16.dp))
             if (CountdownCalculator.isFlightDay()) {
                 FlightDayTimelineCard()
                 Spacer(Modifier.height(16.dp))
             }
-            FreeChecklistCard()
-            Spacer(Modifier.height(16.dp))
-            HomeQuickActions(
-                onOpenTigaki = { onOpenTravel("MOBILITY") },
-                onOpenTavernCalc = { onOpenTravel("EXPLORE") },
-                onOpenPhrasebook = { onOpenTravel("EXPLORE") },
-                onOpenEmergency = { onOpenTravel("HELP") }
-            )
-            Spacer(Modifier.height(16.dp))
-            when (Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % 2) {
-                0 -> FactCard(s.factOfTheDay)
-                else -> HighlightCard(kosHighlightOfTheDay())
-            }
-            Spacer(Modifier.height(12.dp))
-            BeachWindRadarCard()
-            Spacer(Modifier.height(12.dp))
-            BottomSection(
-                s = s,
-                isRefreshing = isRefreshing.value,
-                reloadDone = reloadDone.value,
-                hasError = weatherError.value,
-                onRefresh = {
-                    if (!isRefreshing.value) {
-                        scope.launch {
-                            isRefreshing.value = true
-                            val success = fetchAndSaveWeather(context)
-                            weatherError.value = !success
-                            if (success) KosCountdownLargeWidgetProvider.updateAllLargeWidgets(context)
-                            state.value = HomeState.load(context)
-                            isRefreshing.value = false
-                            reloadDone.value = success
-                        }
+            when (phase) {
+                TripPhase.BEFORE -> {
+                    TodayBefore(s, heroPhoto, onOpenIdeas)
+                    Spacer(Modifier.height(16.dp))
+                    FreeChecklistCard()
+                    Spacer(Modifier.height(16.dp))
+                    when (Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % 2) {
+                        0 -> FactCard(s.factOfTheDay)
+                        else -> HighlightCard(kosHighlightOfTheDay())
                     }
                 }
-            )
+                TripPhase.ON_KOS -> {
+                    TodayOnKos(s, heroPhoto, onOpenIdeas, onOpenSos = { onOpenTravel("HELP") })
+                    Spacer(Modifier.height(16.dp))
+                    HomeQuickActions(
+                        onOpenTigaki = { onOpenTravel("MOBILITY") },
+                        onOpenTavernCalc = { onOpenTravel("EXPLORE") },
+                        onOpenPhrasebook = { onOpenTravel("EXPLORE") },
+                        onOpenEmergency = { onOpenTravel("HELP") }
+                    )
+                }
+                TripPhase.AFTER -> TodayAfter(
+                    s, heroPhoto,
+                    entriesCount = TripDays.all.sumOf { DayEntryStore.load(context, it.index).size }
+                )
+            }
+            if (phase != TripPhase.AFTER) {
+                Spacer(Modifier.height(12.dp))
+                BeachWindRadarCard()
+                Spacer(Modifier.height(12.dp))
+                BottomSection(
+                    s = s,
+                    isRefreshing = isRefreshing.value,
+                    reloadDone = reloadDone.value,
+                    hasError = weatherError.value,
+                    onRefresh = {
+                        if (!isRefreshing.value) {
+                            scope.launch {
+                                isRefreshing.value = true
+                                val success = fetchAndSaveWeather(context)
+                                weatherError.value = !success
+                                if (success) KosCountdownLargeWidgetProvider.updateAllLargeWidgets(context)
+                                state.value = HomeState.load(context)
+                                isRefreshing.value = false
+                                reloadDone.value = success
+                            }
+                        }
+                    }
+                )
+            }
             }
         }
 
