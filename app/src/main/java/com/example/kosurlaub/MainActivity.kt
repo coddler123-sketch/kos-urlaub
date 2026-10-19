@@ -36,7 +36,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -461,24 +460,6 @@ private fun KosHome(
             }
             }
         }
-        if (selectedDay == null && TripPhase.of(AppClock.nowMillis()) == TripPhase.ON_KOS) {
-            Text(
-                text = stringResource(R.string.today_sos),
-                style = PostcardType.Label,
-                color = Color.White,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(padding)
-                    .padding(16.dp)
-                    .size(48.dp)
-                    .clip(CircleShape)
-                    .background(KosStamp)
-                    .clickable { onOpenTravel("HELP") }
-                    .wrapContentSize(Alignment.Center)
-                    .testTag("today-sos")
-            )
-        }
-
         // Settings-BottomSheet: Teilen + Galerie
         if (showSettings.value) {
             val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)

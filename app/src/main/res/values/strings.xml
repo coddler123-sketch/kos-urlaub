@@ -355,7 +355,6 @@
     <string name="today_bus_none">Heute keine Abfahrt mehr</string>
     <string name="today_bus_source">Referenzfahrplan, Stand %1$s</string>
     <string name="today_tip">Tipp des Tages</string>
-    <string name="today_sos">SOS</string>
     <string name="today_after_title">Schön war es.</string>
     <string name="today_after_days">Tage</string>
     <string name="today_after_visited">Tipps besucht</string>
