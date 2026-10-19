@@ -21,3 +21,5 @@ internal val KosOk: Color @Composable get() = LocalKosColors.current.ok
 internal val KosWarn: Color @Composable get() = LocalKosColors.current.warn
 internal val KosAccent2: Color @Composable get() = LocalKosColors.current.accent2
 internal val KosScrim: Color @Composable get() = LocalKosColors.current.scrim
+internal val KosStamp: Color @Composable get() = LocalKosColors.current.stamp
+internal val KosNumeral: Color @Composable get() = LocalKosColors.current.numeral

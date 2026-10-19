@@ -20,7 +20,9 @@ class KosColors(
     val onAccent: Color,
     val ok: Color,
     val warn: Color,
-    val scrim: Color
+    val scrim: Color,
+    val stamp: Color,
+    val numeral: Color
 )
 
 val DarkKosColors = KosColors(
@@ -37,7 +39,9 @@ val DarkKosColors = KosColors(
     onAccent = Color(0xFF16313B),
     ok = Color(0xFF5ED6A2),
     warn = Color(0xFFFFB86B),
-    scrim = Color.Black
+    scrim = Color.Black,
+    stamp = Color(0xFFE0735F),
+    numeral = Color(0xFF7FC4DA)
 )
 
 val LightKosColors = KosColors(
@@ -54,7 +58,9 @@ val LightKosColors = KosColors(
     onAccent = Color.White,
     ok = Color(0xFF2E8B62),
     warn = Color(0xFFB9731E),
-    scrim = Color(0xFFF6F0E4)
+    scrim = Color(0xFFF6F0E4),
+    stamp = Color(0xFFB8432F),
+    numeral = Color(0xFF1F5F7A)
 )
 
 val LocalKosColors = compositionLocalOf { DarkKosColors }
