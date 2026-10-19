@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -31,8 +32,10 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -90,6 +93,29 @@ fun StampBadge(top: String, bottom: String, modifier: Modifier = Modifier) {
         Text(top, style = PostcardType.Label, color = color, textAlign = TextAlign.Center)
         Text(bottom, style = PostcardType.Label.copy(fontSize = PostcardType.Heading.fontSize), color = color)
     }
+}
+
+/** Auswahl-Chip: gewählt = Tinte gefüllt mit Papierschrift, sonst weiße Karte mit Rand. */
+@Composable
+fun PostcardChip(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val shape = RoundedCornerShape(50)
+    Text(
+        text = label,
+        style = PostcardType.Body.copy(fontSize = 13.sp, lineHeight = 18.sp, fontWeight = FontWeight.SemiBold),
+        color = if (selected) KosBg else KosInk,
+        maxLines = 1,
+        modifier = modifier
+            .clip(shape)
+            .background(if (selected) KosInk else HomeCardColor)
+            .border(1.dp, if (selected) KosInk else HomeCardBorder, shape)
+            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
+            .padding(horizontal = 14.dp, vertical = PostcardMetrics.CHIP_V_PADDING_DP.dp)
+    )
 }
 
 /** Gezackte Kante zwischen Foto und Papier. [color] ist die Farbe des Papiers darunter. */
