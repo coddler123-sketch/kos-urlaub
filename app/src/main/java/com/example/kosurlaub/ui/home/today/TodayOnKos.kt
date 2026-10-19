@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,8 +41,7 @@ import java.util.TimeZone
 internal fun TodayOnKos(
     s: HomeState,
     heroPhoto: ImageBitmap?,
-    onOpenIdeas: () -> Unit,
-    onOpenSos: () -> Unit
+    onOpenIdeas: () -> Unit
 ) {
     val context = LocalContext.current
     val now = AppClock.nowMillis()
@@ -109,20 +107,6 @@ internal fun TodayOnKos(
                 }
             }
         }
-        Text(
-            text = stringResource(R.string.today_sos),
-            style = PostcardType.Label,
-            color = Color.White,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(PostcardSpace.Panel)
-                .size(48.dp)
-                .clip(CircleShape)
-                .background(KosStamp)
-                .clickable(onClick = onOpenSos)
-                .wrapContentSize(Alignment.Center)
-                .testTag("today-sos")
-        )
     }
 }
 
