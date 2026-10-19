@@ -25,6 +25,8 @@ Reihenfolge, jedes Teilprojekt einzeln lauffähig und releasebar:
 
 ## Befund Entdecken-Filter (2026-10-19, Teil von Teilprojekt 3)
 
+Erledigt: Quick-Filter gruppiert im Filter-Sheet (Ort, Anfahrt, Dauer, Stimmung), Tipps als Foto-Raster, Umschalter Tipps | Reise in Postkarten-Farben. Offen bleibt die Reise-Seite in Teilprojekt 3.
+
 - Filter kommen dreifach vor: Kategorie-Chips (Alle, Tigaki, Essen, Strände, …), darunter 12 "Quick Filter" (Ort, Anfahrt, Dauer, Stimmung gemischt) und weiter unten dieselben Kategorien noch einmal als Foto-Karten.
 - Doppelungen: "Tigaki" und "Essen" sind Kategorie und Quick Filter; "Rund ums Hotel" ≈ "Tigaki"; "Ohne Auto" ≈ "Zu Fuß" + "Bus"; "Tagesausflug" ≈ "Halber Tag".
 - Von 12 Quick-Filtern sind nur 3–4 ohne Wischen sichtbar; die Chips sind 10sp klein (Regel: mindestens 11sp) und mit Emojis gemischt.
