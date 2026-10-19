@@ -57,4 +57,7 @@ object TripDays {
                 it.day == cal.get(Calendar.DAY_OF_MONTH)
         }
     }
+
+    /** "TAG 4/16" für den laufenden Reisetag, sonst null. */
+    fun label(nowMillis: Long): String? = today(nowMillis)?.let { "TAG ${it.index}/${all.size}" }
 }
