@@ -118,7 +118,7 @@ class MainActivitySmokeTest {
         composeRule.onNodeWithTag("compass-screen").performScrollToKey("community")
         composeRule.onNodeWithTag("community-link").assertIsDisplayed()
 
-        composeRule.onNodeWithTag("compass-category-Unterkünfte").performClick()
+        composeRule.onNodeWithTag("compass-category-filter-Unterkünfte").performClick()
         composeRule.onNodeWithTag("compass-screen").assertIsDisplayed()
         composeRule.onNodeWithText("1 Treffer").assertIsDisplayed()
 
@@ -128,6 +128,18 @@ class MainActivitySmokeTest {
         pressBack()
 
         composeRule.onAllNodesWithText("KOS").onFirst().assertIsDisplayed()
+    }
+
+    @Test
+    fun filterSheetNarrowsTipsAndResets() {
+        composeRule.onNodeWithTag("main-nav-discover").performClick()
+        composeRule.onNodeWithTag("compass-filter-button").performClick()
+        composeRule.onNodeWithTag("compass-filter-sheet").assertIsDisplayed()
+        composeRule.onNodeWithTag("compass-filter-Ruhig").performClick()
+        composeRule.onNodeWithTag("compass-filter-done").performClick()
+        composeRule.onNodeWithText("Filter · 1").assertIsDisplayed()
+        composeRule.onNodeWithTag("compass-category-filter-all").performClick()
+        composeRule.onNodeWithText("Filter · 1").assertIsDisplayed()
     }
 
     @Test
@@ -144,7 +156,7 @@ class MainActivitySmokeTest {
 
         composeRule.onNodeWithTag("compass-tip-beach-marmari").assertIsDisplayed()
         composeRule.onNodeWithTag("compass-save-beach-marmari").performScrollTo().assertIsDisplayed()
-        composeRule.onNodeWithText("♥ GEMERKT").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription(SAVED_DESCRIPTION).assertIsDisplayed()
     }
 
     @Test
@@ -165,8 +177,7 @@ class MainActivitySmokeTest {
     @Test
     fun excursionTipCloseReturnsToTipsOverview() {
         composeRule.onNodeWithTag("main-nav-discover").performClick()
-        composeRule.onNodeWithTag("compass-screen").performScrollToKey("Strände")
-        composeRule.onNodeWithTag("compass-category-Ausflüge").performClick()
+        composeRule.onNodeWithTag("compass-category-filter-Ausflüge").performClick()
         composeRule.onNodeWithTag("compass-screen").performScrollToKey("trip-asklepieion")
         composeRule.onNodeWithTag("compass-tip-trip-asklepieion").performClick()
         composeRule.onNodeWithTag("compass-tip-overlay").assertIsDisplayed()
