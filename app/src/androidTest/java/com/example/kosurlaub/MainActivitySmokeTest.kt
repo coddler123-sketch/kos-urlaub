@@ -138,7 +138,7 @@ class MainActivitySmokeTest {
         composeRule.onNodeWithTag("compass-tip-image-beach-marmari-card", useUnmergedTree = true)
             .performScrollTo()
             .assertIsDisplayed()
-        composeRule.onNodeWithTag("compass-save-beach-marmari").performClick()
+        composeRule.onNodeWithTag("compass-save-beach-marmari").performScrollTo().performClick()
 
         composeRule.activityRule.scenario.recreate()
 
