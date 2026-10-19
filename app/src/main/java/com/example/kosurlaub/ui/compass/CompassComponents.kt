@@ -754,7 +754,7 @@ internal fun categoryColor(category: String): Color = when (category) {
 
 /** Privates Foto zum Tipp, falls geladen, sonst das freie Bild aus den Ressourcen. */
 @Composable
-private fun tipPainter(tip: CompassTip, @DrawableRes fallback: Int): androidx.compose.ui.graphics.painter.Painter {
+internal fun tipPainter(tip: CompassTip, @DrawableRes fallback: Int): androidx.compose.ui.graphics.painter.Painter {
     val context = androidx.compose.ui.platform.LocalContext.current
     val photo = remember(tip.id, PrivateImages.version.intValue) {
         PrivateImages.tipBitmap(context, tip.id)?.asImageBitmap()
