@@ -22,3 +22,12 @@ Reihenfolge, jedes Teilprojekt einzeln lauffähig und releasebar:
 - [ ] SOS-Knopf überlagert beim Scrollen Inhalte; Position und Abstand prüfen
 - [ ] Meer-Temperatur zeigt "–", solange keine Meerdaten geladen sind (auf Heute laden anstoßen)
 - [ ] Instrumentierte Tests komplett auf dem Emulator laufen lassen (nur der Merken-Test wurde einzeln geprüft)
+
+## Befund Entdecken-Filter (2026-10-19, Teil von Teilprojekt 3)
+
+- Filter kommen dreifach vor: Kategorie-Chips (Alle, Tigaki, Essen, Strände, …), darunter 12 "Quick Filter" (Ort, Anfahrt, Dauer, Stimmung gemischt) und weiter unten dieselben Kategorien noch einmal als Foto-Karten.
+- Doppelungen: "Tigaki" und "Essen" sind Kategorie und Quick Filter; "Rund ums Hotel" ≈ "Tigaki"; "Ohne Auto" ≈ "Zu Fuß" + "Bus"; "Tagesausflug" ≈ "Halber Tag".
+- Von 12 Quick-Filtern sind nur 3–4 ohne Wischen sichtbar; die Chips sind 10sp klein (Regel: mindestens 11sp) und mit Emojis gemischt.
+- Der Umschalter Tipps | Reise nutzt die Standard-Lavendelfarbe von Material 3 statt der Postkarten-Palette.
+- Kopf: "Überrascht uns!", "20 ausgewählte Tipps", Titel "Ideen & Orte", Hero-Karte und Suchfeld stapeln sich über dem Inhalt.
+- Vorschlag: eine Chip-Zeile (Kategorien), ein Knopf "Filter" mit gruppiertem Sheet (Ort, Anfahrt, Dauer, Stimmung), Tipps als Foto-Karten im 2-Spalten-Raster wie im Mockup, Umschalter in Postkarten-Farben.
