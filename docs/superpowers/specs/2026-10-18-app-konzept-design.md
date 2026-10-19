@@ -29,7 +29,7 @@ Jedes Teilprojekt wird einzeln gebaut, getestet und released.
 3. **Entdecken.** Kompass (Tipps, gemerkt/besucht) und Reise (Hotel, Bus, Sprachführer, Fotospots, Notfall) werden eine Seite mit Kategorien. Gemerkte Tipps lassen sich einem Tag zuordnen, daraus entsteht der Tagesplan.
 4. **Tagebuch und Rückblick.** Tagebuch im Postkarten-Look, Rückblick am Ende der Reise.
 
-## Offene Fragen für den Start
+## Offene Fragen für den Start (Teilprojekt 2: entschieden, siehe Plan 2026-10-19-navigation-and-phase-home.md)
 
 - Woher kommen Tagesplan-Einträge genau: nur gemerkte Tipps, oder auch frei eingetragene Punkte?
 - Tipp des Tages: nach Wetter und Uhrzeit gefiltert oder zufällig aus den gemerkten?
