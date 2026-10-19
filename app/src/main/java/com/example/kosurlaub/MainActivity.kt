@@ -23,6 +23,7 @@ import androidx.core.view.WindowCompat
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -39,6 +40,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.NavigationBar
@@ -123,12 +125,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private enum class MainDestination {
-    HOME,
-    COMPASS,
-    DIARY,
-    TRAVEL
-}
+private enum class MainDestination { TODAY, DISCOVER, DIARY }
 
 @Composable
 private fun KosApp(
@@ -138,8 +135,9 @@ private fun KosApp(
 ) {
     val context = LocalContext.current
     val destinationName = rememberSaveable {
-        mutableStateOf(if (startInTravel) MainDestination.TRAVEL.name else MainDestination.HOME.name)
+        mutableStateOf(if (startInTravel) MainDestination.DISCOVER.name else MainDestination.TODAY.name)
     }
+    val discoverTab = rememberSaveable { mutableStateOf(if (startInTravel) "TRAVEL" else "TIPS") }
     val nestedDetailVisible = remember { mutableStateOf(false) }
     val scrollToTopRequest = remember { mutableIntStateOf(0) }
     val areaRequest = remember { mutableIntStateOf(0) }
@@ -148,8 +146,8 @@ private fun KosApp(
     val todayIndex = remember { TripDays.today(AppClock.nowMillis())?.index }
     val destination = MainDestination.valueOf(destinationName.value)
 
-    BackHandler(enabled = !nestedDetailVisible.value && destination != MainDestination.HOME) {
-        destinationName.value = MainDestination.HOME.name
+    BackHandler(enabled = !nestedDetailVisible.value && destination != MainDestination.TODAY) {
+        destinationName.value = MainDestination.TODAY.name
     }
 
     Scaffold(
@@ -158,7 +156,7 @@ private fun KosApp(
         bottomBar = {
             if (!nestedDetailVisible.value) {
                 Column {
-                    if (destination == MainDestination.HOME) {
+                    if (destination == MainDestination.TODAY) {
                         DayStrip(
                             days = TripDays.all,
                             todayIndex = todayIndex,
@@ -180,39 +178,35 @@ private fun KosApp(
         }
     ) { padding ->
         when (destination) {
-            MainDestination.HOME -> KosHome(
+            MainDestination.TODAY -> KosHome(
                 padding = padding,
                 selectedDay = TripDays.all.firstOrNull { it.index == selectedDay.intValue },
-                onOpenIdeas = { destinationName.value = MainDestination.COMPASS.name },
+                onOpenIdeas = { discoverTab.value = "TIPS"; destinationName.value = MainDestination.DISCOVER.name },
                 themeMode = themeMode,
                 onThemeMode = onThemeMode,
                 scrollToTopRequest = scrollToTopRequest.intValue,
                 onOpenTravel = { area ->
                     travelArea.value = area
-                    destinationName.value = MainDestination.TRAVEL.name
+                    discoverTab.value = "TRAVEL"
+                    destinationName.value = MainDestination.DISCOVER.name
                     areaRequest.intValue++
                 }
             )
-            MainDestination.TRAVEL -> TravelScreen(
+            MainDestination.DISCOVER -> DiscoverScreen(
                 padding = padding,
+                tab = discoverTab.value,
+                onTab = { discoverTab.value = it },
                 openAreaRequest = areaRequest.intValue,
                 openArea = travelArea.value,
                 scrollToTopRequest = scrollToTopRequest.intValue,
-                onBack = { destinationName.value = MainDestination.HOME.name },
+                onBack = { destinationName.value = MainDestination.TODAY.name },
+                onOpenCommunity = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_URL))) },
                 onDetailVisibilityChanged = { nestedDetailVisible.value = it }
             )
             MainDestination.DIARY -> DiaryScreen(
                 padding = padding,
                 scrollToTopRequest = scrollToTopRequest.intValue,
                 phase = TripPhase.of(AppClock.nowMillis())
-            )
-            MainDestination.COMPASS -> CompassScreen(
-                padding = padding,
-                scrollToTopRequest = scrollToTopRequest.intValue,
-                onOpenCommunity = {
-                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_URL)))
-                },
-                onDetailVisibilityChanged = { nestedDetailVisible.value = it }
             )
         }
     }
@@ -226,16 +220,14 @@ private fun MainNavigationBar(
     NavigationBar(containerColor = KosNav) {
         MainDestination.entries.forEach { destination ->
             val labelRes = when (destination) {
-                MainDestination.HOME -> R.string.main_nav_home
-                MainDestination.COMPASS -> R.string.main_nav_compass
+                MainDestination.TODAY -> R.string.main_nav_today
+                MainDestination.DISCOVER -> R.string.main_nav_discover
                 MainDestination.DIARY -> R.string.main_nav_diary
-                MainDestination.TRAVEL -> R.string.main_nav_travel
             }
             val iconRes = when (destination) {
-                MainDestination.HOME -> R.drawable.ic_nav_home
-                MainDestination.COMPASS -> R.drawable.ic_nav_compass
+                MainDestination.TODAY -> R.drawable.ic_nav_home
+                MainDestination.DISCOVER -> R.drawable.ic_nav_compass
                 MainDestination.DIARY -> R.drawable.ic_nav_diary
-                MainDestination.TRAVEL -> R.drawable.ic_nav_travel
             }
             NavigationBarItem(
                 selected = destination == selected,
@@ -251,6 +243,55 @@ private fun MainNavigationBar(
                     unselectedTextColor = KosInk.copy(alpha = 0.7f)
                 )
             )
+        }
+    }
+}
+
+@Composable
+private fun DiscoverScreen(
+    padding: PaddingValues,
+    tab: String,
+    onTab: (String) -> Unit,
+    openAreaRequest: Int,
+    openArea: String,
+    scrollToTopRequest: Int,
+    onBack: () -> Unit,
+    onOpenCommunity: () -> Unit,
+    onDetailVisibilityChanged: (Boolean) -> Unit
+) {
+    Column(modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding())) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            listOf("TIPS" to R.string.discover_tab_tips, "TRAVEL" to R.string.discover_tab_travel).forEach { (key, label) ->
+                FilterChip(
+                    selected = tab == key,
+                    onClick = { onTab(key) },
+                    label = { Text(stringResource(label)) },
+                    modifier = Modifier.testTag("discover-tab-${key.lowercase()}")
+                )
+            }
+        }
+        val inner = PaddingValues(bottom = padding.calculateBottomPadding())
+        Box(modifier = Modifier.weight(1f)) {
+            if (tab == "TRAVEL") {
+                TravelScreen(
+                    padding = inner,
+                    openAreaRequest = openAreaRequest,
+                    openArea = openArea,
+                    scrollToTopRequest = scrollToTopRequest,
+                    onBack = onBack,
+                    onDetailVisibilityChanged = onDetailVisibilityChanged
+                )
+            } else {
+                CompassScreen(
+                    padding = inner,
+                    scrollToTopRequest = scrollToTopRequest,
+                    onOpenCommunity = onOpenCommunity,
+                    onDetailVisibilityChanged = onDetailVisibilityChanged
+                )
+            }
         }
     }
 }

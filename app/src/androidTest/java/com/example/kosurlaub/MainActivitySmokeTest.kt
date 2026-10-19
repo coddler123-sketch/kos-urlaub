@@ -107,7 +107,7 @@ class MainActivitySmokeTest {
 
     @Test
     fun compassOpensFromMainNavigationAndReturns() {
-        composeRule.onNodeWithTag("main-nav-compass").performClick()
+        composeRule.onNodeWithTag("main-nav-discover").performClick()
         composeRule.onNodeWithText("Ideen & Orte").assertIsDisplayed()
         composeRule.onNodeWithTag("compass-screen").assertIsDisplayed()
         composeRule.onNodeWithText("${compassTipIds.size} AUSGEWÄHLTE TIPPS").assertIsDisplayed()
@@ -128,7 +128,7 @@ class MainActivitySmokeTest {
 
     @Test
     fun compassSearchAndSavedTipPersistAfterRecreation() {
-        composeRule.onNodeWithTag("main-nav-compass").performClick()
+        composeRule.onNodeWithTag("main-nav-discover").performClick()
         composeRule.onNodeWithTag("compass-search").performTextInput("Marmari")
         composeRule.onNodeWithTag("compass-tip-beach-marmari").assertIsDisplayed()
         composeRule.onNodeWithTag("compass-tip-image-beach-marmari-card", useUnmergedTree = true)
@@ -145,7 +145,7 @@ class MainActivitySmokeTest {
 
     @Test
     fun hotelTipOpensWithDirectMapLink() {
-        composeRule.onNodeWithTag("main-nav-compass").performClick()
+        composeRule.onNodeWithTag("main-nav-discover").performClick()
         composeRule.onNodeWithTag("compass-search").performTextInput("Ilios")
         composeRule.onNodeWithTag("compass-tip-hotel-ilios-k-village").performClick()
 
@@ -160,7 +160,7 @@ class MainActivitySmokeTest {
 
     @Test
     fun excursionTipCloseReturnsToTipsOverview() {
-        composeRule.onNodeWithTag("main-nav-compass").performClick()
+        composeRule.onNodeWithTag("main-nav-discover").performClick()
         composeRule.onNodeWithTag("compass-screen").performScrollToKey("Strände")
         composeRule.onNodeWithTag("compass-category-Ausflüge").performClick()
         composeRule.onNodeWithTag("compass-screen").performScrollToKey("trip-asklepieion")
@@ -182,29 +182,28 @@ class MainActivitySmokeTest {
 
     @Test
     fun bottomNavigationSwitchesBetweenMainDestinations() {
-        composeRule.onNodeWithTag("main-nav-home").assertIsSelected()
+        composeRule.onNodeWithTag("main-nav-today").assertIsSelected()
 
-        composeRule.onNodeWithTag("main-nav-travel").performClick().assertIsSelected()
-        composeRule.onNodeWithTag("main-nav-compass").performClick().assertIsSelected()
+        composeRule.onNodeWithTag("main-nav-discover").performClick().assertIsSelected()
         composeRule.onNodeWithTag("compass-screen").assertIsDisplayed()
 
-        composeRule.onNodeWithTag("main-nav-home").performClick().assertIsSelected()
+        composeRule.onNodeWithTag("main-nav-today").performClick().assertIsSelected()
         composeRule.onNodeWithText("KOS").assertIsDisplayed()
     }
 
     @Test
     fun tappingActiveTabReturnsToTop() {
-        composeRule.onNodeWithTag("main-nav-compass").performClick()
+        composeRule.onNodeWithTag("main-nav-discover").performClick()
         composeRule.onNodeWithTag("compass-screen").performScrollToIndex(3)
 
-        composeRule.onNodeWithTag("main-nav-compass").performClick()
+        composeRule.onNodeWithTag("main-nav-discover").performClick()
 
         composeRule.onNodeWithText("Ideen & Orte").assertIsDisplayed()
     }
 
     @Test
     fun randomTipButtonOpensDetailOverlay() {
-        composeRule.onNodeWithTag("main-nav-compass").performClick()
+        composeRule.onNodeWithTag("main-nav-discover").performClick()
         composeRule.onNodeWithTag("compass-random-tip-button").performClick()
 
         composeRule.onNodeWithTag("compass-tip-overlay").assertIsDisplayed()
@@ -212,7 +211,8 @@ class MainActivitySmokeTest {
 
     @Test
     fun tavernCalculatorCalculatesTotalAndPerPerson() {
-        composeRule.onNodeWithTag("main-nav-travel").performClick()
+        composeRule.onNodeWithTag("main-nav-discover").performClick()
+        composeRule.onNodeWithTag("discover-tab-travel").performClick()
         composeRule.onNodeWithTag("travel-area-explore").performClick()
 
         composeRule.onNodeWithTag("tavern-calculator-amount-input")

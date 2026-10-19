@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Kos Urlaub</string>
-    <string name="main_nav_home">Home</string>
-    <string name="main_nav_compass">Ideen</string>
+    <string name="main_nav_today">Heute</string>
+    <string name="main_nav_discover">Entdecken</string>
     <string name="main_nav_diary">Tagebuch</string>
-    <string name="main_nav_travel">Vor Ort &amp; SOS</string>
+    <string name="discover_tab_tips">Tipps</string>
+    <string name="discover_tab_travel">Reise</string>
     <string name="community_title">Kos-Gruppen auf Facebook</string>
     <string name="community_label">FACEBOOK-GRUPPE</string>
     <string name="community_description">Reisetipps und Erfahrungen austauschen</string>
