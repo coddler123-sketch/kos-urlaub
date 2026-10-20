@@ -59,10 +59,9 @@ class MainActivitySmokeTest {
         val beforeTrip = composeRule.onAllNodesWithText("Bis zu unserem Kos-Urlaub").fetchSemanticsNodes().isNotEmpty()
         composeRule.onNodeWithText(if (beforeTrip) "Bis zu unserem Kos-Urlaub" else "Unser Kos-Urlaub").assertIsDisplayed()
         if (composeRule.onAllNodesWithText("TAGE").fetchSemanticsNodes().isNotEmpty()) {
-            // Vor dem Abflug: TodayBefore zeigt TAGE als Stempel, STD./MIN. stehen im selben Text wie die Zahl.
+            // Vor dem Abflug: TodayBefore zeigt TAGE als Stempel und darunter die Uhr mit STD · MIN · SEK.
             composeRule.onNodeWithText("TAGE").assertIsDisplayed()
-            composeRule.onNodeWithText("STD.", substring = true).assertIsDisplayed()
-            composeRule.onNodeWithText("MIN.", substring = true).assertIsDisplayed()
+            composeRule.onNodeWithText("STD · MIN · SEK").assertIsDisplayed()
         } else {
             // Auf Kos und danach zeigt die Startseite andere Texte (Begrüßung bzw. Rückblick).
             val phaseTexts = listOf("Kalimera!", "Schön war es.")
@@ -73,8 +72,8 @@ class MainActivitySmokeTest {
         if (composeRule.onAllNodesWithTag("home-checklist").fetchSemanticsNodes().isNotEmpty()) {
             composeRule.onNodeWithTag("home-checklist").performScrollTo().assertIsDisplayed()
             // Je nach Tag erscheint der Kos-Fakt oder der Highlight-Tipp.
-            val highlight = composeRule.onAllNodesWithText("TIPP FÜR EUREN URLAUB").fetchSemanticsNodes().isNotEmpty()
-            composeRule.onNodeWithText(if (highlight) "TIPP FÜR EUREN URLAUB" else "KOS-FAKT").performScrollTo().assertIsDisplayed()
+            val highlight = composeRule.onAllNodesWithText("TAGESHÖHEPUNKT").fetchSemanticsNodes().isNotEmpty()
+            composeRule.onNodeWithText(if (highlight) "TAGESHÖHEPUNKT" else "KOS-FAKT").performScrollTo().assertIsDisplayed()
         }
     }
 
