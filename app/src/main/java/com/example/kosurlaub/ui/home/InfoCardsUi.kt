@@ -52,11 +52,11 @@ fun CompassCard(onClick: () -> Unit) {
             }
             .padding(horizontal = 16.dp, vertical = 13.dp)
     ) {
-        Text("KOS KOMPASS", color = HomeAccent, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp)
+        PostcardLabel("KOS KOMPASS")
         Spacer(Modifier.height(5.dp))
-        Text("${compassTips.size} ausgewählte Kos-Tipps", color = KosInk, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, fontFamily = KosSans)
+        Text("${compassTips.size} ausgewählte Kos-Tipps", color = KosInk, fontSize = PostcardMetrics.BODY_SP.sp, fontWeight = FontWeight.SemiBold, fontFamily = KosSans)
         Spacer(Modifier.height(4.dp))
-        Text("Strände, Essen, Unterkünfte und Mobilität entdecken  ›", color = KosInk.copy(alpha = 0.8f), fontSize = 11.sp, lineHeight = 16.sp, fontFamily = KosSans)
+        Text("Strände, Essen, Unterkünfte und Mobilität entdecken  ›", color = KosInk.copy(alpha = 0.8f), fontSize = PostcardMetrics.LABEL_SP.sp, lineHeight = 16.sp, fontFamily = KosSans)
     }
 }
 
@@ -76,18 +76,12 @@ fun TravelCard(onClick: () -> Unit) {
             }
             .padding(horizontal = 16.dp, vertical = 13.dp)
     ) {
-        Text(
-            text = stringResource(R.string.travel_card_label),
-            color = HomeAccent,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
-            letterSpacing = 0.8.sp
-        )
+        PostcardLabel(stringResource(R.string.travel_card_label))
         Spacer(Modifier.height(5.dp))
         Text(
             text = stringResource(R.string.travel_card_title),
             color = KosInk,
-            fontSize = 14.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             fontWeight = FontWeight.SemiBold,
             fontFamily = KosSans
         )
@@ -95,7 +89,7 @@ fun TravelCard(onClick: () -> Unit) {
         Text(
             text = stringResource(R.string.travel_card_description),
             color = KosInk.copy(alpha = 0.8f),
-            fontSize = 11.sp,
+            fontSize = PostcardMetrics.LABEL_SP.sp,
             lineHeight = 16.sp,
             fontFamily = KosSans
         )
@@ -109,21 +103,14 @@ fun HomeQuickActions(
     onOpenEmergency: () -> Unit = {}
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        Text(
-            text = "SCHNELLZUGRIFF 🛠️",
-            color = HomeAccent,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = KosSans,
-            letterSpacing = 0.8.sp
-        )
+        PostcardLabel("SCHNELLZUGRIFF")
         Spacer(Modifier.height(8.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             HomeQuickGridCard(
-                title = "🚌 Bus Tigaki",
+                title = "Bus Tigaki",
                 subtitle = "Fahrplan & Abfahrt",
                 testTag = "tigaki-bus-link",
                 onClick = onOpenTigaki,
@@ -137,14 +124,14 @@ fun HomeQuickActions(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             HomeQuickGridCard(
-                title = "🗣️ Sprachführer",
+                title = "Sprachführer",
                 subtitle = "Redewendungen",
                 testTag = "phrasebook-link",
                 onClick = onOpenPhrasebook,
                 modifier = Modifier.weight(1f)
             )
             HomeQuickGridCard(
-                title = "🏥 SOS Notfall",
+                title = "SOS Notfall",
                 subtitle = "Arzt, Taxi & Hotel",
                 testTag = "emergency-link",
                 onClick = onOpenEmergency,
@@ -181,7 +168,7 @@ private fun HomeQuickGridCard(
         Text(
             text = title,
             color = KosInk,
-            fontSize = 13.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = KosSans
         )
@@ -189,7 +176,7 @@ private fun HomeQuickGridCard(
         Text(
             text = subtitle,
             color = KosInk.copy(alpha = 0.8f),
-            fontSize = 10.sp,
+            fontSize = PostcardMetrics.LABEL_SP.sp,
             fontFamily = KosSans
         )
     }
@@ -205,19 +192,12 @@ fun FactCard(fact: String) {
             .border(1.dp, HomeCardBorder, HomeCardShape)
             .padding(horizontal = 16.dp, vertical = 13.dp)
     ) {
-        Text(
-            text = "KOS-FAKT",
-            color = HomeAccent,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = KosSans,
-            letterSpacing = 0.8.sp
-        )
+        PostcardLabel("KOS-FAKT")
         Spacer(Modifier.height(5.dp))
         Text(
             text = fact,
             color = KosInk.copy(alpha = 0.95f),
-            fontSize = 12.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             lineHeight = 18.sp,
             fontFamily = KosSans
         )
@@ -234,19 +214,12 @@ fun HighlightCard(highlight: String) {
             .border(1.dp, HomeCardBorder, HomeCardShape)
             .padding(horizontal = 16.dp, vertical = 13.dp)
     ) {
-        Text(
-            text = "TAGESHÖHEPUNKT",
-            color = HomeAccent,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = KosSans,
-            letterSpacing = 0.8.sp
-        )
+        PostcardLabel("TAGESHÖHEPUNKT")
         Spacer(Modifier.height(5.dp))
         Text(
             text = highlight,
             color = KosInk.copy(alpha = 0.95f),
-            fontSize = 12.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             lineHeight = 18.sp,
             fontFamily = KosSans
         )
@@ -269,21 +242,14 @@ fun CommunityCard(onClick: () -> Unit) {
             }
             .padding(horizontal = 16.dp, vertical = 13.dp)
     ) {
-        Text(
-            text = stringResource(R.string.community_label),
-            color = HomeAccent,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = KosSans,
-            letterSpacing = 0.8.sp
-        )
+        PostcardLabel(stringResource(R.string.community_label))
         Spacer(Modifier.height(5.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = stringResource(R.string.community_title),
                     color = KosInk,
-                    fontSize = 14.sp,
+                    fontSize = PostcardMetrics.BODY_SP.sp,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = KosSans
                 )
@@ -291,7 +257,7 @@ fun CommunityCard(onClick: () -> Unit) {
                 Text(
                     text = stringResource(R.string.community_description),
                     color = KosInk.copy(alpha = 0.8f),
-                    fontSize = 11.sp,
+                    fontSize = PostcardMetrics.LABEL_SP.sp,
                     lineHeight = 16.sp,
                     fontFamily = KosSans
                 )
@@ -299,7 +265,7 @@ fun CommunityCard(onClick: () -> Unit) {
                 Text(
                     text = stringResource(R.string.community_action),
                     color = HomeAccent,
-                    fontSize = 11.sp,
+                    fontSize = PostcardMetrics.LABEL_SP.sp,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = KosSans
                 )
@@ -320,27 +286,20 @@ fun FlightDayTimelineCard() {
             .padding(16.dp)
             .testTag("flight-day-timeline")
     ) {
-        Text(
-            text = "HEUTE IST ABFLUGTAG! ✈️",
-            color = HomeAccent,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = KosSans,
-            letterSpacing = 0.8.sp
-        )
+        PostcardLabel("HEUTE IST ABFLUGTAG!")
         Spacer(Modifier.height(6.dp))
         Text(
             text = "Reise-Timeline & Etappen",
             color = KosInk,
-            fontSize = 15.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = KosSans
         )
         Spacer(Modifier.height(10.dp))
         TimelineItem("~12:45 Uhr", "Boarding & Abflugbereich", "Gepäck aufgegeben & Sicherheitskontrolle")
-        TimelineItem("13:25 Uhr", "Abflug ab Hamburg (HAM) nach Kos 🛫", "Condor DE1640, Direktflug 13.09.2027")
-        TimelineItem("17:45 Uhr", "Ankunft Flughafen Kos (KGS) 🛬", "Ortszeit Kos (+1 Std.)")
-        TimelineItem("~19:00 Uhr", "Check-in ${TripData.HOTEL_NAME} 🏨", TripData.ROOM)
+        TimelineItem("13:25 Uhr", "Abflug ab Hamburg (HAM) nach Kos", "Condor DE1640, Direktflug 13.09.2027")
+        TimelineItem("17:45 Uhr", "Ankunft Flughafen Kos (KGS)", "Ortszeit Kos (+1 Std.)")
+        TimelineItem("~19:00 Uhr", "Check-in ${TripData.HOTEL_NAME}", TripData.ROOM)
     }
 }
 
@@ -355,7 +314,7 @@ private fun TimelineItem(time: String, title: String, subtitle: String) {
         Text(
             text = time,
             color = HomeAccent,
-            fontSize = 12.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = KosSans,
             modifier = Modifier.width(75.dp)
@@ -364,14 +323,14 @@ private fun TimelineItem(time: String, title: String, subtitle: String) {
             Text(
                 text = title,
                 color = KosInk,
-                fontSize = 12.sp,
+                fontSize = PostcardMetrics.BODY_SP.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = KosSans
             )
             Text(
                 text = subtitle,
-                color = Color(0xAAFFFFFF),
-                fontSize = 10.sp,
+                color = KosInk.copy(alpha = 0.75f),
+                fontSize = PostcardMetrics.LABEL_SP.sp,
                 fontFamily = KosSans
             )
         }

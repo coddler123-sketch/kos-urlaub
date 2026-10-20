@@ -169,7 +169,7 @@ internal fun CompassTipPhotoCard(
         ) {
             Text(
                 tip.title,
-                style = PostcardType.Heading.copy(fontSize = 14.sp, lineHeight = 18.sp),
+                style = PostcardType.Heading.copy(fontSize = PostcardMetrics.BODY_SP.sp, lineHeight = 18.sp),
                 color = Color.White, maxLines = 2, overflow = TextOverflow.Ellipsis
             )
             Text(

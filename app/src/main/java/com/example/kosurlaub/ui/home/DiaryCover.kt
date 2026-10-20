@@ -1,5 +1,8 @@
 package com.example.kosurlaub.ui.home
+import com.example.kosurlaub.ui.theme.PostcardMetrics
 
+import com.example.kosurlaub.ui.theme.PostcardLabel
+import com.example.kosurlaub.ui.theme.PostcardType
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -79,7 +82,7 @@ fun PolaroidPhoto(
             color = Color(0xFF2B3A30),
             fontFamily = KosSerif,
             fontStyle = FontStyle.Italic,
-            fontSize = 14.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth().padding(top = 10.dp)
         )
@@ -138,15 +141,11 @@ fun FreeChecklistCard() {
             .padding(16.dp)
             .testTag("home-checklist")
     ) {
-        Text(
-            "EURE LISTE",
-            color = HomeAccent, fontSize = 10.sp, fontWeight = FontWeight.Bold,
-            fontFamily = KosSans, letterSpacing = 1.sp
-        )
+        PostcardLabel("EURE LISTE")
         if (items.isEmpty()) {
             Text(
                 "Noch leer. Schreibt auf, was ihr nicht vergessen wollt.",
-                color = KosInk.copy(alpha = 0.7f), fontSize = 13.sp, fontFamily = KosSans,
+                color = KosInk.copy(alpha = 0.7f), fontSize = PostcardMetrics.BODY_SP.sp, fontFamily = KosSans,
                 modifier = Modifier.padding(top = 8.dp)
             )
         }
@@ -160,7 +159,7 @@ fun FreeChecklistCard() {
                 Text(
                     item.text,
                     color = KosInk.copy(alpha = if (item.done) 0.5f else 0.95f),
-                    fontSize = 14.sp, fontFamily = KosSans,
+                    fontSize = PostcardMetrics.BODY_SP.sp, fontFamily = KosSans,
                     modifier = Modifier.weight(1f)
                 )
                 TextButton(onClick = { update(items.filterIndexed { i, _ -> i != index }) }) {
@@ -176,7 +175,7 @@ fun FreeChecklistCard() {
             OutlinedTextField(
                 value = draft,
                 onValueChange = { draft = it },
-                placeholder = { Text("Neuer Punkt", fontFamily = KosSans, fontSize = 13.sp) },
+                placeholder = { Text("Neuer Punkt", fontFamily = KosSans, fontSize = PostcardMetrics.BODY_SP.sp) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = { add() }),

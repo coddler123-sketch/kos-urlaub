@@ -1,4 +1,5 @@
 package com.example.kosurlaub.ui.home
+import com.example.kosurlaub.ui.theme.PostcardMetrics
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -69,9 +70,9 @@ fun DayStrip(
                     .testTag("day-${day.index}")
             ) {
                 val color = if (isSelected) KosOnAccent else KosInk
-                Text(day.weekday, color = color.copy(alpha = 0.75f), fontSize = 10.sp, fontFamily = KosSans)
+                Text(day.weekday, color = color.copy(alpha = 0.75f), fontSize = PostcardMetrics.LABEL_SP.sp, fontFamily = KosSans)
                 Text(
-                    day.day.toString(), color = color, fontSize = 15.sp,
+                    day.day.toString(), color = color, fontSize = PostcardMetrics.BODY_SP.sp,
                     fontWeight = FontWeight.SemiBold, fontFamily = KosSans
                 )
             }

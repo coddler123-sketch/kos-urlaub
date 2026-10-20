@@ -69,7 +69,7 @@ internal data class CompassCategory(
 internal fun CompassOverviewHeader(count: Int, onRandomTip: () -> Unit = {}) {
     Row(verticalAlignment = Alignment.Bottom) {
         Column(modifier = Modifier.weight(1f)) {
-            Text("Ideen & Orte", style = PostcardType.Title, color = KosInk)
+            Text("Tipps & Orte", style = PostcardType.Title, color = KosInk)
             PostcardLabel("$count ausgewählte Tipps")
         }
         PostcardChip("Überrascht uns!", false, onRandomTip, Modifier.testTag("compass-random-tip-button"))
@@ -86,20 +86,20 @@ internal fun CompassDayPlanCard(tips: List<CompassTip>) {
             .padding(15.dp)
             .testTag("compass-day-plan")
     ) {
-        Text("EUER KLEINER TAGESPLAN", color = HomeAccent, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp)
+        PostcardLabel("EUER KLEINER TAGESPLAN")
         Spacer(Modifier.height(8.dp))
         tips.forEachIndexed { index, tip ->
             val editorial = editorialFor(tip)
             Text(
                 "${index + 1}. ${editorial.bestTime} · ${tip.title}",
                 color = KosInk,
-                fontSize = 12.sp,
+                fontSize = PostcardMetrics.BODY_SP.sp,
                 lineHeight = 18.sp,
                 fontFamily = KosSans
             )
         }
         Spacer(Modifier.height(6.dp))
-        Text("Aus euren gemerkten Tipps · maximal drei Stationen", color = KosInk.copy(alpha = 0.6f), fontSize = 9.sp)
+        Text("Aus euren gemerkten Tipps · maximal drei Stationen", color = KosInk.copy(alpha = 0.6f), fontSize = PostcardMetrics.LABEL_SP.sp)
     }
 }
 @Composable
@@ -161,11 +161,11 @@ internal fun CompassCommunityCard(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column {
-            Text("Facebook", color = KosInk, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, fontFamily = KosSans)
+            Text("Facebook", color = KosInk, fontSize = PostcardMetrics.HEADING_SP.sp, fontWeight = FontWeight.SemiBold, fontFamily = KosSans)
             Spacer(Modifier.height(6.dp))
-            Text("Weitere Erfahrungen aus der Kos-Community", color = KosInk.copy(alpha = 0.75f), fontSize = 11.sp, lineHeight = 16.sp, fontFamily = KosSans)
+            Text("Weitere Erfahrungen aus der Kos-Community", color = KosInk.copy(alpha = 0.75f), fontSize = PostcardMetrics.LABEL_SP.sp, lineHeight = 16.sp, fontFamily = KosSans)
         }
-        Text("COMMUNITY  ↗", color = HomeAccent, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+        Text("COMMUNITY  ↗", style = PostcardType.Label, color = HomeAccent)
     }
 }
 
@@ -234,12 +234,12 @@ internal fun CompassTipCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(tip.category.uppercase(), color = accent, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp)
+                Text(tip.category.uppercase(), color = accent, fontSize = PostcardMetrics.LABEL_SP.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = tip.kind.label,
                         color = statusColor,
-                        fontSize = 9.sp,
+                        fontSize = PostcardMetrics.LABEL_SP.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
                             .background(statusColor.copy(alpha = 0.12f), RoundedCornerShape(50))
@@ -263,12 +263,12 @@ internal fun CompassTipCard(
                 }
             }
             Spacer(Modifier.height(7.dp))
-            Text(tip.title, color = KosInk, fontSize = 17.sp, fontWeight = FontWeight.SemiBold, fontFamily = KosSans)
+            Text(tip.title, color = KosInk, fontSize = PostcardMetrics.HEADING_SP.sp, fontWeight = FontWeight.SemiBold, fontFamily = KosSans)
             Spacer(Modifier.height(5.dp))
             Text(
                 tip.description,
                 color = KosInk.copy(alpha = 0.9f),
-                fontSize = 12.sp,
+                fontSize = PostcardMetrics.BODY_SP.sp,
                 lineHeight = 18.sp,
                 fontFamily = KosSans,
                 maxLines = if (expanded) Int.MAX_VALUE else 2,
@@ -278,14 +278,14 @@ internal fun CompassTipCard(
             Text(
                 listOf(tip.location, editorial.duration, editorial.bestTime).filter(String::isNotBlank).joinToString("  ·  "),
                 color = KosInk.copy(alpha = 0.75f),
-                fontSize = 10.sp,
+                fontSize = PostcardMetrics.LABEL_SP.sp,
                 fontFamily = KosSans
             )
             Spacer(Modifier.height(8.dp))
             Text(
                 if (expanded) "WENIGER ANZEIGEN  ⌃" else "MEHR ANZEIGEN  ›",
                 color = accent,
-                fontSize = 9.sp,
+                fontSize = PostcardMetrics.LABEL_SP.sp,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -298,18 +298,18 @@ internal fun CompassTipCard(
                 Text(
                     if (isSaved) "♥ GEMERKT" else "♡ MERKEN",
                     color = if (isSaved) HomeAccent else KosInk,
-                    fontSize = 11.sp,
+                    fontSize = PostcardMetrics.LABEL_SP.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
             TextButton(onClick = onToggleVisited) {
-                Text(if (isVisited) "✓ ERLEDIGT" else "ALS ERLEDIGT", color = if (isVisited) KosAccent2 else KosInk.copy(alpha = 0.75f), fontSize = 9.sp)
+                Text(if (isVisited) "✓ ERLEDIGT" else "ALS ERLEDIGT", color = if (isVisited) KosAccent2 else KosInk.copy(alpha = 0.75f), fontSize = PostcardMetrics.LABEL_SP.sp)
             }
         }
 
         if (expanded) {
             if (tip.tags.isNotEmpty()) {
-                Text(tip.tags.joinToString("  ·  "), color = accent, fontSize = 9.sp, fontFamily = KosSans)
+                Text(tip.tags.joinToString("  ·  "), color = accent, fontSize = PostcardMetrics.LABEL_SP.sp, fontFamily = KosSans)
             }
             tip.reviewSummary?.let { summary ->
                 Spacer(Modifier.height(12.dp))
@@ -323,7 +323,7 @@ internal fun CompassTipCard(
                     Text(
                         "REZENSIONEN ZUSAMMENGEFASST",
                         color = accent,
-                        fontSize = 9.sp,
+                        fontSize = PostcardMetrics.LABEL_SP.sp,
                         fontWeight = FontWeight.Bold,
                         letterSpacing = 0.7.sp
                     )
@@ -331,7 +331,7 @@ internal fun CompassTipCard(
                     Text(
                         summary,
                         color = KosInk.copy(alpha = 0.9f),
-                        fontSize = 11.sp,
+                        fontSize = PostcardMetrics.LABEL_SP.sp,
                         lineHeight = 17.sp,
                         fontFamily = KosSans
                     )
@@ -350,7 +350,7 @@ internal fun CompassTipCard(
                     Text(
                         "HOTEL AUF EINEN BLICK",
                         color = accent,
-                        fontSize = 9.sp,
+                        fontSize = PostcardMetrics.LABEL_SP.sp,
                         fontWeight = FontWeight.Bold,
                         letterSpacing = 0.7.sp
                     )
@@ -359,14 +359,14 @@ internal fun CompassTipCard(
                         Text(
                             detail.title,
                             color = KosInk.copy(alpha = 0.75f),
-                            fontSize = 9.sp,
+                            fontSize = PostcardMetrics.LABEL_SP.sp,
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(Modifier.height(3.dp))
                         Text(
                             detail.text,
                             color = KosInk.copy(alpha = 0.9f),
-                            fontSize = 11.sp,
+                            fontSize = PostcardMetrics.LABEL_SP.sp,
                             lineHeight = 17.sp,
                             fontFamily = KosSans
                         )
@@ -380,14 +380,8 @@ internal fun CompassTipCard(
                 CompassFactRow("ANREISE", editorial.transport)
 
                 Spacer(Modifier.height(10.dp))
-                Text(
-                    "IM SEPTEMBER",
-                    color = HomeAccent,
-                    fontSize = 9.sp,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 0.8.sp
-                )
-                Text(editorial.septemberNote, color = KosInk.copy(alpha = 0.9f), fontSize = 11.sp, lineHeight = 17.sp, fontFamily = KosSans)
+                PostcardLabel("IM SEPTEMBER")
+                Text(editorial.septemberNote, color = KosInk.copy(alpha = 0.9f), fontSize = PostcardMetrics.LABEL_SP.sp, lineHeight = 17.sp, fontFamily = KosSans)
 
                 Spacer(Modifier.height(12.dp))
                 CompassFactRow("GUT KOMBINIERBAR", editorial.combination)
@@ -396,8 +390,8 @@ internal fun CompassTipCard(
             }
 
             Spacer(Modifier.height(10.dp))
-            Text("EHRLICH EINGESCHÄTZT", color = KosWarn, fontSize = 9.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp)
-            Text(editorial.counterRecommendation, color = Color(0xFFD9C1A8), fontSize = 11.sp, lineHeight = 17.sp, fontFamily = KosSans)
+            Text("EHRLICH EINGESCHÄTZT", color = KosWarn, fontSize = PostcardMetrics.LABEL_SP.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp)
+            Text(editorial.counterRecommendation, color = Color(0xFFD9C1A8), fontSize = PostcardMetrics.LABEL_SP.sp, lineHeight = 17.sp, fontFamily = KosSans)
 
             Spacer(Modifier.height(12.dp))
             if (tip.mapsUrl != null) {
@@ -411,7 +405,7 @@ internal fun CompassTipCard(
                     Text(
                         "IN GOOGLE MAPS ÖFFNEN  ↗",
                         color = accent,
-                        fontSize = 11.sp,
+                        fontSize = PostcardMetrics.LABEL_SP.sp,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -444,14 +438,14 @@ internal fun CompassTipCard(
             Text(
                 if (tip.source == CompassTipSource.COMMUNITY) "PERSÖNLICHE ERFAHRUNG" else "RECHERCHIERTER HINWEIS · STAND ${editorial.checkedAt}",
                 color = KosInk.copy(alpha = 0.5f),
-                fontSize = 9.sp,
+                fontSize = PostcardMetrics.LABEL_SP.sp,
                 fontWeight = FontWeight.Bold
             )
             editorial.validUntil?.let {
                 Text(
                     "GÜLTIGKEIT · $it",
                     color = KosWarn,
-                    fontSize = 9.sp,
+                    fontSize = PostcardMetrics.LABEL_SP.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -459,7 +453,7 @@ internal fun CompassTipCard(
                 Text(
                     "${tip.source.label} · QUELLE ↗",
                     color = KosInk.copy(alpha = 0.6f),
-                    fontSize = 9.sp,
+                    fontSize = PostcardMetrics.LABEL_SP.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .clickable(onClick = onOpenSource)
@@ -474,8 +468,8 @@ internal fun CompassTipCard(
 internal fun CompassFactRow(label: String, value: String) {
     if (value.isBlank()) return
     Row(modifier = Modifier.fillMaxWidth().padding(vertical = 3.dp)) {
-        Text(label, color = KosInk.copy(alpha = 0.5f), fontSize = 9.sp, fontWeight = FontWeight.Bold, modifier = Modifier.width(116.dp))
-        Text(value, color = KosInk.copy(alpha = 0.9f), fontSize = 11.sp, lineHeight = 16.sp, fontFamily = KosSans, modifier = Modifier.weight(1f))
+        Text(label, color = KosInk.copy(alpha = 0.5f), fontSize = PostcardMetrics.LABEL_SP.sp, fontWeight = FontWeight.Bold, modifier = Modifier.width(116.dp))
+        Text(value, color = KosInk.copy(alpha = 0.9f), fontSize = PostcardMetrics.LABEL_SP.sp, lineHeight = 16.sp, fontFamily = KosSans, modifier = Modifier.weight(1f))
     }
 }
 

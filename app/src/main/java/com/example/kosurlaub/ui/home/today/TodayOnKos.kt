@@ -41,7 +41,7 @@ import java.util.TimeZone
 internal fun TodayOnKos(
     s: HomeState,
     heroPhoto: ImageBitmap?,
-    onOpenIdeas: () -> Unit
+    onOpenTips: () -> Unit
 ) {
     val context = LocalContext.current
     val now = AppClock.nowMillis()
@@ -79,7 +79,7 @@ internal fun TodayOnKos(
                 Fact(stringResource(R.string.today_wind), s.weather?.windSpeedLabel ?: "–")
                 Fact(stringResource(R.string.today_sunset), s.sunsetLabel?.substringBefore(" Uhr") ?: "–")
             }
-            PaperPanel(modifier = Modifier.clickable(onClick = onOpenIdeas)) {
+            PaperPanel(modifier = Modifier.clickable(onClick = onOpenTips)) {
                 PostcardLabel(stringResource(R.string.today_plan))
                 if (saved.isEmpty()) {
                     Text(stringResource(R.string.today_plan_empty), style = PostcardType.Body, color = KosInk)
@@ -100,7 +100,7 @@ internal fun TodayOnKos(
                 }
             }
             tip?.let {
-                PaperPanel(modifier = Modifier.clickable(onClick = onOpenIdeas)) {
+                PaperPanel(modifier = Modifier.clickable(onClick = onOpenTips)) {
                     PostcardLabel(stringResource(R.string.today_tip))
                     Text(it.tip.title, style = PostcardType.Heading, color = KosInk)
                     Text(it.reason, style = PostcardType.Body, color = KosInk)

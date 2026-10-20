@@ -1,4 +1,5 @@
 package com.example.kosurlaub.ui.settings
+import com.example.kosurlaub.ui.theme.PostcardMetrics
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -58,7 +59,7 @@ fun UpdateBanner(
             Text(
                 text = if (isDownloading) "Lade Aktualisierung herunter …" else "Aktualisierung v${update.versionName} verfügbar · Tippe zum Installieren",
                 color = KosInk,
-                fontSize = 12.sp,
+                fontSize = PostcardMetrics.BODY_SP.sp,
                 fontFamily = KosSans,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.weight(1f)
@@ -81,7 +82,7 @@ fun StartupUpdateDialog(
                 text = "Aktualisierung verfügbar",
                 fontFamily = KosSans,
                 fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
+                fontSize = PostcardMetrics.HEADING_SP.sp,
                 color = KosInk
             )
         },
@@ -90,7 +91,7 @@ fun StartupUpdateDialog(
                 Text(
                     text = "Eine neue Version (v${update.versionName}) deiner Kos-App ist verfügbar. Jetzt installieren?",
                     fontFamily = KosSans,
-                    fontSize = 14.sp,
+                    fontSize = PostcardMetrics.BODY_SP.sp,
                     color = KosInk.copy(alpha = 0.9f)
                 )
                 if (isDownloading) {
@@ -108,7 +109,7 @@ fun StartupUpdateDialog(
                         Text(
                             text = "Wird heruntergeladen …",
                             fontFamily = KosSans,
-                            fontSize = 13.sp,
+                            fontSize = PostcardMetrics.BODY_SP.sp,
                             color = KosInk.copy(alpha = 0.8f)
                         )
                     }

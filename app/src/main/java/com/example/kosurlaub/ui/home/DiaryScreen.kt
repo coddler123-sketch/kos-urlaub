@@ -1,5 +1,8 @@
 package com.example.kosurlaub.ui.home
+import com.example.kosurlaub.ui.theme.PostcardMetrics
 
+import com.example.kosurlaub.ui.theme.PostcardLabel
+import com.example.kosurlaub.ui.theme.PostcardType
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -90,7 +93,7 @@ fun DiaryScreen(padding: PaddingValues, scrollToTopRequest: Int, phase: TripPhas
 
         DiaryCard("WOLLEN WIR NOCH") {
             if (wishes.isEmpty()) {
-                DiaryLine("Nichts vorgemerkt. Unter „Ideen“ könnt ihr Orte merken.", 0.7f)
+                DiaryLine("Nichts vorgemerkt. Unter „Tipps“ könnt ihr Orte merken.", 0.7f)
             }
             wishes.forEach { tip ->
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
@@ -129,7 +132,7 @@ fun DiaryScreen(padding: PaddingValues, scrollToTopRequest: Int, phase: TripPhas
                     val day = TripDays.all.first { it.index == index }
                     Text(
                         "Tag $index · ${day.weekday} ${day.day}.${day.month}.",
-                        color = HomeAccent, fontSize = 13.sp, fontFamily = KosSerif, fontWeight = FontWeight.SemiBold,
+                        color = HomeAccent, fontSize = PostcardMetrics.BODY_SP.sp, fontFamily = KosSerif, fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
                     )
                     entries.forEach { entry ->
@@ -161,7 +164,7 @@ fun DiaryScreen(padding: PaddingValues, scrollToTopRequest: Int, phase: TripPhas
 private fun Stat(value: Int, label: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(64.dp)) {
         Text(value.toString(), color = KosInk, fontSize = 28.sp, fontFamily = KosSerif, fontWeight = FontWeight.Bold)
-        Text(label, color = KosInk.copy(alpha = 0.7f), fontSize = 11.sp, fontFamily = KosSans)
+        Text(label, color = KosInk.copy(alpha = 0.7f), fontSize = PostcardMetrics.LABEL_SP.sp, fontFamily = KosSans)
     }
 }
 
@@ -180,7 +183,7 @@ private fun DiaryCard(label: String, content: @Composable () -> Unit) {
             .border(1.dp, HomeCardBorder, HomeCardShape)
             .padding(16.dp)
     ) {
-        Text(label, color = HomeAccent, fontSize = 10.sp, fontWeight = FontWeight.Bold, fontFamily = KosSans, letterSpacing = 1.sp)
+        PostcardLabel(label)
         Spacer(Modifier.height(8.dp))
         content()
     }

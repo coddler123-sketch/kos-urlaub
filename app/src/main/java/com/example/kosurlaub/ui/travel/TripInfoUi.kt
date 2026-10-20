@@ -1,5 +1,7 @@
 package com.example.kosurlaub.ui.travel
 
+import com.example.kosurlaub.ui.theme.PostcardLabel
+import com.example.kosurlaub.ui.theme.PostcardType
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,14 +23,7 @@ import com.example.kosurlaub.ui.theme.KosInk
 @Composable
 internal fun TripInfoCard(onOpenMap: (String) -> Unit) {
     TravelCardContainer {
-        Text(
-            "REISE & HOTEL ✈️",
-            color = HomeAccent,
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Bold,
-            letterSpacing = 0.8.sp,
-            modifier = Modifier.testTag("trip-info-card")
-        )
+        PostcardLabel("Reise & Hotel", Modifier.testTag("trip-info-card"))
         Spacer(Modifier.height(8.dp))
         InfoLine("Hinflug", TripData.outbound.summary())
         InfoLine("Rückflug", TripData.inbound.summary())
@@ -46,7 +41,7 @@ internal fun TripInfoCard(onOpenMap: (String) -> Unit) {
             onClick = { onOpenMap("${TripData.HOTEL_LAT},${TripData.HOTEL_LON}(${TripData.HOTEL_NAME})") },
             modifier = Modifier.testTag("trip-info-map")
         ) {
-            Text("📍 Hotel auf der Karte", color = HomeAccent, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+            Text("HOTEL AUF DER KARTE", style = PostcardType.Label, color = HomeAccent)
         }
     }
 }
@@ -54,7 +49,7 @@ internal fun TripInfoCard(onOpenMap: (String) -> Unit) {
 @Composable
 private fun InfoLine(label: String, text: String) {
     Column(verticalArrangement = Arrangement.spacedBy(2.dp), modifier = Modifier.padding(vertical = 4.dp)) {
-        Text(label.uppercase(), color = KosInk.copy(alpha = 0.75f), fontSize = 9.sp, fontWeight = FontWeight.Bold)
-        Text(text, color = KosInk, fontSize = 12.sp, lineHeight = 17.sp)
+        PostcardLabel(label)
+        Text(text, style = PostcardType.Body, color = KosInk)
     }
 }

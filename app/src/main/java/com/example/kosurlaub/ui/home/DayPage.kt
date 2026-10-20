@@ -1,5 +1,8 @@
 package com.example.kosurlaub.ui.home
+import com.example.kosurlaub.ui.theme.PostcardMetrics
 
+import com.example.kosurlaub.ui.theme.PostcardLabel
+import com.example.kosurlaub.ui.theme.PostcardType
 import android.graphics.BitmapFactory
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -58,11 +61,11 @@ private val fullWeekdays = mapOf(
 
 /** Tagesseite: nur Fakten und Platz für Eigenes, keine Vorschläge. */
 @Composable
-fun DayPage(day: TripDay, onOpenIdeas: () -> Unit) {
+fun DayPage(day: TripDay, onOpenTips: () -> Unit) {
     Column(modifier = Modifier.fillMaxWidth().testTag("day-page")) {
         Text(
             "TAG ${day.index} VON ${TripDays.all.size}",
-            color = HomeAccent, fontSize = 11.sp, fontWeight = FontWeight.Bold,
+            color = HomeAccent, fontSize = PostcardMetrics.LABEL_SP.sp, fontWeight = FontWeight.Bold,
             fontFamily = KosSans, letterSpacing = 1.sp, modifier = Modifier.testTag("home-selected-day")
         )
         Text(
@@ -77,9 +80,9 @@ fun DayPage(day: TripDay, onOpenIdeas: () -> Unit) {
         YourDayCard(day)
         Spacer(Modifier.height(12.dp))
         Text(
-            "Ideen ansehen  ›",
-            color = KosInk.copy(alpha = 0.75f), fontSize = 14.sp, fontFamily = KosSerif,
-            modifier = Modifier.clickable(onClick = onOpenIdeas).padding(vertical = 10.dp).testTag("day-ideas")
+            "Tipps ansehen  ›",
+            color = KosInk.copy(alpha = 0.75f), fontSize = PostcardMetrics.BODY_SP.sp, fontFamily = KosSerif,
+            modifier = Modifier.clickable(onClick = onOpenTips).padding(vertical = 10.dp).testTag("day-ideas")
         )
     }
 }
@@ -94,7 +97,7 @@ private fun DayCard(label: String, content: @Composable () -> Unit) {
             .border(1.dp, HomeCardBorder, HomeCardShape)
             .padding(16.dp)
     ) {
-        Text(label, color = HomeAccent, fontSize = 10.sp, fontWeight = FontWeight.Bold, fontFamily = KosSans, letterSpacing = 1.sp)
+        PostcardLabel(label)
         Spacer(Modifier.height(8.dp))
         content()
     }
@@ -192,7 +195,7 @@ private fun YourDayCard(day: TripDay) {
         Spacer(Modifier.height(6.dp))
         OutlinedTextField(
             value = draft, onValueChange = { draft = it },
-            placeholder = { Text("Notiz", fontFamily = KosSans, fontSize = 13.sp) },
+            placeholder = { Text("Notiz", fontFamily = KosSans, fontSize = PostcardMetrics.BODY_SP.sp) },
             modifier = Modifier.fillMaxWidth().testTag("day-note-input")
         )
         FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -212,7 +215,7 @@ private fun YourDayCard(day: TripDay) {
             if (tips.isEmpty()) Line("Eure Merkliste ist noch leer.", alpha = 0.7f, size = 12)
             tips.forEach { tip ->
                 Text(
-                    tip.title, color = KosInk, fontSize = 14.sp, fontFamily = KosSans,
+                    tip.title, color = KosInk, fontSize = PostcardMetrics.BODY_SP.sp, fontFamily = KosSans,
                     modifier = Modifier.fillMaxWidth().clickable {
                         update(entries + DayEntry(DayEntry.Kind.PLACE, tip.id)); showPlaces = false
                     }.padding(vertical = 8.dp)

@@ -57,7 +57,7 @@ internal fun MarineWeatherCard(
             Text(
                 text = stringResource(R.string.travel_marine_title),
                 color = KosInk,
-                fontSize = 16.sp,
+                fontSize = PostcardMetrics.HEADING_SP.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = KosSerif
             )
@@ -78,7 +78,7 @@ internal fun MarineWeatherCard(
                         else R.string.travel_marine_calm
                     ),
                     color = if (isMarineCaution(weather, marineWeather)) Color(0xFFFFD180) else HomeAccent,
-                    fontSize = 11.sp,
+                    fontSize = PostcardMetrics.LABEL_SP.sp,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = KosSans
                 )
@@ -90,7 +90,7 @@ internal fun MarineWeatherCard(
                             .format(Date(marineWeather.fetchedAtMillis))
                     ),
                     color = KosInk.copy(alpha = 0.5f),
-                    fontSize = 9.sp,
+                    fontSize = PostcardMetrics.LABEL_SP.sp,
                     modifier = Modifier.padding(top = 6.dp)
                 )
             }
@@ -154,13 +154,13 @@ private fun Metric(@StringRes labelRes: Int, value: String, modifier: Modifier =
         Text(
             text = stringResource(labelRes),
             color = KosInk.copy(alpha = 0.6f),
-            fontSize = 9.sp,
+            fontSize = PostcardMetrics.LABEL_SP.sp,
             fontFamily = KosSans
         )
         Text(
             text = value,
             color = KosInk,
-            fontSize = 14.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = KosSans
         )
@@ -172,7 +172,7 @@ private fun MarineStatusText(@StringRes textRes: Int) {
     Text(
         text = stringResource(textRes),
         color = KosInk.copy(alpha = 0.75f),
-        fontSize = 11.sp,
+        fontSize = PostcardMetrics.LABEL_SP.sp,
         lineHeight = 16.sp,
         fontFamily = KosSans
     )
@@ -184,13 +184,7 @@ internal fun EmergencyContactsCard(
     onCall: (String) -> Unit
 ) {
     TravelCardContainer {
-        Text(
-            text = stringResource(R.string.travel_help_more),
-            color = HomeAccent,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
-            letterSpacing = 0.8.sp
-        )
+        PostcardLabel(stringResource(R.string.travel_help_more))
         contacts.forEach { contact ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -199,7 +193,7 @@ internal fun EmergencyContactsCard(
                 Text(
                     text = stringResource(contact.titleRes),
                     color = KosInk,
-                    fontSize = 12.sp,
+                    fontSize = PostcardMetrics.BODY_SP.sp,
                     fontFamily = KosSans,
                     modifier = Modifier.weight(1f)
                 )
@@ -242,14 +236,14 @@ private fun MapHelpRow(
             Text(
                 text = stringResource(titleRes),
                 color = KosInk,
-                fontSize = 13.sp,
+                fontSize = PostcardMetrics.BODY_SP.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = KosSans
             )
             Text(
                 text = stringResource(descriptionRes),
                 color = KosInk.copy(alpha = 0.75f),
-                fontSize = 10.sp,
+                fontSize = PostcardMetrics.LABEL_SP.sp,
                 lineHeight = 15.sp,
                 fontFamily = KosSans
             )
@@ -276,7 +270,7 @@ internal fun TravelChecklistCard(
                 items.size
             ),
             color = HomeAccent,
-            fontSize = 11.sp,
+            fontSize = PostcardMetrics.LABEL_SP.sp,
             fontWeight = FontWeight.SemiBold,
             fontFamily = KosSans
         )
@@ -295,7 +289,7 @@ internal fun TravelChecklistCard(
                 Text(
                     text = stringResource(item.titleRes),
                     color = KosInk,
-                    fontSize = 12.sp,
+                    fontSize = PostcardMetrics.BODY_SP.sp,
                     lineHeight = 17.sp,
                     fontFamily = KosSans,
                     modifier = Modifier.weight(1f)
@@ -314,9 +308,10 @@ internal fun TravelChecklistCard(
         Text(
             text = stringResource(R.string.travel_notes_saved),
             color = KosInk.copy(alpha = 0.5f),
-            fontSize = 9.sp,
+            fontSize = PostcardMetrics.LABEL_SP.sp,
             lineHeight = 14.sp,
             modifier = Modifier.padding(top = 6.dp)
         )
     }
 }
+

@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.dp
 internal val HomeAccent: Color @Composable get() = LocalKosColors.current.accent
 internal val HomeCardColor: Color @Composable get() = LocalKosColors.current.card
 internal val HomeCardBorder: Color @Composable get() = LocalKosColors.current.cardBorder
-internal val HomeCardShape = RoundedCornerShape(18.dp)
+internal val HomeCardShape = PostcardShape.Panel
 
 /** Haupttextfarbe (Tinte): hell auf dunklem, dunkel auf hellem Grund. */
 internal val KosInk: Color @Composable get() = LocalKosColors.current.ink

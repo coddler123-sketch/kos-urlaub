@@ -112,7 +112,7 @@ class MainActivitySmokeTest {
     @Test
     fun compassOpensFromMainNavigationAndReturns() {
         composeRule.onNodeWithTag("main-nav-discover").performClick()
-        composeRule.onNodeWithText("Ideen & Orte").assertIsDisplayed()
+        composeRule.onNodeWithText("Tipps & Orte").assertIsDisplayed()
         composeRule.onNodeWithTag("compass-screen").assertIsDisplayed()
         composeRule.onNodeWithText("${compassTipIds.size} AUSGEWÄHLTE TIPPS").assertIsDisplayed()
         composeRule.onNodeWithTag("compass-screen").performScrollToKey("community")
@@ -217,7 +217,7 @@ class MainActivitySmokeTest {
 
         composeRule.onNodeWithTag("main-nav-discover").performClick()
 
-        composeRule.onNodeWithText("Ideen & Orte").assertIsDisplayed()
+        composeRule.onNodeWithText("Tipps & Orte").assertIsDisplayed()
     }
 
     @Test

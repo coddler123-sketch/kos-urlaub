@@ -347,7 +347,7 @@ private fun TravelOverviewCard(
         Text(
             text = stringResource(titleRes),
             color = KosInk,
-            fontSize = 15.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = KosSans
         )
@@ -355,7 +355,7 @@ private fun TravelOverviewCard(
         Text(
             text = stringResource(descriptionRes),
             color = Color(0xC7FFFFFF),
-            fontSize = 10.sp,
+            fontSize = PostcardMetrics.LABEL_SP.sp,
             lineHeight = 15.sp,
             fontFamily = KosSans
         )
@@ -363,7 +363,7 @@ private fun TravelOverviewCard(
         Text(
             text = stringResource(R.string.travel_area_open),
             color = HomeAccent,
-            fontSize = 11.sp,
+            fontSize = PostcardMetrics.LABEL_SP.sp,
             fontWeight = FontWeight.SemiBold,
             fontFamily = KosSans
         )
@@ -397,12 +397,7 @@ private fun TravelHeader() {
     Column {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Spacer(Modifier.weight(1f))
-            Text(
-                text = stringResource(R.string.travel_screen_label),
-                color = HomeAccent,
-                fontSize = 10.sp,
-                fontWeight = FontWeight.Bold
-            )
+            PostcardLabel(stringResource(R.string.travel_screen_label))
         }
         Text(
             text = stringResource(R.string.travel_screen_title),
@@ -415,7 +410,7 @@ private fun TravelHeader() {
         Text(
             text = stringResource(R.string.travel_screen_intro),
             color = KosInk.copy(alpha = 0.75f),
-            fontSize = 12.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             lineHeight = 18.sp,
             fontFamily = KosSans
         )
@@ -427,7 +422,7 @@ private fun SectionLabel(textRes: Int) {
     Text(
         text = stringResource(textRes),
         color = HomeAccent,
-        fontSize = 10.sp,
+        fontSize = PostcardMetrics.LABEL_SP.sp,
         fontWeight = FontWeight.Bold,
         letterSpacing = 0.8.sp,
         modifier = Modifier.padding(top = 8.dp, start = 4.dp)
@@ -464,7 +459,7 @@ private fun SupportingTravelText(textRes: Int) {
     Text(
         text = stringResource(textRes),
         color = KosInk.copy(alpha = 0.6f),
-        fontSize = 10.sp,
+        fontSize = PostcardMetrics.LABEL_SP.sp,
         lineHeight = 15.sp,
         fontFamily = KosSans,
         modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
@@ -484,7 +479,7 @@ private fun BusOverviewCard() {
         Text(
             text = stringResource(R.string.travel_bus_intro),
             color = KosInk,
-            fontSize = 13.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             fontWeight = FontWeight.SemiBold,
             fontFamily = KosSans
         )
@@ -493,7 +488,7 @@ private fun BusOverviewCard() {
             Text(
                 text = "• ${stringResource(destination)}",
                 color = KosInk.copy(alpha = 0.9f),
-                fontSize = 12.sp,
+                fontSize = PostcardMetrics.BODY_SP.sp,
                 lineHeight = 20.sp,
                 fontFamily = KosSans
             )
@@ -507,7 +502,7 @@ private fun TravelSourceCard(source: TravelSource, onOpen: () -> Unit) {
         Text(
             text = stringResource(source.titleRes),
             color = KosInk,
-            fontSize = 16.sp,
+            fontSize = PostcardMetrics.HEADING_SP.sp,
             fontWeight = FontWeight.SemiBold,
             fontFamily = KosSerif
         )
@@ -515,7 +510,7 @@ private fun TravelSourceCard(source: TravelSource, onOpen: () -> Unit) {
         Text(
             text = stringResource(source.descriptionRes),
             color = KosInk.copy(alpha = 0.85f),
-            fontSize = 12.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             lineHeight = 18.sp,
             fontFamily = KosSans
         )
@@ -551,7 +546,7 @@ private fun ExcursionCard(
         Text(
             text = idea.imageCredit,
             color = KosInk.copy(alpha = 0.6f),
-            fontSize = 9.sp,
+            fontSize = PostcardMetrics.LABEL_SP.sp,
             fontFamily = KosSans,
             modifier = Modifier
                 .align(Alignment.End)
@@ -562,7 +557,7 @@ private fun ExcursionCard(
         Text(
             text = stringResource(idea.titleRes),
             color = KosInk,
-            fontSize = 16.sp,
+            fontSize = PostcardMetrics.HEADING_SP.sp,
             fontWeight = FontWeight.SemiBold,
             fontFamily = KosSerif
         )
@@ -570,7 +565,7 @@ private fun ExcursionCard(
         Text(
             text = stringResource(idea.metaRes),
             color = HomeAccent,
-            fontSize = 10.sp,
+            fontSize = PostcardMetrics.LABEL_SP.sp,
             fontWeight = FontWeight.SemiBold,
             fontFamily = KosSans
         )
@@ -578,7 +573,7 @@ private fun ExcursionCard(
         Text(
             text = stringResource(idea.descriptionRes),
             color = KosInk.copy(alpha = 0.9f),
-            fontSize = 12.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             lineHeight = 18.sp,
             fontFamily = KosSans
         )
@@ -707,19 +702,12 @@ private fun GreekPhrasebookCard() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = "GRIECHISCH FÜR DIE TAVERNE 🇬🇷 🔊",
-                    color = HomeAccent,
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = KosSans,
-                    letterSpacing = 0.8.sp
-                )
+                PostcardLabel("GRIECHISCH FÜR DIE TAVERNE")
                 Spacer(Modifier.height(4.dp))
                 Text(
                     text = "Sprachführer & Audio-Aussprache",
                     color = KosInk,
-                    fontSize = 14.sp,
+                    fontSize = PostcardMetrics.BODY_SP.sp,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = KosSans
                 )
@@ -727,7 +715,7 @@ private fun GreekPhrasebookCard() {
             Text(
                 text = if (expanded) "▲" else "▼",
                 color = HomeAccent,
-                fontSize = 12.sp,
+                fontSize = PostcardMetrics.BODY_SP.sp,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -750,20 +738,20 @@ private fun GreekPhrasebookCard() {
                             Text(
                                 text = phrase.greek,
                                 color = KosInk,
-                                fontSize = 13.sp,
+                                fontSize = PostcardMetrics.BODY_SP.sp,
                                 fontWeight = FontWeight.Bold,
                                 fontFamily = KosSans
                             )
                             Spacer(Modifier.width(6.dp))
                             Text(
-                                text = "🔊",
-                                fontSize = 12.sp
+                                text = "",
+                                fontSize = PostcardMetrics.BODY_SP.sp
                             )
                         }
                         Text(
                             text = phrase.german,
                             color = HomeAccent,
-                            fontSize = 12.sp,
+                            fontSize = PostcardMetrics.BODY_SP.sp,
                             fontWeight = FontWeight.Medium,
                             fontFamily = KosSans
                         )
@@ -771,7 +759,7 @@ private fun GreekPhrasebookCard() {
                     Text(
                         text = "Aussprache: ${phrase.phonetic}",
                         color = KosInk.copy(alpha = 0.6f),
-                        fontSize = 11.sp,
+                        fontSize = PostcardMetrics.LABEL_SP.sp,
                         fontFamily = KosSans
                     )
                 }
@@ -800,20 +788,13 @@ private fun PhotoSpotsCard(onOpenMap: (String) -> Unit) {
             .testTag("photo-spots-card")
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = "📸 DIE 10 BESTEN FOTOSPOTS UM TIGAKI",
-                color = HomeAccent,
-                fontSize = 10.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = KosSans,
-                letterSpacing = 0.8.sp
-            )
+            PostcardLabel("DIE 10 BESTEN FOTOSPOTS UM TIGAKI")
         }
         Spacer(Modifier.height(4.dp))
         Text(
             text = "Perfekte Uhrzeiten & Fototipps für Urlaubsfotos",
             color = KosInk,
-            fontSize = 15.sp,
+            fontSize = PostcardMetrics.BODY_SP.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = KosSans
         )
@@ -822,23 +803,7 @@ private fun PhotoSpotsCard(onOpenMap: (String) -> Unit) {
         LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             items(categories) { category ->
                 val isSelected = selectedCategory == category
-                FilterChip(
-                    selected = isSelected,
-                    onClick = { selectedCategory = category },
-                    label = { Text(category, fontSize = 11.sp, fontFamily = KosSans) },
-                    colors = FilterChipDefaults.filterChipColors(
-                        containerColor = KosInk.copy(alpha = 0.2f),
-                        labelColor = KosInk.copy(alpha = 0.8f),
-                        selectedContainerColor = HomeAccent.copy(alpha = 0.25f),
-                        selectedLabelColor = HomeAccent
-                    ),
-                    border = FilterChipDefaults.filterChipBorder(
-                        enabled = true,
-                        selected = isSelected,
-                        borderColor = HomeCardBorder,
-                        selectedBorderColor = HomeAccent
-                    )
-                )
+                PostcardChip(category, isSelected, { selectedCategory = category })
             }
         }
 
@@ -862,26 +827,26 @@ private fun PhotoSpotsCard(onOpenMap: (String) -> Unit) {
                     Text(
                         text = "${spot.iconEmoji} ${spot.title}",
                         color = KosInk,
-                        fontSize = 14.sp,
+                        fontSize = PostcardMetrics.BODY_SP.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = KosSans,
                         modifier = Modifier.weight(1f)
                     )
                     TextButton(onClick = { onOpenMap(spot.mapQuery) }, contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp)) {
-                        Text("📍 Karte", color = HomeAccent, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
+                        Text("Karte", color = HomeAccent, fontSize = PostcardMetrics.LABEL_SP.sp, fontWeight = FontWeight.SemiBold)
                     }
                 }
                 Text(
-                    text = "⏰ ${spot.bestTime}  •  📍 ${spot.location}",
+                    text = "${spot.bestTime} · ${spot.location}",
                     color = HomeAccent,
-                    fontSize = 11.sp,
+                    fontSize = PostcardMetrics.LABEL_SP.sp,
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.padding(top = 2.dp, bottom = 4.dp)
                 )
                 Text(
                     text = spot.tip,
                     color = Color(0xDDFFFFFF),
-                    fontSize = 12.sp,
+                    fontSize = PostcardMetrics.BODY_SP.sp,
                     lineHeight = 17.sp,
                     fontFamily = KosSans
                 )
@@ -917,7 +882,7 @@ private fun SosNumberRow(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onCall(number) }
-            .padding(vertical = 10.dp),
+            .padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(modifier = Modifier.weight(1f)) {
@@ -941,10 +906,10 @@ private fun TravelSubTabRow(
     onSelectArea: (TravelArea) -> Unit
 ) {
     val items = listOf(
-        Triple(TravelArea.MOBILITY, "🚌 Bus & Mobil", "travel-area-mobility"),
-        Triple(TravelArea.TODAY, "🏨 Reise & Meer", "travel-area-today"),
-        Triple(TravelArea.EXPLORE, "🗣️ Ausflüge & Sprache", "travel-area-explore"),
-        Triple(TravelArea.HELP, "🏥 SOS & Hilfe", "travel-area-help")
+        Triple(TravelArea.HELP, "SOS & Hilfe", "travel-area-help"),
+        Triple(TravelArea.MOBILITY, "Bus & Mobil", "travel-area-mobility"),
+        Triple(TravelArea.TODAY, "Reise & Meer", "travel-area-today"),
+        Triple(TravelArea.EXPLORE, "Ausflüge & Sprache", "travel-area-explore")
     )
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -953,24 +918,7 @@ private fun TravelSubTabRow(
     ) {
         items(items) { (area, label, tag) ->
             val isSelected = selectedArea == area
-            FilterChip(
-                selected = isSelected,
-                onClick = { onSelectArea(area) },
-                label = { Text(label, fontSize = 11.sp, fontWeight = FontWeight.Bold, fontFamily = KosSans) },
-                colors = FilterChipDefaults.filterChipColors(
-                    containerColor = KosNav,
-                    labelColor = KosInk.copy(alpha = 0.8f),
-                    selectedContainerColor = HomeAccent,
-                    selectedLabelColor = KosBg
-                ),
-                border = FilterChipDefaults.filterChipBorder(
-                    enabled = true,
-                    selected = isSelected,
-                    borderColor = HomeCardBorder,
-                    selectedBorderColor = HomeAccent
-                ),
-                modifier = Modifier.testTag(tag)
-            )
+            PostcardChip(label, isSelected, { onSelectArea(area) }, Modifier.testTag(tag))
         }
     }
 }

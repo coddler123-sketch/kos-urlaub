@@ -167,7 +167,7 @@ fun CompassScreen(
             }
             if (!isOverview) {
                 item(key = "count", span = full) {
-                    Text("${visible.size} Treffer", color = KosInk.copy(alpha = 0.75f), fontSize = 12.sp, fontFamily = KosSans)
+                    Text("${visible.size} Treffer", color = KosInk.copy(alpha = 0.75f), fontSize = PostcardMetrics.BODY_SP.sp, fontFamily = KosSans)
                 }
             }
             items(visible, key = { it.id }) { tip ->
@@ -187,7 +187,7 @@ fun CompassScreen(
                 item(key = "disclaimer", span = full) {
                     Text(
                         "Persönliche Erfahrungen können sich ändern. Preise, Öffnungszeiten und Bedingungen bitte vor Ort prüfen.",
-                        color = KosInk.copy(alpha = 0.7f), fontSize = 11.sp, lineHeight = 15.sp,
+                        color = KosInk.copy(alpha = 0.7f), fontSize = PostcardMetrics.LABEL_SP.sp, lineHeight = 15.sp,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                 }
@@ -247,7 +247,7 @@ fun CompassScreen(
                     Text(
                         text = "${tip.category.uppercase()} · TIPP",
                         color = KosInk,
-                        fontSize = 12.sp,
+                        fontSize = PostcardMetrics.BODY_SP.sp,
                         fontFamily = KosSans
                     )
                     TextButton(

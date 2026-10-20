@@ -108,7 +108,7 @@ fun GallerySheet(
                 Text(
                     Images.displayNameOf(previewName),
                     color = Color.White,
-                    fontSize = 12.sp,
+                    fontSize = PostcardMetrics.BODY_SP.sp,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = KosSans,
                     modifier = Modifier.align(Alignment.BottomStart).padding(12.dp)
@@ -139,10 +139,10 @@ fun GallerySheet(
                     .padding(horizontal = 14.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("AUTOMATIK", color = HomeAccent, fontSize = 9.sp, fontWeight = FontWeight.Bold, modifier = Modifier.width(72.dp))
+                Text("AUTOMATIK", color = HomeAccent, fontSize = PostcardMetrics.LABEL_SP.sp, fontWeight = FontWeight.Bold, modifier = Modifier.width(72.dp))
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Täglicher Bildwechsel", color = KosInk, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, fontFamily = KosSans)
-                    Text("Jeden Tag eine neue Kos-Impression", color = KosInk.copy(alpha = 0.6f), fontSize = 10.sp, fontFamily = KosSans)
+                    Text("Täglicher Bildwechsel", color = KosInk, fontSize = PostcardMetrics.BODY_SP.sp, fontWeight = FontWeight.SemiBold, fontFamily = KosSans)
+                    Text("Jeden Tag eine neue Kos-Impression", color = KosInk.copy(alpha = 0.6f), fontSize = PostcardMetrics.LABEL_SP.sp, fontFamily = KosSans)
                 }
                 if (isAuto) Text("✓", color = HomeAccent, fontWeight = FontWeight.Bold)
             }
@@ -215,7 +215,7 @@ private fun GalleryImage(
         Text(
             displayName,
             color = Color.White,
-            fontSize = 11.sp,
+            fontSize = PostcardMetrics.LABEL_SP.sp,
             fontWeight = FontWeight.SemiBold,
             fontFamily = KosSans,
             maxLines = 2,
@@ -225,7 +225,7 @@ private fun GalleryImage(
             Text(
                 if (selected) "✓" else "AUTOMATIK",
                 color = KosPanel,
-                fontSize = 9.sp,
+                fontSize = PostcardMetrics.LABEL_SP.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.align(Alignment.TopEnd).padding(8.dp).background(HomeAccent, RoundedCornerShape(8.dp)).padding(horizontal = 6.dp, vertical = 3.dp)
             )

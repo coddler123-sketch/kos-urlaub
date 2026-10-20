@@ -79,7 +79,7 @@ private fun PassStop(code: String, city: String, time: String, align: Alignment.
 internal fun TodayBefore(
     s: HomeState,
     heroPhoto: ImageBitmap?,
-    onOpenIdeas: () -> Unit
+    onOpenTips: () -> Unit
 ) {
     val context = LocalContext.current
     val flight = TripData.outbound
@@ -125,7 +125,7 @@ internal fun TodayBefore(
         }
         BoardingPass(flight)
         if (saved.isNotEmpty()) {
-            PaperPanel(modifier = Modifier.clickable(onClick = onOpenIdeas)) {
+            PaperPanel(modifier = Modifier.clickable(onClick = onOpenTips)) {
                 PostcardLabel("${stringResource(R.string.today_before_saved)} · ${saved.size}")
                 saved.take(4).forEach { Text("• ${it.title}", style = PostcardType.Body, color = KosInk) }
             }

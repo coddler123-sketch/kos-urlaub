@@ -182,7 +182,7 @@ private fun KosApp(
             MainDestination.TODAY -> KosHome(
                 padding = padding,
                 selectedDay = TripDays.all.firstOrNull { it.index == selectedDay.intValue },
-                onOpenIdeas = { discoverTab.value = "TIPS"; destinationName.value = MainDestination.DISCOVER.name },
+                onOpenTips = { discoverTab.value = "TIPS"; destinationName.value = MainDestination.DISCOVER.name },
                 themeMode = themeMode,
                 onThemeMode = onThemeMode,
                 scrollToTopRequest = scrollToTopRequest.intValue,
@@ -302,7 +302,7 @@ private fun DiscoverScreen(
 private fun KosHome(
     padding: PaddingValues,
     selectedDay: TripDay?,
-    onOpenIdeas: () -> Unit,
+    onOpenTips: () -> Unit,
     themeMode: ThemeMode,
     onThemeMode: (ThemeMode) -> Unit,
     scrollToTopRequest: Int,
@@ -394,7 +394,7 @@ private fun KosHome(
             )
             Spacer(Modifier.height(18.dp))
             if (selectedDay != null) {
-                DayPage(day = selectedDay, onOpenIdeas = onOpenIdeas)
+                DayPage(day = selectedDay, onOpenTips = onOpenTips)
             } else {
             val phase = TripPhase.of(AppClock.nowMillis())
             val privatePath = remember(PrivateImages.version.intValue, s.backgroundRes) {
@@ -409,7 +409,7 @@ private fun KosHome(
             }
             when (phase) {
                 TripPhase.BEFORE -> {
-                    TodayBefore(s, heroPhoto, onOpenIdeas)
+                    TodayBefore(s, heroPhoto, onOpenTips)
                     Spacer(Modifier.height(16.dp))
                     FreeChecklistCard()
                     Spacer(Modifier.height(16.dp))
@@ -419,7 +419,7 @@ private fun KosHome(
                     }
                 }
                 TripPhase.ON_KOS -> {
-                    TodayOnKos(s, heroPhoto, onOpenIdeas)
+                    TodayOnKos(s, heroPhoto, onOpenTips)
                     Spacer(Modifier.height(16.dp))
                     HomeQuickActions(
                         onOpenTigaki = { onOpenTravel("MOBILITY") },
