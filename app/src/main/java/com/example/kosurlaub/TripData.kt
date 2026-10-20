@@ -71,7 +71,7 @@ object TripData {
     const val HOTEL_CHECK_OUT = "bis 11:00 Uhr"
 
     /** Nur auf top-hotels-gr.com gefunden, nicht gegengeprüft (Vorwahl 22420 passt zu Kos). */
-    const val HOTEL_PHONE_UNCONFIRMED = "+30 22420 69411"
+    const val HOTEL_PHONE = "+30 22420 69411"
 
     private fun millis(zone: String, y: Int, m: Int, d: Int, h: Int, min: Int): Long =
         Calendar.getInstance(TimeZone.getTimeZone(zone)).apply {

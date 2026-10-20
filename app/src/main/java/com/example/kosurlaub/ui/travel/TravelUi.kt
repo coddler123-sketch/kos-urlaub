@@ -863,7 +863,7 @@ private fun KosEmergencyCard(onCall: (String) -> Unit, onOpenMap: (String) -> Un
         SosNumberRow("Rettungsdienst", "166", onCall)
         SosNumberRow("Feuerwehr", "199", onCall)
         SosNumberRow(
-            "Hotel-Rezeption", TripData.HOTEL_PHONE_UNCONFIRMED, onCall,
+            "Hotel-Rezeption", TripData.HOTEL_PHONE, onCall,
             note = "Nummer nicht bestätigt",
             onOpenMap = { onOpenMap("${TripData.HOTEL_LAT},${TripData.HOTEL_LON}(${TripData.HOTEL_NAME})") }
         )
