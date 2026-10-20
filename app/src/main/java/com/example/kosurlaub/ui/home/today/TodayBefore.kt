@@ -30,50 +30,6 @@ import com.example.kosurlaub.ui.compass.compassTips
 import com.example.kosurlaub.ui.home.HomeState
 import com.example.kosurlaub.ui.theme.*
 
-/** Flug und Hotel als Bordkarte: Codes und Zeiten oben, Abreißkante mit Kerben, Hotel im Abschnitt darunter. */
-@Composable
-private fun BoardingPass(f: TripData.Flight) {
-    val notch = KosBg
-    val dash = HomeCardBorder
-    Column(
-        Modifier.fillMaxWidth().clip(PostcardShape.Panel).background(HomeCardColor)
-            .border(1.dp, HomeCardBorder, PostcardShape.Panel)
-    ) {
-        Column(Modifier.padding(PostcardSpace.Panel), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                PostcardLabel(stringResource(R.string.today_before_flight_hotel))
-                PostcardLabel("${f.airline} ${f.number}")
-            }
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                PassStop(f.fromAirport, f.fromCity, "%02d:%02d".format(f.departHour, f.departMinute), Alignment.Start)
-                Text("✈", Modifier.weight(1f), style = PostcardType.Heading, color = KosStamp, textAlign = TextAlign.Center)
-                PassStop(f.toAirport, f.toCity, "%02d:%02d".format(f.arriveHour, f.arriveMinute), Alignment.End)
-            }
-        }
-        Canvas(Modifier.fillMaxWidth().height(14.dp)) {
-            drawLine(
-                dash, Offset(14.dp.toPx(), size.height / 2), Offset(size.width - 14.dp.toPx(), size.height / 2),
-                strokeWidth = 1.5.dp.toPx(), pathEffect = PathEffect.dashPathEffect(floatArrayOf(6.dp.toPx(), 5.dp.toPx()))
-            )
-            drawCircle(notch, 7.dp.toPx(), Offset(0f, size.height / 2))
-            drawCircle(notch, 7.dp.toPx(), Offset(size.width, size.height / 2))
-        }
-        Column(Modifier.padding(PostcardSpace.Panel), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            PostcardLabel("${f.weekday} %02d.%02d. · ${stringResource(R.string.today_before_hotel)}".format(f.day, f.month))
-            Text("${TripData.HOTEL_NAME} · ${TripData.HOTEL_PLACE}", style = PostcardType.Body, color = KosInk)
-        }
-    }
-}
-
-@Composable
-private fun PassStop(code: String, city: String, time: String, align: Alignment.Horizontal) {
-    Column(horizontalAlignment = align) {
-        Text(code, style = PostcardType.Numeral.copy(fontSize = 36.sp), color = KosInk)
-        PostcardLabel(city)
-        Text(time, style = PostcardType.Heading, color = KosInk)
-    }
-}
-
 /** Heute vor dem Abflug: Klappzahlen-Countdown, Flug und Hotel, gemerkte Tipps, aktuelles Kos-Wetter. */
 @Composable
 internal fun TodayBefore(
@@ -129,7 +85,12 @@ internal fun TodayBefore(
                 )
             }
         }
-        BoardingPass(flight)
+        BoardingPass(
+            flight,
+            stringResource(R.string.today_before_flight_hotel),
+            "${flight.weekday} %02d.%02d. · ${stringResource(R.string.today_before_hotel)}".format(flight.day, flight.month),
+            "${TripData.HOTEL_NAME} · ${TripData.HOTEL_PLACE}"
+        )
         if (saved.isNotEmpty()) {
             PaperPanel(modifier = Modifier.clickable(onClick = onOpenTips)) {
                 PostcardLabel("${stringResource(R.string.today_before_saved)} · ${saved.size}")

@@ -2,6 +2,9 @@ package com.example.kosurlaub
 
 import com.example.kosurlaub.ui.home.TripDays
 import com.example.kosurlaub.ui.home.TripPhase
+import com.example.kosurlaub.ui.home.isReturnPassVisible
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test

@@ -345,6 +345,8 @@
     <string name="today_before_soon_label">Morgen geht\'s los</string>
     <string name="today_before_soon_body">Online-Check-in, Ausweise und Gepäck prüfen: %1$d kg aufgegeben, %2$d kg Handgepäck.</string>
     <string name="today_before_hotel">Hotel</string>
+    <string name="today_return_flight">Rückflug</string>
+    <string name="today_return_checkout">Check-out</string>
     <string name="today_open_ideas">Guide</string>
     <string name="today_greeting">Kalimera!</string>
     <string name="today_air">Luft</string>
