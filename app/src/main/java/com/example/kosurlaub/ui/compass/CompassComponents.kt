@@ -32,8 +32,6 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -107,7 +105,7 @@ internal fun CompassSearchField(
     query: String,
     onQueryChange: (String) -> Unit
 ) {
-    OutlinedTextField(
+    PostcardTextField(
         value = query,
         onValueChange = onQueryChange,
         modifier = Modifier
@@ -129,19 +127,7 @@ internal fun CompassSearchField(
                     Text("×", color = KosInk, fontSize = 22.sp)
                 }
             }
-        },
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedTextColor = KosInk,
-            unfocusedTextColor = KosInk,
-            focusedBorderColor = KosInk,
-            unfocusedBorderColor = HomeCardBorder,
-            focusedLabelColor = KosInk,
-            unfocusedLabelColor = KosInk.copy(alpha = 0.75f),
-            focusedPlaceholderColor = KosInk.copy(alpha = 0.5f),
-            unfocusedPlaceholderColor = KosInk.copy(alpha = 0.5f),
-            cursorColor = KosInk
-        ),
-        shape = HomeCardShape
+        }
     )
 }
 
@@ -225,7 +211,7 @@ internal fun CompassTipCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(if (expanded) 184.dp else 136.dp)
-                    .clip(RoundedCornerShape(14.dp))
+                    .clip(PostcardShape.Photo)
                     .testTag("compass-tip-image-${tip.id}-${if (expanded) "detail" else "card"}")
             )
             Spacer(Modifier.height(12.dp))
@@ -316,8 +302,8 @@ internal fun CompassTipCard(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(accent.copy(alpha = 0.10f), RoundedCornerShape(14.dp))
-                        .border(1.dp, accent.copy(alpha = 0.30f), RoundedCornerShape(14.dp))
+                        .background(accent.copy(alpha = 0.10f), PostcardShape.Photo)
+                        .border(1.dp, accent.copy(alpha = 0.30f), PostcardShape.Photo)
                         .padding(12.dp)
                 ) {
                     Text(
@@ -342,8 +328,8 @@ internal fun CompassTipCard(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(accent.copy(alpha = 0.10f), RoundedCornerShape(14.dp))
-                        .border(1.dp, accent.copy(alpha = 0.30f), RoundedCornerShape(14.dp))
+                        .background(accent.copy(alpha = 0.10f), PostcardShape.Photo)
+                        .border(1.dp, accent.copy(alpha = 0.30f), PostcardShape.Photo)
                         .padding(12.dp)
                         .testTag("compass-hotel-details-${tip.id}")
                 ) {
@@ -411,7 +397,7 @@ internal fun CompassTipCard(
                 }
                 Spacer(Modifier.height(8.dp))
             }
-            OutlinedTextField(
+            PostcardTextField(
                 value = personalNote,
                 onValueChange = { personalNote = it },
                 label = { Text("Eigene Notiz") },
@@ -419,19 +405,7 @@ internal fun CompassTipCard(
                 minLines = 2,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .testTag("compass-note-${tip.id}"),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = KosInk,
-                    unfocusedTextColor = KosInk,
-                    focusedBorderColor = accent,
-                    unfocusedBorderColor = HomeCardBorder,
-                    focusedLabelColor = accent,
-                    unfocusedLabelColor = KosInk.copy(alpha = 0.75f),
-                    focusedPlaceholderColor = KosInk.copy(alpha = 0.5f),
-                    unfocusedPlaceholderColor = KosInk.copy(alpha = 0.5f),
-                    cursorColor = accent
-                ),
-                shape = RoundedCornerShape(14.dp)
+                    .testTag("compass-note-${tip.id}")
             )
 
             Spacer(Modifier.height(10.dp))

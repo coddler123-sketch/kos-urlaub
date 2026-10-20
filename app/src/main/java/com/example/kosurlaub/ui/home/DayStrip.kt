@@ -1,4 +1,5 @@
 package com.example.kosurlaub.ui.home
+import com.example.kosurlaub.ui.theme.PostcardShape
 import com.example.kosurlaub.ui.theme.PostcardMetrics
 
 import androidx.compose.foundation.BorderStroke
@@ -14,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -60,10 +60,10 @@ fun DayStrip(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .width(44.dp)
-                    .background(if (isSelected) HomeAccent else KosInk.copy(alpha = 0.07f), RoundedCornerShape(10.dp))
+                    .background(if (isSelected) HomeAccent else KosInk.copy(alpha = 0.07f), PostcardShape.Tile)
                     .border(
                         if (isToday && !isSelected) BorderStroke(1.5.dp, HomeAccent) else BorderStroke(0.dp, Color.Transparent),
-                        RoundedCornerShape(10.dp)
+                        PostcardShape.Tile
                     )
                     .selectable(selected = isSelected, role = Role.Tab, onClick = { onSelect(day) })
                     .padding(vertical = 6.dp)

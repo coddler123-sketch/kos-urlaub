@@ -18,7 +18,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -199,4 +204,47 @@ fun FlipDigits(value: Long, modifier: Modifier = Modifier) {
             }
         }
     }
+}
+
+/** Eingabefeld im Postkarten-Stil: Tintenrand, runde Ecken, Papierfläche. */
+@Composable
+fun PostcardTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    label: (@Composable () -> Unit)? = null,
+    placeholder: (@Composable () -> Unit)? = null,
+    trailingIcon: (@Composable () -> Unit)? = null,
+    singleLine: Boolean = false,
+    minLines: Int = 1,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier,
+        textStyle = PostcardType.Body.copy(color = KosInk),
+        label = label,
+        placeholder = placeholder,
+        trailingIcon = trailingIcon,
+        singleLine = singleLine,
+        minLines = minLines,
+        visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        shape = PostcardShape.Photo,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = KosInk,
+            unfocusedTextColor = KosInk,
+            focusedBorderColor = KosInk,
+            unfocusedBorderColor = HomeCardBorder,
+            focusedLabelColor = KosInk,
+            unfocusedLabelColor = KosInk.copy(alpha = 0.75f),
+            focusedPlaceholderColor = KosInk.copy(alpha = 0.5f),
+            unfocusedPlaceholderColor = KosInk.copy(alpha = 0.5f),
+            cursorColor = KosInk
+        )
+    )
 }

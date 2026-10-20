@@ -1,4 +1,5 @@
 package com.example.kosurlaub.ui.home
+import com.example.kosurlaub.ui.theme.PostcardTextField
 import com.example.kosurlaub.ui.theme.PostcardMetrics
 
 import com.example.kosurlaub.ui.theme.PostcardLabel
@@ -18,7 +19,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
@@ -172,7 +172,7 @@ fun FreeChecklistCard() {
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.padding(top = 8.dp)
         ) {
-            OutlinedTextField(
+            PostcardTextField(
                 value = draft,
                 onValueChange = { draft = it },
                 placeholder = { Text("Neuer Punkt", fontFamily = KosSans, fontSize = PostcardMetrics.BODY_SP.sp) },

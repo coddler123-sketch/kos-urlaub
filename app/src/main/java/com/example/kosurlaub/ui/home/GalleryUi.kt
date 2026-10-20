@@ -97,7 +97,7 @@ fun GallerySheet(
             )
 
             Box(
-                modifier = Modifier.fillMaxWidth().height(120.dp).clip(RoundedCornerShape(16.dp)).background(Color.Black)
+                modifier = Modifier.fillMaxWidth().height(120.dp).clip(PostcardShape.Panel).background(Color.Black)
             ) {
                 Image(
                     painter = painterResource(Images.resourceOf(previewName)),
@@ -119,7 +119,7 @@ fun GallerySheet(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(12.dp))
+                    .clip(PostcardShape.Tile)
                     .background(if (isAuto) KosInk.copy(alpha = 0.2f) else KosInk.copy(alpha = 0.07f))
                     .testTag("gallery-auto-image")
                     .selectable(
@@ -194,7 +194,7 @@ private fun GalleryImage(
         modifier = Modifier
             .fillMaxWidth()
             .height(120.dp)
-            .clip(RoundedCornerShape(12.dp))
+            .clip(PostcardShape.Tile)
             .background(KosInk.copy(alpha = 0.07f))
             .testTag("gallery-image-$imageName")
             .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
@@ -227,7 +227,7 @@ private fun GalleryImage(
                 color = KosPanel,
                 fontSize = PostcardMetrics.LABEL_SP.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.TopEnd).padding(8.dp).background(HomeAccent, RoundedCornerShape(8.dp)).padding(horizontal = 6.dp, vertical = 3.dp)
+                modifier = Modifier.align(Alignment.TopEnd).padding(8.dp).background(HomeAccent, PostcardShape.Tile).padding(horizontal = 6.dp, vertical = 3.dp)
             )
         }
     }

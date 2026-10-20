@@ -1,4 +1,6 @@
 package com.example.kosurlaub.ui.home
+import com.example.kosurlaub.ui.theme.PostcardShape
+import com.example.kosurlaub.ui.theme.PostcardTextField
 import com.example.kosurlaub.ui.theme.PostcardMetrics
 
 import com.example.kosurlaub.ui.theme.PostcardLabel
@@ -20,8 +22,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -193,7 +193,7 @@ private fun YourDayCard(day: TripDay) {
             }
         }
         Spacer(Modifier.height(6.dp))
-        OutlinedTextField(
+        PostcardTextField(
             value = draft, onValueChange = { draft = it },
             placeholder = { Text("Notiz", fontFamily = KosSans, fontSize = PostcardMetrics.BODY_SP.sp) },
             modifier = Modifier.fillMaxWidth().testTag("day-note-input")
@@ -235,7 +235,7 @@ internal fun DayPhoto(file: File) {
     if (bitmap != null) {
         Image(
             bitmap = bitmap.asImageBitmap(), contentDescription = "Euer Foto", contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxWidth().height(160.dp).clip(RoundedCornerShape(10.dp))
+            modifier = Modifier.fillMaxWidth().height(160.dp).clip(PostcardShape.Tile)
         )
     } else {
         Line("Foto nicht mehr vorhanden", alpha = 0.6f, size = 12)

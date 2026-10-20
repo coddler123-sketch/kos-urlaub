@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -288,7 +287,7 @@ private fun PrivateImagesSection() {
         actionTag = "settings-private-images"
     )
     if (!enabled) {
-        OutlinedTextField(
+        PostcardTextField(
             value = code,
             onValueChange = { code = it },
             singleLine = true,

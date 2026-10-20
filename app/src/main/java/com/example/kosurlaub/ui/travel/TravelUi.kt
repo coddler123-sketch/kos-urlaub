@@ -814,9 +814,9 @@ private fun PhotoSpotsCard(onOpenMap: (String) -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 5.dp)
-                    .clip(RoundedCornerShape(8.dp))
+                    .clip(PostcardShape.Tile)
                     .background(Color(0x20000000))
-                    .border(1.dp, KosInk.copy(alpha = 0.2f), RoundedCornerShape(8.dp))
+                    .border(1.dp, KosInk.copy(alpha = 0.2f), PostcardShape.Tile)
                     .padding(12.dp)
             ) {
                 Row(

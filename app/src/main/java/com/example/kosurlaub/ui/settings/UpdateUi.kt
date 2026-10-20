@@ -1,4 +1,5 @@
 package com.example.kosurlaub.ui.settings
+import com.example.kosurlaub.ui.theme.PostcardShape
 import com.example.kosurlaub.ui.theme.PostcardMetrics
 
 import androidx.compose.foundation.background
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -40,7 +40,7 @@ fun UpdateBanner(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
+            .clip(PostcardShape.Tile)
             .background(HomeAccent.copy(alpha = 0.22f))
             .clickable(enabled = !isDownloading, onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 12.dp)

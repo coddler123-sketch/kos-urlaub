@@ -49,5 +49,6 @@ object PostcardSpace {
 object PostcardShape {
     val Panel = RoundedCornerShape(16.dp)
     val Photo = RoundedCornerShape(14.dp)
+    val Tile = RoundedCornerShape(10.dp)
     val Chip = RoundedCornerShape(4.dp)
 }
