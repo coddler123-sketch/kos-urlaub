@@ -7,8 +7,8 @@ Entwurf: [docs/superpowers/specs/2026-10-18-app-konzept-design.md](superpowers/s
 Reihenfolge, jedes Teilprojekt einzeln lauffähig und releasebar:
 
 - [x] **1. Postkarten-Designsystem** – Farben, Schriften (Serife Titel, Sans Zahlen), Foto-Karte, Stempel-Chip, Papier-Panel, Perforationskante; hell und dunkel. Ändert noch keine Funktion. Vorgabe aus dem Mockup-Review: keine Schrift unter 11sp, Innenabstand in Karten und Chips mindestens 8dp (Mockup `docs/mockups/app-konzept.html` nutzt noch 9–10px).
-- [x] **2. Navigation und Phasen-Startseite** – Tabs Heute · Entdecken · Tagebuch; Startseite je nach `TripPhase` (vorher / auf Kos / danach).
-- [ ] **3. Entdecken** – Kompass und Reise zu einer Seite mit Kategorien; gemerkte Tipps einem Tag zuordnen (Grundlage für den Tagesplan).
+- [x] **2. Navigation und Phasen-Startseite** – Tabs Heute · Guide · Tagebuch; Startseite je nach `TripPhase` (vorher / auf Kos / danach).
+- [ ] **3. Guide** – Kompass und Reise zu einer Seite mit Kategorien; gemerkte Tipps einem Tag zuordnen (Grundlage für den Tagesplan).
 - [ ] **4. Tagebuch und Rückblick** – Tagebuch im Postkarten-Look, Rückblick am Ende der Reise.
 
 ## Offen aus den Widgets
@@ -23,7 +23,7 @@ Reihenfolge, jedes Teilprojekt einzeln lauffähig und releasebar:
 - [ ] Meer-Temperatur zeigt "–", solange keine Meerdaten geladen sind (auf Heute laden anstoßen)
 - [ ] Instrumentierte Tests komplett auf dem Emulator laufen lassen (nur der Merken-Test wurde einzeln geprüft)
 
-## Befund Entdecken-Filter (2026-10-19, Teil von Teilprojekt 3)
+## Befund Guide-Filter (2026-10-19, Teil von Teilprojekt 3)
 
 Erledigt: Quick-Filter gruppiert im Filter-Sheet (Ort, Anfahrt, Dauer, Stimmung), Tipps als Foto-Raster, Umschalter Tipps | Reise in Postkarten-Farben. Offen bleibt die Reise-Seite in Teilprojekt 3.
 

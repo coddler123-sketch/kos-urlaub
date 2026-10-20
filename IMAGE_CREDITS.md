@@ -62,7 +62,7 @@ Urheber und Lizenz wie in `TravelContent.kt` (`imageCredit`, `imageUrl`).
 
 - Verwendete Bilder ohne bekannte Quelle: keine.
 
-## Tipp-Fotos (Entdecken, Wikimedia Commons)
+## Tipp-Fotos (Guide, Wikimedia Commons)
 
 | Datei | Quelle | Urheber | Lizenz |
 |---|---|---|---|

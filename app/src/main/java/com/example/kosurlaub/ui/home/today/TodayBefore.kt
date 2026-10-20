@@ -117,9 +117,6 @@ internal fun TodayBefore(
                     Text(stringResource(R.string.today_before_hms_label), style = PostcardType.Label, color = Color.White.copy(alpha = 0.7f))
                 }
             }
-            s.weather?.let {
-                StampBadge(top = it.temperatureLabel, bottom = "KOS", modifier = Modifier.align(Alignment.TopEnd).padding(PostcardSpace.Panel))
-            }
             PerforationEdge(modifier = Modifier.align(Alignment.BottomCenter))
         }
         Text(s.phrase, style = PostcardType.Quote, color = KosInk)

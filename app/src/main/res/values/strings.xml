@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Kos Urlaub</string>
     <string name="main_nav_today">Heute</string>
-    <string name="main_nav_discover">Entdecken</string>
+    <string name="main_nav_discover">Guide</string>
     <string name="main_nav_diary">Tagebuch</string>
     <string name="discover_tab_tips">Tipps</string>
     <string name="discover_tab_travel">Reise</string>
@@ -22,7 +22,7 @@
     <string name="travel_area_today_description">Wetter, Meer und wichtige Hinweise für den Tag.</string>
     <string name="travel_area_mobility">Busse &amp; Mobilität</string>
     <string name="travel_area_mobility_description">Busfahrpläne und Verbindungen ab Tigaki.</string>
-    <string name="travel_area_explore">Entdecken</string>
+    <string name="travel_area_explore">Ausflüge &amp; Sprache</string>
     <string name="travel_area_explore_description">Veranstaltungen und Ideen für Ausflüge.</string>
     <string name="travel_area_help">Hilfe &amp; Vorbereitung</string>
     <string name="travel_area_help_description">Notfallkontakte, Orientierung und eure Urlaubsliste.</string>
@@ -345,14 +345,14 @@
     <string name="today_before_soon_label">Morgen geht\'s los</string>
     <string name="today_before_soon_body">Online-Check-in, Ausweise und Gepäck prüfen: %1$d kg aufgegeben, %2$d kg Handgepäck.</string>
     <string name="today_before_hotel">Hotel</string>
-    <string name="today_open_ideas">Entdecken</string>
+    <string name="today_open_ideas">Guide</string>
     <string name="today_greeting">Kalimera!</string>
     <string name="today_air">Luft</string>
     <string name="today_sea">Meer</string>
     <string name="today_wind">Wind</string>
     <string name="today_sunset">Sonne ↓</string>
     <string name="today_plan">Heute vor</string>
-    <string name="today_plan_empty">Noch nichts gemerkt. Tipps findest du bei Entdecken.</string>
+    <string name="today_plan_empty">Noch nichts gemerkt. Tipps findest du im Guide.</string>
     <string name="today_next_bus">Nächster Bus</string>
     <string name="today_bus_none">Heute keine Abfahrt mehr</string>
     <string name="today_bus_source">Referenzfahrplan, Stand %1$s</string>

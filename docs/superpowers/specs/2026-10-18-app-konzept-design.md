@@ -13,7 +13,7 @@ Eine App, deren Startseite sich je nach Phase (vorher, auf Kos, danach) ändert,
 ## Entscheidungen
 
 - Konzept 1 (Phasen-App) mit der Optik aus Konzept 2 (Postkarte), durchgehend in der ganzen App.
-- Tabs: **Heute · Entdecken · Tagebuch**.
+- Tabs: **Heute · Guide · Tagebuch**.
 - „Heute“ auf Kos zeigt von oben nach unten: Wetter und Meer, Tagesplan, nächster Bus, Tipp des Tages. SOS bleibt als fester Knopf erreichbar.
 - Verworfen: Reise als Zeitleiste (Konzept 3), wegen neuem Datenmodell und hohem Aufwand.
 
@@ -26,7 +26,7 @@ Jedes Teilprojekt wird einzeln gebaut, getestet und released.
    - Vorher: Abflugtafel-Countdown als Held, Flug und Hotel, gemerkte Tipps, Wetter-Trend.
    - Auf Kos: siehe Entscheidungen.
    - Danach: Rückblick mit Zahlen und Fotos.
-3. **Entdecken.** Kompass (Tipps, gemerkt/besucht) und Reise (Hotel, Bus, Sprachführer, Fotospots, Notfall) werden eine Seite mit Kategorien. Gemerkte Tipps lassen sich einem Tag zuordnen, daraus entsteht der Tagesplan.
+3. **Guide.** Kompass (Tipps, gemerkt/besucht) und Reise (Hotel, Bus, Sprachführer, Fotospots, Notfall) werden eine Seite mit Kategorien. Gemerkte Tipps lassen sich einem Tag zuordnen, daraus entsteht der Tagesplan.
 4. **Tagebuch und Rückblick.** Tagebuch im Postkarten-Look, Rückblick am Ende der Reise.
 
 ## Offene Fragen für den Start (Teilprojekt 2: entschieden, siehe Plan 2026-10-19-navigation-and-phase-home.md)
