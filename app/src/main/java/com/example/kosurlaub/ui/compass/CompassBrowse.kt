@@ -154,12 +154,12 @@ internal fun CompassTipPhotoCard(
             .clickable(onClick = onOpen)
             .testTag("compass-tip-${tip.id}")
     ) {
-        Image(
-            painter = tipPainter(tip, editorial.imageRes),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize().testTag("compass-tip-image-${tip.id}-card")
-        )
+        val photo = rememberTipImage(tip, editorial.imageRes, CARD_IMAGE_WIDTH_PX)
+        Box(Modifier.fillMaxSize().background(KosPanelHigh).testTag("compass-tip-image-${tip.id}-card")) {
+            photo?.let {
+                Image(it, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+            }
+        }
         Box(
             modifier = Modifier.fillMaxSize()
                 .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(alpha = 0.72f))))

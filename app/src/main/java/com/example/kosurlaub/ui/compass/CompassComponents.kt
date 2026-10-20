@@ -1,4 +1,8 @@
 package com.example.kosurlaub.ui.compass
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -40,7 +44,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,7 +55,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -186,15 +188,15 @@ internal fun CompassTipCard(
             .border(1.dp, HomeCardBorder, PostcardShape.Panel)
             .testTag("compass-tip-${tip.id}")
     ) {
-        Image(
-            painter = tipPainter(tip, editorial.imageRes),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(220.dp)
+        val photo = rememberTipImage(tip, editorial.imageRes, DETAIL_IMAGE_WIDTH_PX)
+        Box(
+            Modifier.fillMaxWidth().height(220.dp).background(KosPanelHigh)
                 .testTag("compass-tip-image-${tip.id}-detail")
-        )
+        ) {
+            photo?.let {
+                Image(it, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+            }
+        }
         Column(modifier = Modifier.padding(PostcardSpace.Panel), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             StampChip(tip.kind.label)
             Text(tip.title, style = PostcardType.Title, color = KosInk)
@@ -312,19 +314,39 @@ internal fun CompassFactRow(label: String, value: String) {
     }
 }
 
+/** Zielbreiten in Pixeln: Raster-Kachel (halbe Bildschirmbreite) und Detailansicht (volle Breite). */
+internal const val CARD_IMAGE_WIDTH_PX = 640
+internal const val DETAIL_IMAGE_WIDTH_PX = 1200
+
+private val tipImageCache = object : android.util.LruCache<String, ImageBitmap>(24 * 1024 * 1024) {
+    override fun sizeOf(key: String, value: ImageBitmap) = value.width * value.height * 4
+}
+
+private fun decodeScaledResource(context: android.content.Context, @DrawableRes res: Int, targetWidth: Int): android.graphics.Bitmap? {
+    val bounds = android.graphics.BitmapFactory.Options().apply { inJustDecodeBounds = true }
+    android.graphics.BitmapFactory.decodeResource(context.resources, res, bounds)
+    val options = android.graphics.BitmapFactory.Options().apply {
+        inSampleSize = (bounds.outWidth / targetWidth).coerceAtLeast(1)
+    }
+    return android.graphics.BitmapFactory.decodeResource(context.resources, res, options)
+}
+
+/**
+ * Tipp-Bild im Hintergrund und nur so groß wie nötig laden (privates Foto, sonst freies Bild),
+ * damit das Scrollen im Raster nicht an riesigen Bitmaps hakt. Null, solange es lädt.
+ */
 @Composable
-internal fun categoryColor(category: String): Color = when (category) {
-    "Tigaki" -> Color(0xFF64D8CB)
-    "Essen" -> Color(0xFFE8B96A)
-    "Strände" -> Color(0xFF70B8E8)
-    "Ausflüge" -> Color(0xFFE58B6B)
-    "Mobilität" -> Color(0xFF8DD7E3)
-    "Unterkünfte" -> Color(0xFF93C98B)
-    "Supermärkte" -> Color(0xFF79C98D)
-    "Mode & Accessoires" -> Color(0xFFE0A36C)
-    "Souvenirs" -> Color(0xFFD6A4E8)
-    "Regionale Produkte" -> Color(0xFFD9A86C)
-    else -> HomeAccent
+internal fun rememberTipImage(tip: CompassTip, @DrawableRes fallback: Int, targetWidthPx: Int): ImageBitmap? {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val version = PrivateImages.version.intValue
+    return androidx.compose.runtime.produceState<ImageBitmap?>(null, tip.id, fallback, targetWidthPx, version) {
+        val key = "${tip.id}|$fallback|$targetWidthPx|$version"
+        val cached = tipImageCache.get(key)
+        value = cached ?: kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            (PrivateImages.tipBitmap(context, tip.id, targetWidthPx)
+                ?: decodeScaledResource(context, fallback, targetWidthPx))?.asImageBitmap()
+        }?.also { tipImageCache.put(key, it) }
+    }.value
 }
 
 /** Privates Foto zum Tipp, falls geladen, sonst das freie Bild aus den Ressourcen. */

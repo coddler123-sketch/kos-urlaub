@@ -73,8 +73,8 @@ object PrivateImages {
     }
 
     /** Nur Tipp-Bilder, die schon heruntergeladen sind. */
-    fun tipBitmap(context: Context, tipId: String): Bitmap? =
-        TIPS[tipId]?.let { bitmap(context, it, 1200) }
+    fun tipBitmap(context: Context, tipId: String, maxWidth: Int = 1200): Bitmap? =
+        TIPS[tipId]?.let { bitmap(context, it, maxWidth) }
 
     /**
      * Wandelt die Eingabe in das GitHub-Token: kurzer Code (z. B. KOS7-H3Q9-XPM2) wird gegen die
