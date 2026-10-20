@@ -9,6 +9,7 @@ import com.example.kosurlaub.ui.travel.*
 import com.example.kosurlaub.ui.weather.*
 import com.example.kosurlaub.ui.settings.*
 import com.example.kosurlaub.ui.theme.*
+import androidx.compose.foundation.border
 import com.example.kosurlaub.widget.*
 
 import android.content.Intent
@@ -369,7 +370,7 @@ private fun KosHome(
                 .fillMaxWidth()
                 .padding(padding)
                 .verticalScroll(scrollState)
-                .padding(horizontal = 24.dp, vertical = 32.dp)
+                .padding(horizontal = 24.dp, vertical = 16.dp)
         ) {
             updateController.availableUpdate?.let { update ->
                 UpdateBanner(
@@ -563,30 +564,15 @@ private fun HeaderSection(
     Row(verticalAlignment = Alignment.Top) {
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = "KOS",
-                color = KosInk,
-                fontSize = 38.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = KosSerif,
-                letterSpacing = 5.sp
-            )
-            Text(
                 text = if (s.isReached) "Unser Kos-Urlaub" else "Bis zu unserem Kos-Urlaub",
-                color = KosInk.copy(alpha = 0.9f),
-                fontSize = 15.sp,
-                fontFamily = KosSans
+                style = PostcardType.Title,
+                color = KosInk
             )
-            Text(
-                text = "${s.departureDate} · ${s.departureTime} Uhr",
-                color = KosInk.copy(alpha = 0.8f),
-                fontSize = 12.sp,
-                fontFamily = KosSans,
-                modifier = Modifier.padding(top = 8.dp)
-            )
+            PostcardLabel("${s.departureDate} · ${s.departureTime} Uhr", Modifier.padding(top = 4.dp))
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.offset(x = 12.dp, y = (-12).dp)
+            modifier = Modifier.offset(x = 12.dp)
         ) {
             // Settings Button
             Box(
@@ -607,13 +593,14 @@ private fun HeaderSection(
                         .align(Alignment.Center)
                         .size(34.dp)
                         .clip(CircleShape)
-                        .background(HomeCardColor.copy(alpha = 0.38f))
+                        .background(HomeCardColor)
+                        .border(1.dp, HomeCardBorder, CircleShape)
                 ) {
-                    Text(
-                        text = "⚙",
-                        fontSize = 17.sp,
-                        color = HomeAccent.copy(alpha = 0.78f),
-                        modifier = Modifier.align(Alignment.Center)
+                    androidx.compose.material3.Icon(
+                        painter = androidx.compose.ui.res.painterResource(R.drawable.ic_settings),
+                        contentDescription = null,
+                        tint = KosInk,
+                        modifier = Modifier.align(Alignment.Center).size(20.dp)
                     )
                 }
             }

@@ -232,8 +232,14 @@ fun TravelScreen(
                 }
             }
             TravelArea.HELP -> {
-                item { KosEmergencyCard(onCall = callNumber, onOpenMap = openMap) }
                 item { EmergencyCard(onCall = { callNumber("112") }) }
+                item {
+                    TravelMapHelpCard(
+                        onHospital = { openMap("General Hospital of Kos") },
+                        onPharmacy = { openMap("pharmacy near me") }
+                    )
+                }
+                item { KosEmergencyCard(onCall = callNumber, onOpenMap = openMap) }
                 item {
                     ExpandableTravelGroup(
                         titleRes = R.string.travel_more_help,
@@ -244,12 +250,6 @@ fun TravelScreen(
                 }
                 if (showMoreHelp) {
                     item { EmergencyContactsCard(emergencyContacts, callNumber) }
-                    item {
-                        TravelMapHelpCard(
-                            onHospital = { openMap("General Hospital of Kos") },
-                            onPharmacy = { openMap("pharmacy near me") }
-                        )
-                    }
                     item { SupportingTravelText(R.string.travel_emergency_disclaimer) }
                 }
             }
@@ -618,36 +618,31 @@ private fun EmergencyCard(onCall: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(0x331D9A6C), HomeCardShape)
-            .border(1.dp, KosOk, HomeCardShape)
+            .clip(PostcardShape.Panel)
+            .background(KosStamp)
             .padding(16.dp)
+            .testTag("sos-112-card")
     ) {
         Text(
-            text = stringResource(R.string.travel_emergency_title),
-            color = KosInk,
-            fontSize = 17.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = KosSerif
+            text = stringResource(R.string.travel_emergency_title).uppercase(),
+            style = PostcardType.Label,
+            color = Color.White.copy(alpha = 0.9f)
         )
-        Spacer(Modifier.height(6.dp))
+        Text("112", style = PostcardType.Numeral.copy(fontSize = 64.sp), color = Color.White)
         Text(
             text = stringResource(R.string.travel_emergency_description),
-            color = KosInk.copy(alpha = 0.9f),
-            fontSize = 12.sp,
-            lineHeight = 18.sp,
-            fontFamily = KosSans
+            style = PostcardType.Body,
+            color = Color.White
         )
         Spacer(Modifier.height(12.dp))
         Button(
             onClick = onCall,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = KosOk,
-                contentColor = KosPanel
-            )
+            modifier = Modifier.fillMaxWidth().height(52.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = KosStamp)
         ) {
             Text(
                 text = stringResource(R.string.travel_emergency_action),
-                fontWeight = FontWeight.Bold
+                style = PostcardType.Heading
             )
         }
     }
@@ -898,79 +893,46 @@ private fun PhotoSpotsCard(onOpenMap: (String) -> Unit) {
 
 @Composable
 private fun KosEmergencyCard(onCall: (String) -> Unit, onOpenMap: (String) -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(HomeCardShape)
-            .background(Color(0x331D9A6C))
-            .border(1.dp, KosOk, HomeCardShape)
-            .padding(16.dp)
-            .testTag("kos-emergency-sos-card")
-    ) {
-        Text(
-            "NOTFALL & SERVICE TIGAKI 🚨",
-            color = KosOk,
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Bold,
-            letterSpacing = 0.8.sp
+    PaperPanel(modifier = Modifier.testTag("kos-emergency-sos-card")) {
+        PostcardLabel("Weitere Nummern in Griechenland")
+        SosNumberRow("Polizei", "100", onCall)
+        SosNumberRow("Rettungsdienst", "166", onCall)
+        SosNumberRow("Feuerwehr", "199", onCall)
+        SosNumberRow(
+            "Hotel-Rezeption", TripData.HOTEL_PHONE_UNCONFIRMED, onCall,
+            note = "Nummer nicht bestätigt",
+            onOpenMap = { onOpenMap("${TripData.HOTEL_LAT},${TripData.HOTEL_LON}(${TripData.HOTEL_NAME})") }
         )
-        Spacer(Modifier.height(4.dp))
-        Text(
-            "Wichtige Telefonnummern & Anlaufstellen vor Ort",
-            color = KosInk,
-            fontSize = 15.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = KosSans
-        )
-        Spacer(Modifier.height(12.dp))
-
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            EmergencyContactRow("EU-Notruf (Rettung & Polizei)", "112", onCall)
-            EmergencyContactRow("Polizei", "100", onCall)
-            EmergencyContactRow("Rettungsdienst (Krankenwagen)", "166", onCall)
-            EmergencyContactRow("Feuerwehr", "199", onCall)
-            EmergencyContactRow(
-                "Hotel-Rezeption (Nummer nur aus einer Quelle, nicht bestätigt)",
-                TripData.HOTEL_PHONE_UNCONFIRMED,
-                onCall,
-                onOpenMap = {
-                    onOpenMap("${TripData.HOTEL_LAT},${TripData.HOTEL_LON}(${TripData.HOTEL_NAME})")
-                }
-            )
-        }
     }
 }
 
 @Composable
-private fun EmergencyContactRow(
+private fun SosNumberRow(
     label: String,
     number: String,
     onCall: (String) -> Unit,
+    note: String? = null,
     onOpenMap: (() -> Unit)? = null
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(Color(0x26000000))
-            .padding(horizontal = 10.dp, vertical = 8.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+            .clickable { onCall(number) }
+            .padding(vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(modifier = Modifier.weight(1f)) {
-            Text(label, color = KosInk, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
-            Text(number, color = KosOk, fontSize = 11.sp)
+            Text(label, style = PostcardType.Body, color = KosInk)
+            if (note != null) Text(note.uppercase(), style = PostcardType.Label, color = KosInk.copy(alpha = 0.7f))
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            if (onOpenMap != null) {
-                TextButton(onClick = onOpenMap, contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp)) {
-                    Text("📍 Karte", color = KosInk, fontSize = 11.sp)
-                }
-            }
-            TextButton(onClick = { onCall(number) }, contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp)) {
-                Text("📞 Anrufen", color = KosOk, fontSize = 11.sp, fontWeight = FontWeight.Bold)
-            }
+        if (onOpenMap != null) {
+            TextButton(onClick = onOpenMap) { Text("Karte", style = PostcardType.Label, color = KosInk) }
         }
+        Text(
+            number,
+            style = if (number.length <= 4) PostcardType.Numeral else PostcardType.Numeral.copy(fontSize = PostcardType.Heading.fontSize),
+            color = KosInk
+        )
     }
 }
 

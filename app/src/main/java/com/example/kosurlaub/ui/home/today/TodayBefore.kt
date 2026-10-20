@@ -1,6 +1,15 @@
 package com.example.kosurlaub.ui.home.today
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.background
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Text
@@ -18,10 +27,52 @@ import com.example.kosurlaub.R
 import com.example.kosurlaub.TripData
 import com.example.kosurlaub.ui.compass.CompassPreferences
 import com.example.kosurlaub.ui.compass.compassTips
-import com.example.kosurlaub.ui.home.CountdownProgress
 import com.example.kosurlaub.ui.home.HomeState
 import com.example.kosurlaub.ui.theme.*
-import java.util.Locale
+
+/** Flug und Hotel als Bordkarte: Codes und Zeiten oben, Abreißkante mit Kerben, Hotel im Abschnitt darunter. */
+@Composable
+private fun BoardingPass(f: TripData.Flight) {
+    val notch = KosBg
+    val dash = HomeCardBorder
+    Column(
+        Modifier.fillMaxWidth().clip(PostcardShape.Panel).background(HomeCardColor)
+            .border(1.dp, HomeCardBorder, PostcardShape.Panel)
+    ) {
+        Column(Modifier.padding(PostcardSpace.Panel), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                PostcardLabel(stringResource(R.string.today_before_flight_hotel))
+                PostcardLabel("${f.airline} ${f.number}")
+            }
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                PassStop(f.fromAirport, f.fromCity, "%02d:%02d".format(f.departHour, f.departMinute), Alignment.Start)
+                Text("✈", Modifier.weight(1f), style = PostcardType.Heading, color = KosStamp, textAlign = TextAlign.Center)
+                PassStop(f.toAirport, f.toCity, "%02d:%02d".format(f.arriveHour, f.arriveMinute), Alignment.End)
+            }
+        }
+        Canvas(Modifier.fillMaxWidth().height(14.dp)) {
+            drawLine(
+                dash, Offset(14.dp.toPx(), size.height / 2), Offset(size.width - 14.dp.toPx(), size.height / 2),
+                strokeWidth = 1.5.dp.toPx(), pathEffect = PathEffect.dashPathEffect(floatArrayOf(6.dp.toPx(), 5.dp.toPx()))
+            )
+            drawCircle(notch, 7.dp.toPx(), Offset(0f, size.height / 2))
+            drawCircle(notch, 7.dp.toPx(), Offset(size.width, size.height / 2))
+        }
+        Column(Modifier.padding(PostcardSpace.Panel), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            PostcardLabel("${f.weekday} %02d.%02d. · ${stringResource(R.string.today_before_hotel)}".format(f.day, f.month))
+            Text("${TripData.HOTEL_NAME} · ${TripData.HOTEL_PLACE}", style = PostcardType.Body, color = KosInk)
+        }
+    }
+}
+
+@Composable
+private fun PassStop(code: String, city: String, time: String, align: Alignment.Horizontal) {
+    Column(horizontalAlignment = align) {
+        Text(code, style = PostcardType.Numeral.copy(fontSize = 36.sp), color = KosInk)
+        PostcardLabel(city)
+        Text(time, style = PostcardType.Heading, color = KosInk)
+    }
+}
 
 /** Heute vor dem Abflug: Klappzahlen-Countdown, Flug und Hotel, gemerkte Tipps, aktuelles Kos-Wetter. */
 @Composable
@@ -40,55 +91,43 @@ internal fun TodayBefore(
             } else {
                 Image(painterResource(s.backgroundRes), null, Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
             }
+            Box(
+                Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(110.dp)
+                    .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(alpha = 0.55f))))
+            )
             Row(
-                modifier = Modifier.align(Alignment.TopStart).padding(PostcardSpace.Panel),
+                modifier = Modifier.align(Alignment.BottomStart).padding(start = PostcardSpace.Panel, bottom = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 FlipDigits(s.days)
                 StampChip(stringResource(R.string.widget_days_label))
             }
+            Text(
+                "${s.hours.toString().padStart(2, '0')} ${stringResource(R.string.widget_hours_label)}  ${s.minutes.toString().padStart(2, '0')} ${stringResource(R.string.widget_minutes_label)}",
+                style = PostcardType.Label, color = Color.White,
+                modifier = Modifier.align(Alignment.TopStart).padding(PostcardSpace.Panel)
+            )
             s.weather?.let {
                 StampBadge(top = it.temperatureLabel, bottom = "KOS", modifier = Modifier.align(Alignment.TopEnd).padding(PostcardSpace.Panel))
             }
             PerforationEdge(modifier = Modifier.align(Alignment.BottomCenter))
         }
-        Row(verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-            Text(
-                "${flight.fromCity} → ${flight.toCity}".uppercase(Locale.GERMAN),
-                style = PostcardType.Heading, color = KosInk
-            )
-            Text(
-                "${s.hours.toString().padStart(2, '0')} ${stringResource(R.string.widget_hours_label)}  ${s.minutes.toString().padStart(2, '0')} ${stringResource(R.string.widget_minutes_label)}",
-                style = PostcardType.Label, color = KosInk
-            )
-        }
-        CountdownProgress(s.progress)
         Text(s.phrase, style = PostcardType.Quote, color = KosInk)
-
-        PaperPanel {
-            PostcardLabel(stringResource(R.string.today_before_flight_hotel))
-            Text(
-                "${flight.weekday} %02d.%02d. · %02d:%02d %s → %02d:%02d %s".format(
-                    flight.day, flight.month, flight.departHour, flight.departMinute, flight.fromAirport,
-                    flight.arriveHour, flight.arriveMinute, flight.toAirport
-                ),
-                style = PostcardType.Body, color = KosInk
-            )
-            Text("${TripData.HOTEL_NAME} · ${TripData.HOTEL_PLACE}", style = PostcardType.Body, color = KosInk)
-        }
-        PaperPanel(modifier = Modifier.clickable(onClick = onOpenIdeas)) {
-            PostcardLabel("${stringResource(R.string.today_before_saved)} · ${saved.size}")
-            if (saved.isEmpty()) {
-                Text(stringResource(R.string.today_before_saved_empty), style = PostcardType.Body, color = KosInk)
-            } else {
-                saved.take(4).forEach { Text("• ${it.title}", style = PostcardType.Body, color = KosInk) }
+        if (s.days == 1L) {
+            PaperPanel {
+                PostcardLabel(stringResource(R.string.today_before_soon_label))
+                Text(
+                    stringResource(R.string.today_before_soon_body, TripData.CHECKED_BAG_KG, TripData.CARRY_ON_KG),
+                    style = PostcardType.Body, color = KosInk
+                )
             }
         }
-        s.weather?.let { w ->
-            PaperPanel {
-                PostcardLabel(stringResource(R.string.today_before_weather))
-                Text("${w.temperatureLabel} · ${w.apparentTemperatureLabel} · Wind ${w.windSpeedLabel}", style = PostcardType.Body, color = KosInk)
+        BoardingPass(flight)
+        if (saved.isNotEmpty()) {
+            PaperPanel(modifier = Modifier.clickable(onClick = onOpenIdeas)) {
+                PostcardLabel("${stringResource(R.string.today_before_saved)} · ${saved.size}")
+                saved.take(4).forEach { Text("• ${it.title}", style = PostcardType.Body, color = KosInk) }
             }
         }
     }
