@@ -568,7 +568,16 @@ private fun HeaderSection(
                 style = PostcardType.Title,
                 color = KosInk
             )
-            PostcardLabel("${s.departureDate} · ${s.departureTime} Uhr", Modifier.padding(top = 4.dp))
+            val out = TripData.outbound
+            val back = TripData.inbound
+            PostcardLabel(
+                when {
+                    s.isOver -> "%02d.%02d. – %02d.%02d.%d".format(out.day, out.month, back.day, back.month, back.year)
+                    s.isReached -> "Rückflug %02d.%02d.%d · %02d:%02d Uhr".format(back.day, back.month, back.year, back.departHour, back.departMinute)
+                    else -> "${s.departureDate} · ${s.departureTime} Uhr"
+                },
+                Modifier.padding(top = 4.dp)
+            )
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
