@@ -207,7 +207,8 @@ private fun KosApp(
             MainDestination.DIARY -> DiaryScreen(
                 padding = padding,
                 scrollToTopRequest = scrollToTopRequest.intValue,
-                phase = TripPhase.of(AppClock.nowMillis())
+                phase = TripPhase.of(AppClock.nowMillis()),
+                onOpenTips = { discoverTab.value = "TIPS"; destinationName.value = MainDestination.DISCOVER.name }
             )
         }
     }

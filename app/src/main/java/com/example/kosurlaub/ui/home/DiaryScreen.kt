@@ -1,4 +1,8 @@
 package com.example.kosurlaub.ui.home
+import androidx.compose.ui.text.TextStyle
+import com.example.kosurlaub.ui.theme.PaperPanel
+import com.example.kosurlaub.ui.theme.PostcardChip
+import com.example.kosurlaub.ui.theme.PostcardSpace
 import com.example.kosurlaub.ui.theme.PostcardMetrics
 
 import com.example.kosurlaub.ui.theme.PostcardLabel
@@ -64,7 +68,7 @@ fun diaryStats(visitedCount: Int, entriesByDay: Map<Int, List<DayEntry>>): Diary
 
 /** Tagebuch: Merkliste „Wollen wir noch“, Erlebtes, Einträge je Tag und Rückblick. */
 @Composable
-fun DiaryScreen(padding: PaddingValues, scrollToTopRequest: Int, phase: TripPhase) {
+fun DiaryScreen(padding: PaddingValues, scrollToTopRequest: Int, phase: TripPhase, onOpenTips: () -> Unit) {
     val context = LocalContext.current
     val scroll = rememberScrollState()
     LaunchedEffect(scrollToTopRequest) { if (scrollToTopRequest > 0) scroll.animateScrollTo(0) }
@@ -81,107 +85,132 @@ fun DiaryScreen(padding: PaddingValues, scrollToTopRequest: Int, phase: TripPhas
             .fillMaxSize()
             .padding(padding)
             .verticalScroll(scroll)
-            .padding(horizontal = 24.dp, vertical = 32.dp)
-            .testTag("diary-screen")
+            .padding(horizontal = 24.dp, vertical = 16.dp)
+            .testTag("diary-screen"),
+        verticalArrangement = Arrangement.spacedBy(PostcardSpace.Gap)
     ) {
-        Text("Unser Tagebuch", color = KosInk, fontSize = 32.sp, fontWeight = FontWeight.Bold, fontFamily = KosSerif)
-        Spacer(Modifier.height(16.dp))
+        Text("Unser Tagebuch", style = PostcardType.Title, color = KosInk)
+        Text(
+            when (phase) {
+                TripPhase.BEFORE -> "Sammelt, was ihr auf Kos erleben wollt. Unterwegs wächst hier euer Reisetagebuch."
+                TripPhase.ON_KOS -> "Haltet fest, was ihr erlebt: Orte, Notizen und Fotos."
+                TripPhase.AFTER -> "Eure Erinnerungen an Kos."
+            },
+            style = PostcardType.Quote, color = KosInk
+        )
 
         val wishes = compassTips.filter { it.id in saved && it.id !in visited }
         val done = compassTips.filter { it.id in visited }
 
-        DiaryCard("WOLLEN WIR NOCH") {
-            if (wishes.isEmpty()) {
-                DiaryLine("Nichts vorgemerkt. Unter „Tipps“ könnt ihr Orte merken.", 0.7f)
-            }
-            wishes.forEach { tip ->
-                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                    Checkbox(
-                        checked = false,
-                        onCheckedChange = { visited = CompassPreferences.toggleVisited(context, tip.id) },
-                        colors = CheckboxDefaults.colors(checkedColor = HomeAccent, uncheckedColor = KosInk.copy(alpha = 0.5f)),
-                        modifier = Modifier.testTag("diary-wish-${tip.id}")
-                    )
-                    DiaryLine(tip.title)
-                }
+        if (wishes.isEmpty() && done.isEmpty()) {
+            DiaryCard("Eure Tipps") {
+                DiaryLine("Noch nichts vorgemerkt. Merkt euch Orte unter „Tipps“, hier hakt ihr sie später ab.")
+                Spacer(Modifier.height(12.dp))
+                PostcardChip("Tipps ansehen", true, onOpenTips, Modifier.testTag("diary-open-tips"))
             }
         }
-        Spacer(Modifier.height(12.dp))
 
-        DiaryCard("ERLEBT") {
-            if (done.isEmpty()) DiaryLine("Noch nichts abgehakt.", 0.7f)
-            done.forEach { tip ->
-                val date = CompassPreferences.visitedOn(context, tip.id)
-                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                    Checkbox(
-                        checked = true,
-                        onCheckedChange = { visited = CompassPreferences.toggleVisited(context, tip.id) },
-                        colors = CheckboxDefaults.colors(checkedColor = HomeAccent, uncheckedColor = KosInk.copy(alpha = 0.5f))
-                    )
-                    DiaryLine(tip.title, modifier = Modifier.weight(1f))
-                    if (date != null) DiaryLine(dateFormat.format(Date(date)), 0.6f, 12)
+        if (wishes.isNotEmpty()) {
+            DiaryCard("Wollen wir noch") {
+                wishes.forEach { tip ->
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                        DiaryCheckbox(
+                            checked = false,
+                            onChange = { visited = CompassPreferences.toggleVisited(context, tip.id) },
+                            modifier = Modifier.testTag("diary-wish-${tip.id}")
+                        )
+                        DiaryLine(tip.title)
+                    }
                 }
             }
         }
-        Spacer(Modifier.height(12.dp))
+
+        if (done.isNotEmpty()) {
+            DiaryCard("Erlebt") {
+                done.forEach { tip ->
+                    val date = CompassPreferences.visitedOn(context, tip.id)
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                        DiaryCheckbox(checked = true, onChange = { visited = CompassPreferences.toggleVisited(context, tip.id) })
+                        DiaryLine(tip.title, modifier = Modifier.weight(1f))
+                        if (date != null) {
+                            DiaryLine(dateFormat.format(Date(date)), style = PostcardType.Label, alpha = 0.6f)
+                        }
+                    }
+                }
+            }
+        }
 
         if (entriesByDay.isNotEmpty()) {
-            DiaryCard("EINTRÄGE JE TAG") {
+            DiaryCard("Einträge je Tag") {
                 entriesByDay.forEach { (index, entries) ->
                     val day = TripDays.all.first { it.index == index }
                     Text(
                         "Tag $index · ${day.weekday} ${day.day}.${day.month}.",
-                        color = HomeAccent, fontSize = PostcardMetrics.BODY_SP.sp, fontFamily = KosSerif, fontWeight = FontWeight.SemiBold,
+                        style = PostcardType.Heading, color = KosInk,
                         modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
                     )
                     entries.forEach { entry ->
                         when (entry.kind) {
                             DayEntry.Kind.NOTE -> DiaryLine(entry.value)
-                            DayEntry.Kind.PLACE -> DiaryLine("📍 " + (compassTips.firstOrNull { it.id == entry.value }?.title ?: entry.value))
+                            DayEntry.Kind.PLACE -> DiaryLine("Ort: " + (compassTips.firstOrNull { it.id == entry.value }?.title ?: entry.value))
                             DayEntry.Kind.PHOTO -> DayPhoto(File(File(context.filesDir, "day_photos"), entry.value))
                         }
                         Spacer(Modifier.height(4.dp))
                     }
                 }
             }
-            Spacer(Modifier.height(12.dp))
         }
 
+        // Vier Nullen vor dem Urlaub sagen nichts; der Rückblick erscheint, sobald etwas da ist.
         val stats = diaryStats(done.size, entriesByDay)
-        DiaryCard(if (phase == TripPhase.AFTER) "RÜCKBLICK · UNSER KOS" else "RÜCKBLICK · BISHER") {
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                Stat(stats.places, "Orte")
-                Stat(stats.notes, "Notizen")
-                Stat(stats.photos, "Fotos")
-                Stat(stats.daysWithEntries, "Tage")
+        if (phase == TripPhase.AFTER || stats.places + stats.notes + stats.photos + stats.daysWithEntries > 0) {
+            DiaryCard(if (phase == TripPhase.AFTER) "Rückblick · Unser Kos" else "Rückblick · Bisher") {
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    Stat(stats.places, "Orte", Modifier.weight(1f))
+                    Stat(stats.notes, "Notizen", Modifier.weight(1f))
+                    Stat(stats.photos, "Fotos", Modifier.weight(1f))
+                    Stat(stats.daysWithEntries, "Tage", Modifier.weight(1f))
+                }
             }
         }
     }
 }
 
 @Composable
-private fun Stat(value: Int, label: String) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(64.dp)) {
-        Text(value.toString(), color = KosInk, fontSize = 28.sp, fontFamily = KosSerif, fontWeight = FontWeight.Bold)
-        Text(label, color = KosInk.copy(alpha = 0.7f), fontSize = PostcardMetrics.LABEL_SP.sp, fontFamily = KosSans)
+private fun Stat(value: Int, label: String, modifier: Modifier = Modifier) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
+        Text(value.toString(), style = PostcardType.Title, color = KosInk)
+        PostcardLabel(label)
     }
 }
 
 @Composable
-private fun DiaryLine(text: String, alpha: Float = 0.95f, size: Int = 14, modifier: Modifier = Modifier) {
-    Text(text, color = KosInk.copy(alpha = alpha), fontSize = size.sp, lineHeight = (size + 6).sp, fontFamily = KosSans, modifier = modifier)
+private fun DiaryCheckbox(checked: Boolean, onChange: () -> Unit, modifier: Modifier = Modifier) {
+    Checkbox(
+        checked = checked,
+        onCheckedChange = { onChange() },
+        colors = CheckboxDefaults.colors(
+            checkedColor = KosInk,
+            checkmarkColor = KosBg,
+            uncheckedColor = KosInk.copy(alpha = 0.5f)
+        ),
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun DiaryLine(
+    text: String,
+    modifier: Modifier = Modifier,
+    style: TextStyle = PostcardType.Body,
+    alpha: Float = 0.95f
+) {
+    Text(text, style = style, color = KosInk.copy(alpha = alpha), modifier = modifier)
 }
 
 @Composable
 private fun DiaryCard(label: String, content: @Composable () -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(HomeCardShape)
-            .background(HomeCardColor)
-            .border(1.dp, HomeCardBorder, HomeCardShape)
-            .padding(16.dp)
-    ) {
+    PaperPanel {
         PostcardLabel(label)
         Spacer(Modifier.height(8.dp))
         content()
