@@ -228,19 +228,6 @@ class MainActivitySmokeTest {
         composeRule.onNodeWithTag("compass-tip-overlay").assertIsDisplayed()
     }
 
-    @Test
-    fun tavernCalculatorCalculatesTotalAndPerPerson() {
-        composeRule.onNodeWithTag("main-nav-discover").performClick()
-        composeRule.onNodeWithTag("discover-tab-travel").performClick()
-        composeRule.onNodeWithTag("travel-area-explore").performClick()
-
-        composeRule.onNodeWithTag("tavern-calculator-amount-input")
-            .performScrollTo()
-            .performTextInput("50")
-        composeRule.onNodeWithText("Gesamt inkl. Trinkgeld:").assertIsDisplayed()
-        composeRule.onNodeWithText("55,00 €").assertIsDisplayed()
-    }
-
     private fun pressBack() {
         composeRule.activityRule.scenario.onActivity {
             it.onBackPressedDispatcher.onBackPressed()

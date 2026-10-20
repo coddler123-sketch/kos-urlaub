@@ -105,7 +105,6 @@ fun TravelCard(onClick: () -> Unit) {
 @Composable
 fun HomeQuickActions(
     onOpenTigaki: () -> Unit,
-    onOpenTavernCalc: () -> Unit = {},
     onOpenPhrasebook: () -> Unit = {},
     onOpenEmergency: () -> Unit = {}
 ) {
@@ -130,13 +129,6 @@ fun HomeQuickActions(
                 onClick = onOpenTigaki,
                 modifier = Modifier.weight(1f),
                 emphasized = true
-            )
-            HomeQuickGridCard(
-                title = "💶 Tavernen-Rechner",
-                subtitle = "Trinkgeld & Splitting",
-                testTag = "taverna-calc-link",
-                onClick = onOpenTavernCalc,
-                modifier = Modifier.weight(1f)
             )
         }
         Spacer(Modifier.height(8.dp))

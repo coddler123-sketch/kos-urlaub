@@ -23,17 +23,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -322,129 +318,5 @@ internal fun TravelChecklistCard(
             lineHeight = 14.sp,
             modifier = Modifier.padding(top = 6.dp)
         )
-    }
-}
-
-@Composable
-internal fun TavernCalculatorCard() {
-    var amountInput by rememberSaveable { mutableStateOf("") }
-    var selectedTipPercent by rememberSaveable { mutableStateOf(10) }
-    var peopleCount by rememberSaveable { mutableStateOf(2) }
-
-    val amount = amountInput.replace(',', '.').toDoubleOrNull() ?: 0.0
-    val tipMultiplier = 1.0 + (selectedTipPercent / 100.0)
-    val totalWithTip = amount * tipMultiplier
-    val perPerson = if (peopleCount > 0) totalWithTip / peopleCount else totalWithTip
-
-    TravelCardContainer {
-        Text(
-            text = "💶 TAVERNEN- & TRINKGELD-RECHNER",
-            color = HomeAccent,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = KosSans,
-            letterSpacing = 0.8.sp
-        )
-        Spacer(Modifier.height(6.dp))
-        Text(
-            text = "Rechnung entspannt aufteilen",
-            color = KosInk,
-            fontSize = 15.sp,
-            fontWeight = FontWeight.SemiBold,
-            fontFamily = KosSans
-        )
-        Spacer(Modifier.height(10.dp))
-
-        OutlinedTextField(
-            value = amountInput,
-            onValueChange = { if (it.length <= 7) amountInput = it },
-            label = { Text("Rechnungsbetrag (€)", color = KosInk.copy(alpha = 0.8f)) },
-            placeholder = { Text("z.B. 45.00", color = KosInk.copy(alpha = 0.4f)) },
-            singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedTextColor = KosInk,
-                unfocusedTextColor = KosInk,
-                focusedBorderColor = HomeAccent,
-                unfocusedBorderColor = KosInk.copy(alpha = 0.4f)
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .testTag("tavern-calculator-amount-input")
-        )
-
-        Spacer(Modifier.height(10.dp))
-        Text("Trinkgeld wählen (Griecheland ca. 5–10 %):", color = KosInk.copy(alpha = 0.75f), fontSize = 11.sp, fontFamily = KosSans)
-        Spacer(Modifier.height(6.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            listOf(5, 10, 15).forEach { percent ->
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(if (selectedTipPercent == percent) HomeAccent else KosPanelHigh)
-                        .clickable { selectedTipPercent = percent }
-                        .padding(horizontal = 14.dp, vertical = 6.dp)
-                ) {
-                    Text(
-                        "$percent %",
-                        color = if (selectedTipPercent == percent) KosNav else KosInk,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
-        }
-
-        Spacer(Modifier.height(12.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("Personen:", color = KosInk.copy(alpha = 0.75f), fontSize = 12.sp, fontFamily = KosSans)
-            Spacer(Modifier.weight(1f))
-            Box(
-                modifier = Modifier
-                    .size(32.dp)
-                    .clip(CircleShape)
-                    .background(KosPanelHigh)
-                    .clickable { if (peopleCount > 1) peopleCount-- }
-            ) {
-                Text("-", color = KosInk, fontSize = 18.sp, fontWeight = FontWeight.Bold, modifier = Modifier.align(Alignment.Center))
-            }
-            Text("$peopleCount", color = KosInk, fontSize = 14.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 14.dp))
-            Box(
-                modifier = Modifier
-                    .size(32.dp)
-                    .clip(CircleShape)
-                    .background(KosPanelHigh)
-                    .clickable { if (peopleCount < 10) peopleCount++ }
-            ) {
-                Text("+", color = KosInk, fontSize = 18.sp, fontWeight = FontWeight.Bold, modifier = Modifier.align(Alignment.Center))
-            }
-        }
-
-        if (amount > 0) {
-            Spacer(Modifier.height(12.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(KosPanelHigh)
-                    .padding(12.dp)
-            ) {
-                Column {
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        Text("Gesamt inkl. Trinkgeld:", color = KosInk, fontSize = 12.sp)
-                        Text(String.format(Locale.GERMANY, "%.2f €", totalWithTip), color = HomeAccent, fontSize = 13.sp, fontWeight = FontWeight.Bold)
-                    }
-                    if (peopleCount > 1) {
-                        Spacer(Modifier.height(6.dp))
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                            Text("Pro Person ($peopleCount P.):", color = KosInk, fontSize = 12.sp)
-                            Text(String.format(Locale.GERMANY, "%.2f €", perPerson), color = HomeAccent, fontSize = 13.sp, fontWeight = FontWeight.Bold)
-                        }
-                    }
-                }
-            }
-        }
     }
 }

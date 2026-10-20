@@ -199,7 +199,6 @@ fun TravelScreen(
                 }
             }
             TravelArea.EXPLORE -> {
-                item { TavernCalculatorCard() }
                 item { GreekPhrasebookCard() }
                 item { PhotoSpotsCard(onOpenMap = openMap) }
                 items(excursionIdeas, key = { it.id }) { idea ->

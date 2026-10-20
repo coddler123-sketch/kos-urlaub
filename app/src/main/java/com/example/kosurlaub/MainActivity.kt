@@ -423,7 +423,6 @@ private fun KosHome(
                     Spacer(Modifier.height(16.dp))
                     HomeQuickActions(
                         onOpenTigaki = { onOpenTravel("MOBILITY") },
-                        onOpenTavernCalc = { onOpenTravel("EXPLORE") },
                         onOpenPhrasebook = { onOpenTravel("EXPLORE") },
                         onOpenEmergency = { onOpenTravel("HELP") }
                     )
