@@ -341,6 +341,7 @@
     </string-array>
     <string name="today_before_flight_hotel">Flug &amp; Hotel</string>
     <string name="today_before_saved">Gemerkte Tipps</string>
+    <string name="today_before_hms_label">STD · MIN · SEK</string>
     <string name="today_before_soon_label">Morgen geht\'s los</string>
     <string name="today_before_soon_body">Online-Check-in, Ausweise und Gepäck prüfen: %1$d kg aufgegeben, %2$d kg Handgepäck.</string>
     <string name="today_before_hotel">Hotel</string>

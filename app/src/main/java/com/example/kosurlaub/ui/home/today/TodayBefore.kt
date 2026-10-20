@@ -85,7 +85,7 @@ internal fun TodayBefore(
     val flight = TripData.outbound
     val saved = compassTips.filter { it.id in CompassPreferences.saved(context) }
     Column(verticalArrangement = Arrangement.spacedBy(PostcardSpace.Gap)) {
-        Box(modifier = Modifier.fillMaxWidth().height(200.dp).clip(PostcardShape.Panel)) {
+        Box(modifier = Modifier.fillMaxWidth().height(240.dp).clip(PostcardShape.Panel)) {
             if (heroPhoto != null) {
                 Image(heroPhoto, null, Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
             } else {
@@ -95,19 +95,28 @@ internal fun TodayBefore(
                 Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(110.dp)
                     .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(alpha = 0.55f))))
             )
-            Row(
-                modifier = Modifier.align(Alignment.BottomStart).padding(start = PostcardSpace.Panel, bottom = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            Column(
+                modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth()
+                    .padding(start = PostcardSpace.Panel, end = PostcardSpace.Panel, bottom = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                FlipDigits(s.days)
-                StampChip(stringResource(R.string.widget_days_label))
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FlipDigits(s.days)
+                    StampChip(stringResource(R.string.widget_days_label))
+                }
+                Row(
+                    Modifier.fillMaxWidth().clip(PostcardShape.Chip).background(Color.Black.copy(alpha = 0.55f))
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        "%02d : %02d : %02d".format(s.hours, s.minutes, s.seconds),
+                        style = PostcardType.Numeral.copy(fontSize = 22.sp, fontFeatureSettings = "tnum"), color = Color.White
+                    )
+                    Text(stringResource(R.string.today_before_hms_label), style = PostcardType.Label, color = Color.White.copy(alpha = 0.7f))
+                }
             }
-            Text(
-                "${s.hours.toString().padStart(2, '0')} ${stringResource(R.string.widget_hours_label)}  ${s.minutes.toString().padStart(2, '0')} ${stringResource(R.string.widget_minutes_label)}",
-                style = PostcardType.Label, color = Color.White,
-                modifier = Modifier.align(Alignment.TopStart).padding(PostcardSpace.Panel)
-            )
             s.weather?.let {
                 StampBadge(top = it.temperatureLabel, bottom = "KOS", modifier = Modifier.align(Alignment.TopEnd).padding(PostcardSpace.Panel))
             }
