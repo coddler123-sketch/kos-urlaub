@@ -123,9 +123,9 @@
     <string name="widget_minutes_label">MIN.</string>
     <string name="widget_phrase_description">Spruch des Tages</string>
     <string name="widget_phrase">Jeden Tag ein Stück näher ans Meer.</string>
-    <string name="widget_over_message">Schön war es! 🌅</string>
+    <string name="widget_over_message">Schön war es!</string>
     <string name="widget_arrival_message">Es ist soweit!</string>
-    <string name="widget_vacation_line1">Ihr seid auf Kos. 🌊</string>
+    <string name="widget_vacation_line1">Ihr seid auf Kos.</string>
     <string name="widget_vacation_line2">Genießt jeden Augenblick.</string>
 
     <!-- Widget-Stile -->

@@ -94,7 +94,7 @@ fun SettingsSheet(
         }
         if (BuildConfig.DEBUG) DebugClockSection()
         SettingsRow(
-            icon = "🖼",
+            icon = "▣",
             label = "Titelbild",
             detail = "Vorschau und Auswahl",
             actionLabel = "Galerie",
@@ -264,7 +264,7 @@ private fun PrivateImagesSection() {
     }
 
     SettingsRow(
-        icon = "🔑",
+        icon = "◆",
         label = "Private Fotos",
         detail = status,
         actionLabel = when {

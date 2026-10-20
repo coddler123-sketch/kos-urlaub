@@ -489,11 +489,11 @@ private fun KosHome(
                         val sv = state.value
                         val msg = buildString {
                             when {
-                                sv.isOver -> { append("🌅 Zurück von Kos – es war wunderschön!") }
-                                sv.isOnVacation -> { appendLine("🌊 Wir sind auf Kos!"); append("Genießt jeden Augenblick.") }
-                                sv.isReached -> { appendLine("🛫 Heute geht's los nach Kos!"); append("Abflug: ${sv.departureDate} um ${sv.departureTime} Uhr") }
+                                sv.isOver -> { append("Zurück von Kos – es war wunderschön!") }
+                                sv.isOnVacation -> { appendLine("Wir sind auf Kos!"); append("Genießt jeden Augenblick.") }
+                                sv.isReached -> { appendLine("Heute geht's los nach Kos!"); append("Abflug: ${sv.departureDate} um ${sv.departureTime} Uhr") }
                                 else -> {
-                                    appendLine("🌊 Noch ${sv.days} Tage bis Kos!")
+                                    appendLine("Noch ${sv.days} Tage bis Kos!")
                                     appendLine("Abflug: ${sv.departureDate} um ${sv.departureTime} Uhr")
                                     appendLine()
                                     appendLine("${sv.days} Tage · ${sv.hours.toString().padStart(2,'0')} Std. · ${sv.minutes.toString().padStart(2,'0')} Min.")

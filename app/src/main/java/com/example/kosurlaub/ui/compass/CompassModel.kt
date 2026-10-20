@@ -101,15 +101,15 @@ internal fun filterCompassTips(
 }
 
 internal fun matchesCompassQuickFilter(tip: CompassTip, filter: String): Boolean = when (filter) {
-    "📍 Tigaki" -> tip.location.contains("Tigaki", ignoreCase = true) ||
+    "Tigaki" -> tip.location.contains("Tigaki", ignoreCase = true) ||
         tip.tags.any { it.contains("Tigaki", ignoreCase = true) }
-    "🏛️ Kos-Stadt" -> tip.location.contains("Kos-Stadt", ignoreCase = true) ||
+    "Kos-Stadt" -> tip.location.contains("Kos-Stadt", ignoreCase = true) ||
         tip.location.contains("Asklepieion", ignoreCase = true)
-    "🏰 Süden & Inland" -> tip.location.contains("Zia", ignoreCase = true) ||
+    "Süden & Inland" -> tip.location.contains("Zia", ignoreCase = true) ||
         tip.location.contains("Antimachia", ignoreCase = true) ||
         tip.location.contains("Kefalos", ignoreCase = true) ||
         tip.location.contains("Agios Fokas", ignoreCase = true)
-    "🚤 Bootsausflüge" -> tip.location.contains("Nisyros", ignoreCase = true) ||
+    "Bootsausflüge" -> tip.location.contains("Nisyros", ignoreCase = true) ||
         tip.location.contains("Bodrum", ignoreCase = true)
     "Rund ums Hotel" -> tip.location.contains("Tigaki", ignoreCase = true) ||
         tip.tags.any { it.contains("Tigaki", ignoreCase = true) } ||

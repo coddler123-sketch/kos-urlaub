@@ -23,7 +23,6 @@ class PhotoSpotsTest {
             assertTrue("Photo spot time category empty", spot.timeCategory.isNotBlank())
             assertTrue("Photo spot tip empty", spot.tip.isNotBlank())
             assertTrue("Photo spot map query empty", spot.mapQuery.isNotBlank())
-            assertTrue("Photo spot emoji empty", spot.iconEmoji.isNotBlank())
         }
     }
 }

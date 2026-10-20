@@ -47,10 +47,10 @@ internal val quickFilterGroups = listOf(
     QuickFilterGroup(
         "Ort",
         listOf(
-            QuickFilter("📍 Tigaki", "Tigaki"),
-            QuickFilter("🏛️ Kos-Stadt", "Kos-Stadt"),
-            QuickFilter("🏰 Süden & Inland", "Süden & Inland"),
-            QuickFilter("🚤 Bootsausflüge", "Bootsausflüge")
+            QuickFilter("Tigaki", "Tigaki"),
+            QuickFilter("Kos-Stadt", "Kos-Stadt"),
+            QuickFilter("Süden & Inland", "Süden & Inland"),
+            QuickFilter("Bootsausflüge", "Bootsausflüge")
         )
     ),
     QuickFilterGroup(

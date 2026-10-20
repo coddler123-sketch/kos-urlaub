@@ -825,7 +825,7 @@ private fun PhotoSpotsCard(onOpenMap: (String) -> Unit) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "${spot.iconEmoji} ${spot.title}",
+                        text = spot.title,
                         color = KosInk,
                         fontSize = PostcardMetrics.BODY_SP.sp,
                         fontWeight = FontWeight.Bold,

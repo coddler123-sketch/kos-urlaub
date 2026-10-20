@@ -183,7 +183,7 @@ private fun YourDayCard(day: TripDay) {
                 Column(modifier = Modifier.weight(1f)) {
                     when (entry.kind) {
                         DayEntry.Kind.NOTE -> Line(entry.value)
-                        DayEntry.Kind.PLACE -> Line("📍 " + (compassTips.firstOrNull { it.id == entry.value }?.title ?: entry.value))
+                        DayEntry.Kind.PLACE -> Line("Ort: " + (compassTips.firstOrNull { it.id == entry.value }?.title ?: entry.value))
                         DayEntry.Kind.PHOTO -> DayPhoto(File(File(context.filesDir, "day_photos"), entry.value))
                     }
                 }

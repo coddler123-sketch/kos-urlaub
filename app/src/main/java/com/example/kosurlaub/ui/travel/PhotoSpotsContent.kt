@@ -9,8 +9,7 @@ internal data class PhotoSpot(
     val bestTime: String,
     val timeCategory: String, // "Sonnenaufgang", "Vormittag", "Golden Hour", "Blaue Stunde", "Mittagslicht"
     val tip: String,
-    val mapQuery: String,
-    val iconEmoji: String
+    val mapQuery: String
 )
 
 internal val photoSpots = listOf(
@@ -21,8 +20,7 @@ internal val photoSpots = listOf(
         bestTime = "Frühmorgens (ca. 07:00–08:30 Uhr)",
         timeCategory = "Sonnenaufgang",
         tip = "Flaches Wasser und feiner Sand: Am frühen Morgen liegt das Meer oft spiegelglatt, die Berge der Türkei zeichnen sich im Dunst ab.",
-        mapQuery = "Tigaki Beach, Kos",
-        iconEmoji = "🌅"
+        mapQuery = "Tigaki Beach, Kos"
     ),
     PhotoSpot(
         id = "alikes_flamingos",
@@ -31,8 +29,7 @@ internal val photoSpots = listOf(
         bestTime = "Früher Morgen oder später Nachmittag",
         timeCategory = "Natur",
         tip = "Kurzer Spaziergang von Tigaki. Mit Teleobjektiv oder Handy-Zoom Abstand halten, die Vögel sind scheu.",
-        mapQuery = "Alikes Salt Lake, Tigaki, Kos",
-        iconEmoji = "🦩"
+        mapQuery = "Alikes Salt Lake, Tigaki, Kos"
     ),
     PhotoSpot(
         id = "neratzia_castle",
@@ -41,8 +38,7 @@ internal val photoSpots = listOf(
         bestTime = "Vormittag oder später Nachmittag",
         timeCategory = "Vormittag",
         tip = "Von der Brücke am Eingang und vom Hafenkai aus wirken die Mauern am besten. Mittags ist das Licht sehr hart.",
-        mapQuery = "Castle of Neratzia, Kos",
-        iconEmoji = "🏰"
+        mapQuery = "Castle of Neratzia, Kos"
     ),
     PhotoSpot(
         id = "hippocrates_plane",
@@ -51,8 +47,7 @@ internal val photoSpots = listOf(
         bestTime = "Vormittag",
         timeCategory = "Vormittag",
         tip = "Der alte Baum steht gestützt im Schatten; Detailfotos der Stützen und des Brunnens daneben funktionieren gut.",
-        mapQuery = "Hippocrates Plane Tree, Kos",
-        iconEmoji = "🌳"
+        mapQuery = "Hippocrates Plane Tree, Kos"
     ),
     PhotoSpot(
         id = "asklepieion",
@@ -61,8 +56,7 @@ internal val photoSpots = listOf(
         bestTime = "Vormittag (nach Öffnung, wenig Besucher)",
         timeCategory = "Vormittag",
         tip = "Von den oberen Terrassen reicht der Blick über die Küste bis zur Türkei. Die Säulen der obersten Ebene sind ein gutes Motiv.",
-        mapQuery = "Asklepieion of Kos",
-        iconEmoji = "🏛️"
+        mapQuery = "Asklepieion of Kos"
     ),
     PhotoSpot(
         id = "zia_sunset",
@@ -71,8 +65,7 @@ internal val photoSpots = listOf(
         bestTime = "Sonnenuntergang (Mitte September ca. 19:30–20:00 Uhr)",
         timeCategory = "Golden Hour",
         tip = "Gut eine halbe Stunde vor Sonnenuntergang da sein, damit ihr einen Platz mit freiem Blick habt. Rückfahrt vorher klären.",
-        mapQuery = "Zia Village, Kos",
-        iconEmoji = "🌇"
+        mapQuery = "Zia Village, Kos"
     ),
     PhotoSpot(
         id = "kastri_kefalos",
@@ -81,8 +74,7 @@ internal val photoSpots = listOf(
         bestTime = "Später Nachmittag",
         timeCategory = "Golden Hour",
         tip = "Die kleine Insel mit der weißen Kapelle liegt direkt vor dem Strand. Bei Niedrigwasser sieht man den Sandweg dorthin.",
-        mapQuery = "Kastri Island, Kefalos, Kos",
-        iconEmoji = "⛪"
+        mapQuery = "Kastri Island, Kefalos, Kos"
     ),
     PhotoSpot(
         id = "paradise_beach",
@@ -91,7 +83,6 @@ internal val photoSpots = listOf(
         bestTime = "Vormittag",
         timeCategory = "Vormittag",
         tip = "Weite Sandstrände und Dünen. Am besten von oben fotografieren, dort zeigt sich die Farbe des Wassers.",
-        mapQuery = "Paradise Beach, Kos",
-        iconEmoji = "🏖️"
+        mapQuery = "Paradise Beach, Kos"
     )
 )
