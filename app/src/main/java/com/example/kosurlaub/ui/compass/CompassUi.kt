@@ -205,7 +205,7 @@ fun CompassScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Brush.verticalGradient(listOf(KosPanel, KosBg)))
+                    .background(KosBg)
                     .testTag("compass-tip-overlay")
             ) {
                 LazyColumn(
@@ -222,10 +222,6 @@ fun CompassScreen(
                             tip = tip,
                             isSaved = tip.id in savedTips,
                             isVisited = tip.id in visitedTips,
-                            expanded = true,
-                            showCloseButton = false,
-                            onToggleExpanded = ::closeTip,
-                            onClose = ::closeTip,
                             onToggleSaved = { toggleSaved(tip.id) },
                             onToggleVisited = { toggleVisited(tip.id) },
                             onOpenMap = {
@@ -239,17 +235,12 @@ fun CompassScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFA101719))
+                        .background(KosBg)
                         .padding(start = 20.dp, end = 8.dp, top = 6.dp, bottom = 6.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = "${tip.category.uppercase()} · TIPP",
-                        color = KosInk,
-                        fontSize = PostcardMetrics.BODY_SP.sp,
-                        fontFamily = KosSans
-                    )
+                    PostcardLabel("${tip.category} · Tipp")
                     TextButton(
                         onClick = ::closeTip,
                         modifier = Modifier

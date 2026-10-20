@@ -1,4 +1,7 @@
 package com.example.kosurlaub.ui.compass
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import com.example.kosurlaub.*
 
 import com.example.kosurlaub.R
@@ -155,15 +158,12 @@ internal fun CompassCommunityCard(
     }
 }
 
+/** Detailansicht eines Tipps: Foto, Titel, Fakten, Merken/Erledigt, Karte und eigene Notiz. */
 @Composable
 internal fun CompassTipCard(
     tip: CompassTip,
     isSaved: Boolean,
     isVisited: Boolean,
-    expanded: Boolean,
-    showCloseButton: Boolean = true,
-    onToggleExpanded: () -> Unit,
-    onClose: () -> Unit,
     onToggleSaved: () -> Unit,
     onToggleVisited: () -> Unit,
     onOpenMap: () -> Unit,
@@ -178,224 +178,81 @@ internal fun CompassTipCard(
         delay(350)
         CompassPreferences.saveNote(context, tip.id, personalNote)
     }
-    val statusColor = when (tip.kind) {
-        CompassTipKind.RECOMMENDATION -> HomeAccent
-        CompassTipKind.NOTE -> KosAccent2
-        CompassTipKind.CAUTION -> KosWarn
-    }
-    val accent = categoryColor(tip.category)
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(
-                if (tip.kind == CompassTipKind.CAUTION) KosPanel else HomeCardColor,
-                HomeCardShape
-            )
-            .border(1.dp, accent.copy(alpha = 0.45f), HomeCardShape)
-            .padding(16.dp)
+            .clip(PostcardShape.Panel)
+            .background(HomeCardColor)
+            .border(1.dp, HomeCardBorder, PostcardShape.Panel)
+            .testTag("compass-tip-${tip.id}")
     ) {
-        Column(
+        Image(
+            painter = tipPainter(tip, editorial.imageRes),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(onClick = onToggleExpanded)
-                .semantics {
-                    role = Role.Button
-                    contentDescription = "${tip.title}, ${if (expanded) "Details schließen" else "Details öffnen"}"
-                }
-                .testTag("compass-tip-${tip.id}")
-        ) {
-            Image(
-                painter = tipPainter(tip, editorial.imageRes),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(if (expanded) 184.dp else 136.dp)
-                    .clip(PostcardShape.Photo)
-                    .testTag("compass-tip-image-${tip.id}-${if (expanded) "detail" else "card"}")
-            )
-            Spacer(Modifier.height(12.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(tip.category.uppercase(), color = accent, fontSize = PostcardMetrics.LABEL_SP.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp)
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = tip.kind.label,
-                        color = statusColor,
-                        fontSize = PostcardMetrics.LABEL_SP.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .background(statusColor.copy(alpha = 0.12f), RoundedCornerShape(50))
-                            .padding(horizontal = 8.dp, vertical = 4.dp)
-                    )
-                    if (expanded && showCloseButton) {
-                        TextButton(
-                            onClick = onClose,
-                            modifier = Modifier
-                                .width(48.dp)
-                                .height(48.dp)
-                                .testTag("compass-close-${tip.id}")
-                                .semantics {
-                                    contentDescription = "Tipp schließen und zur Tipps-Übersicht zurückkehren"
-                                },
-                            contentPadding = PaddingValues(0.dp)
-                        ) {
-                            Text("×", color = KosInk, fontSize = 24.sp, fontWeight = FontWeight.Medium)
-                        }
-                    }
-                }
+                .height(220.dp)
+                .testTag("compass-tip-image-${tip.id}-detail")
+        )
+        Column(modifier = Modifier.padding(PostcardSpace.Panel), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            StampChip(tip.kind.label)
+            Text(tip.title, style = PostcardType.Title, color = KosInk)
+            Text(tip.description, style = PostcardType.Body, color = KosInk)
+            val meta = listOf(tip.location, editorial.duration, editorial.bestTime).filter(String::isNotBlank)
+            if (meta.isNotEmpty()) {
+                Text(meta.joinToString("  ·  "), style = PostcardType.Label, color = KosInk.copy(alpha = 0.75f))
             }
-            Spacer(Modifier.height(7.dp))
-            Text(tip.title, color = KosInk, fontSize = PostcardMetrics.HEADING_SP.sp, fontWeight = FontWeight.SemiBold, fontFamily = KosSans)
-            Spacer(Modifier.height(5.dp))
-            Text(
-                tip.description,
-                color = KosInk.copy(alpha = 0.9f),
-                fontSize = PostcardMetrics.BODY_SP.sp,
-                lineHeight = 18.sp,
-                fontFamily = KosSans,
-                maxLines = if (expanded) Int.MAX_VALUE else 2,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(Modifier.height(8.dp))
-            Text(
-                listOf(tip.location, editorial.duration, editorial.bestTime).filter(String::isNotBlank).joinToString("  ·  "),
-                color = KosInk.copy(alpha = 0.75f),
-                fontSize = PostcardMetrics.LABEL_SP.sp,
-                fontFamily = KosSans
-            )
-            Spacer(Modifier.height(8.dp))
-            Text(
-                if (expanded) "WENIGER ANZEIGEN  ⌃" else "MEHR ANZEIGEN  ›",
-                color = accent,
-                fontSize = PostcardMetrics.LABEL_SP.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-            TextButton(
-                onClick = onToggleSaved,
-                modifier = Modifier.testTag("compass-save-${tip.id}")
-            ) {
-                Text(
-                    if (isSaved) "♥ GEMERKT" else "♡ MERKEN",
-                    color = if (isSaved) HomeAccent else KosInk,
-                    fontSize = PostcardMetrics.LABEL_SP.sp,
-                    fontWeight = FontWeight.Bold
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                PostcardChip(
+                    if (isSaved) "♥ Gemerkt" else "♡ Merken", isSaved, onToggleSaved,
+                    Modifier.testTag("compass-save-${tip.id}")
                 )
+                PostcardChip(if (isVisited) "✓ Erledigt" else "Als erledigt", isVisited, onToggleVisited)
             }
-            TextButton(onClick = onToggleVisited) {
-                Text(if (isVisited) "✓ ERLEDIGT" else "ALS ERLEDIGT", color = if (isVisited) KosAccent2 else KosInk.copy(alpha = 0.75f), fontSize = PostcardMetrics.LABEL_SP.sp)
-            }
-        }
-
-        if (expanded) {
             if (tip.tags.isNotEmpty()) {
-                Text(tip.tags.joinToString("  ·  "), color = accent, fontSize = PostcardMetrics.LABEL_SP.sp, fontFamily = KosSans)
+                Text(tip.tags.joinToString("  ·  "), style = PostcardType.Label, color = KosInk.copy(alpha = 0.75f))
             }
             tip.reviewSummary?.let { summary ->
-                Spacer(Modifier.height(12.dp))
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(accent.copy(alpha = 0.10f), PostcardShape.Photo)
-                        .border(1.dp, accent.copy(alpha = 0.30f), PostcardShape.Photo)
-                        .padding(12.dp)
-                ) {
-                    Text(
-                        "REZENSIONEN ZUSAMMENGEFASST",
-                        color = accent,
-                        fontSize = PostcardMetrics.LABEL_SP.sp,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 0.7.sp
-                    )
-                    Spacer(Modifier.height(5.dp))
-                    Text(
-                        summary,
-                        color = KosInk.copy(alpha = 0.9f),
-                        fontSize = PostcardMetrics.LABEL_SP.sp,
-                        lineHeight = 17.sp,
-                        fontFamily = KosSans
-                    )
+                TipPanel("Rezensionen zusammengefasst") {
+                    Text(summary, style = PostcardType.Body, color = KosInk)
                 }
             }
             if (tip.hotelDetails.isNotEmpty()) {
-                Spacer(Modifier.height(12.dp))
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(accent.copy(alpha = 0.10f), PostcardShape.Photo)
-                        .border(1.dp, accent.copy(alpha = 0.30f), PostcardShape.Photo)
-                        .padding(12.dp)
-                        .testTag("compass-hotel-details-${tip.id}")
-                ) {
-                    Text(
-                        "HOTEL AUF EINEN BLICK",
-                        color = accent,
-                        fontSize = PostcardMetrics.LABEL_SP.sp,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 0.7.sp
-                    )
+                TipPanel("Hotel auf einen Blick", Modifier.testTag("compass-hotel-details-${tip.id}")) {
                     tip.hotelDetails.forEachIndexed { index, detail ->
-                        Spacer(Modifier.height(if (index == 0) 10.dp else 12.dp))
-                        Text(
-                            detail.title,
-                            color = KosInk.copy(alpha = 0.75f),
-                            fontSize = PostcardMetrics.LABEL_SP.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Spacer(Modifier.height(3.dp))
-                        Text(
-                            detail.text,
-                            color = KosInk.copy(alpha = 0.9f),
-                            fontSize = PostcardMetrics.LABEL_SP.sp,
-                            lineHeight = 17.sp,
-                            fontFamily = KosSans
-                        )
+                        if (index > 0) Spacer(Modifier.height(6.dp))
+                        PostcardLabel(detail.title)
+                        Text(detail.text, style = PostcardType.Body, color = KosInk)
                     }
                 }
             } else {
-                Spacer(Modifier.height(12.dp))
-                CompassFactRow("DAUER", editorial.duration)
-                CompassFactRow("BESTE ZEIT", editorial.bestTime)
-                CompassFactRow("AB HOTEL", editorial.fromHotel)
-                CompassFactRow("ANREISE", editorial.transport)
-
-                Spacer(Modifier.height(10.dp))
-                PostcardLabel("IM SEPTEMBER")
-                Text(editorial.septemberNote, color = KosInk.copy(alpha = 0.9f), fontSize = PostcardMetrics.LABEL_SP.sp, lineHeight = 17.sp, fontFamily = KosSans)
-
-                Spacer(Modifier.height(12.dp))
-                CompassFactRow("GUT KOMBINIERBAR", editorial.combination)
-                CompassFactRow("RÜCKFAHRT", editorial.returnTip)
-                CompassFactRow("VOR ORT", editorial.facilities)
-            }
-
-            Spacer(Modifier.height(10.dp))
-            Text("EHRLICH EINGESCHÄTZT", color = KosWarn, fontSize = PostcardMetrics.LABEL_SP.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp)
-            Text(editorial.counterRecommendation, color = Color(0xFFD9C1A8), fontSize = PostcardMetrics.LABEL_SP.sp, lineHeight = 17.sp, fontFamily = KosSans)
-
-            Spacer(Modifier.height(12.dp))
-            if (tip.mapsUrl != null) {
-                OutlinedButton(
-                    onClick = onOpenMap,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .testTag("compass-map-${tip.id}"),
-                    border = BorderStroke(1.dp, accent.copy(alpha = 0.75f))
-                ) {
-                    Text(
-                        "IN GOOGLE MAPS ÖFFNEN  ↗",
-                        color = accent,
-                        fontSize = PostcardMetrics.LABEL_SP.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                Column {
+                    CompassFactRow("Dauer", editorial.duration)
+                    CompassFactRow("Beste Zeit", editorial.bestTime)
+                    CompassFactRow("Ab Hotel", editorial.fromHotel)
+                    CompassFactRow("Anreise", editorial.transport)
                 }
-                Spacer(Modifier.height(8.dp))
+                TipPanel("Im September") {
+                    Text(editorial.septemberNote, style = PostcardType.Body, color = KosInk)
+                }
+                Column {
+                    CompassFactRow("Gut kombinierbar", editorial.combination)
+                    CompassFactRow("Rückfahrt", editorial.returnTip)
+                    CompassFactRow("Vor Ort", editorial.facilities)
+                }
+            }
+            TipPanel("Ehrlich eingeschätzt", labelColor = KosStamp) {
+                Text(editorial.counterRecommendation, style = PostcardType.Body, color = KosInk)
+            }
+            if (tip.mapsUrl != null) {
+                Button(
+                    onClick = onOpenMap,
+                    modifier = Modifier.fillMaxWidth().height(52.dp).testTag("compass-map-${tip.id}"),
+                    colors = ButtonDefaults.buttonColors(containerColor = KosInk, contentColor = KosBg)
+                ) {
+                    Text("IN GOOGLE MAPS ÖFFNEN  ↗", style = PostcardType.Label)
+                }
             }
             PostcardTextField(
                 value = personalNote,
@@ -403,47 +260,55 @@ internal fun CompassTipCard(
                 label = { Text("Eigene Notiz") },
                 placeholder = { Text("Treffpunkt, Uhrzeit oder Erinnerung") },
                 minLines = 2,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .testTag("compass-note-${tip.id}")
+                modifier = Modifier.fillMaxWidth().testTag("compass-note-${tip.id}")
             )
-
-            Spacer(Modifier.height(10.dp))
-            Text(
-                if (tip.source == CompassTipSource.COMMUNITY) "PERSÖNLICHE ERFAHRUNG" else "RECHERCHIERTER HINWEIS · STAND ${editorial.checkedAt}",
-                color = KosInk.copy(alpha = 0.5f),
-                fontSize = PostcardMetrics.LABEL_SP.sp,
-                fontWeight = FontWeight.Bold
-            )
-            editorial.validUntil?.let {
+            Column {
                 Text(
-                    "GÜLTIGKEIT · $it",
-                    color = KosWarn,
-                    fontSize = PostcardMetrics.LABEL_SP.sp,
-                    fontWeight = FontWeight.Bold
+                    if (tip.source == CompassTipSource.COMMUNITY) "PERSÖNLICHE ERFAHRUNG" else "RECHERCHIERTER HINWEIS · STAND ${editorial.checkedAt}",
+                    style = PostcardType.Label, color = KosInk.copy(alpha = 0.6f)
                 )
-            }
-            if (tip.sourceUrl != null) {
-                Text(
-                    "${tip.source.label} · QUELLE ↗",
-                    color = KosInk.copy(alpha = 0.6f),
-                    fontSize = PostcardMetrics.LABEL_SP.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .clickable(onClick = onOpenSource)
-                        .padding(vertical = 8.dp)
-                )
+                editorial.validUntil?.let {
+                    Text("GÜLTIGKEIT · $it", style = PostcardType.Label, color = KosStamp)
+                }
+                if (tip.sourceUrl != null) {
+                    Text(
+                        "${tip.source.label} · QUELLE ↗",
+                        style = PostcardType.Label, color = HomeAccent,
+                        modifier = Modifier.clickable(onClick = onOpenSource).padding(vertical = 8.dp)
+                    )
+                }
             }
         }
+    }
+}
+
+/** Abgesetzter Block mit Überschrift innerhalb der Tipp-Detailansicht. */
+@Composable
+private fun TipPanel(
+    title: String,
+    modifier: Modifier = Modifier,
+    labelColor: Color = KosInk,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(PostcardShape.Photo)
+            .background(KosPanelHigh)
+            .padding(PostcardSpace.Panel),
+        verticalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Text(title.uppercase(), style = PostcardType.Label, color = labelColor)
+        content()
     }
 }
 
 @Composable
 internal fun CompassFactRow(label: String, value: String) {
     if (value.isBlank()) return
-    Row(modifier = Modifier.fillMaxWidth().padding(vertical = 3.dp)) {
-        Text(label, color = KosInk.copy(alpha = 0.5f), fontSize = PostcardMetrics.LABEL_SP.sp, fontWeight = FontWeight.Bold, modifier = Modifier.width(116.dp))
-        Text(value, color = KosInk.copy(alpha = 0.9f), fontSize = PostcardMetrics.LABEL_SP.sp, lineHeight = 16.sp, fontFamily = KosSans, modifier = Modifier.weight(1f))
+    Row(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
+        PostcardLabel(label, Modifier.width(120.dp))
+        Text(value, style = PostcardType.Body, color = KosInk, modifier = Modifier.weight(1f))
     }
 }
 
