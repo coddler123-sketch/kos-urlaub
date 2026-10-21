@@ -131,7 +131,7 @@ fun WeatherCard(
                 )
             }
         } else {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(end = 48.dp)
@@ -149,12 +149,15 @@ fun WeatherCard(
                         Text(s.weather.apparentTemperatureLabel, style = PostcardType.Body, color = KosInk.copy(alpha = 0.85f))
                     }
                 }
-                Text(
-                    text = "Wind ${s.weather.windSpeedLabel} · Luftfeuchte ${s.weather.humidityLabel} · Regen ${s.weather.precipitationLabel}",
-                    style = PostcardType.Body.copy(fontSize = PostcardMetrics.BODY_SP.sp),
-                    color = KosInk.copy(alpha = 0.85f)
-                )
+                val sea = rememberSeaTemperature()
+                Row(Modifier.fillMaxWidth()) {
+                    WeatherFact("Meer", sea?.let { "${Math.round(it)}°" } ?: "–", Modifier.weight(1f))
+                    WeatherFact("Wind", s.weather.windSpeedLabel, Modifier.weight(1f))
+                    WeatherFact("Feuchte", s.weather.humidityLabel, Modifier.weight(1f))
+                    WeatherFact("Regen", s.weather.precipitationLabel, Modifier.weight(1f))
+                }
                 if (s.weather.forecastDays.isNotEmpty()) {
+                    WeatherDivider()
                     Row(modifier = Modifier.fillMaxWidth()) {
                         s.weather.forecastDays.forEach { day ->
                             Column(
@@ -174,21 +177,33 @@ fun WeatherCard(
                         }
                     }
                 }
-                if (s.sunriseLabel != null || s.sunsetLabel != null) {
-                    Column {
-                        s.sunriseLabel?.let { PostcardLabel("Sonnenaufgang $it") }
-                        s.sunsetLabel?.let { PostcardLabel("Sonnenuntergang $it") }
-                    }
+                WeatherDivider()
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    s.sunriseLabel?.let { PostcardLabel("Sonnenaufgang $it") }
+                    s.sunsetLabel?.let { PostcardLabel("Sonnenuntergang $it") }
+                    Text(
+                        text = s.weatherStatus,
+                        style = PostcardType.Label,
+                        color = KosInk.copy(alpha = 0.65f),
+                        maxLines = 1
+                    )
                 }
-                Text(
-                    text = s.weatherStatus,
-                    style = PostcardType.Label,
-                    color = KosInk.copy(alpha = 0.65f),
-                    maxLines = 1
-                )
             }
         }
     }
+}
+
+@Composable
+private fun WeatherFact(label: String, value: String, modifier: Modifier = Modifier) {
+    Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(value, style = PostcardType.Numeral.copy(fontSize = PostcardType.Heading.fontSize), color = KosInk)
+        PostcardLabel(label)
+    }
+}
+
+@Composable
+private fun WeatherDivider() {
+    Box(Modifier.fillMaxWidth().height(1.dp).background(HomeCardBorder))
 }
 
 @Composable

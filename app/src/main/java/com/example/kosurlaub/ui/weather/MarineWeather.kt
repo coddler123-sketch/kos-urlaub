@@ -12,6 +12,15 @@ import com.example.kosurlaub.widget.*
 
 import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
@@ -101,4 +110,17 @@ object MarineWeatherRepository {
 
     private fun Float.storedDouble(): Double? =
         takeUnless { it == MISSING_VALUE }?.toDouble()
+}
+
+/** Meer-Temperatur: sofort aus dem Cache, beim Anzeigen frisch geladen. */
+@Composable
+fun rememberSeaTemperature(): Double? {
+    val context = LocalContext.current
+    var sea by remember { mutableStateOf(MarineWeatherRepository.cached(context)?.seaSurfaceTemperatureCelsius) }
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            MarineWeatherRepository.fetch()?.also { MarineWeatherRepository.save(context.applicationContext, it) }
+        }?.let { sea = it.seaSurfaceTemperatureCelsius }
+    }
+    return sea
 }

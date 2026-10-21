@@ -8,13 +8,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,7 +31,7 @@ import com.example.kosurlaub.ui.home.localEpochDay
 import com.example.kosurlaub.ui.theme.*
 import com.example.kosurlaub.ui.travel.nextBus
 import com.example.kosurlaub.ui.weather.KosWeather
-import com.example.kosurlaub.ui.weather.MarineWeatherRepository
+import com.example.kosurlaub.ui.weather.rememberSeaTemperature
 import com.example.kosurlaub.ui.weather.WeatherRepository
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -125,19 +118,13 @@ internal fun TodayOnKos(
 /** Luft, Meer, Wind und Sonnenuntergang auf Kos; die Meer-Temperatur wird beim Anzeigen frisch geladen. */
 @Composable
 internal fun KosWeatherRow(s: HomeState) {
-    val context = LocalContext.current
-    var sea by remember { mutableStateOf(MarineWeatherRepository.cached(context)?.seaSurfaceTemperatureCelsius) }
-    LaunchedEffect(Unit) {
-        withContext(Dispatchers.IO) {
-            MarineWeatherRepository.fetch()?.also { MarineWeatherRepository.save(context.applicationContext, it) }
-        }?.let { sea = it.seaSurfaceTemperatureCelsius }
+    val sea = rememberSeaTemperature()
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        Fact(stringResource(R.string.today_air), s.weather?.temperatureLabel ?: "–")
+        Fact(stringResource(R.string.today_sea), sea?.let { "${Math.round(it)}°" } ?: "–")
+        Fact(stringResource(R.string.today_wind), s.weather?.windSpeedLabel ?: "–")
+        Fact(stringResource(R.string.today_sunset), s.sunsetLabel?.substringBefore(" Uhr") ?: "–")
     }
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Fact(stringResource(R.string.today_air), s.weather?.temperatureLabel ?: "–")
-                Fact(stringResource(R.string.today_sea), sea?.let { "${Math.round(it)}°" } ?: "–")
-                Fact(stringResource(R.string.today_wind), s.weather?.windSpeedLabel ?: "–")
-                Fact(stringResource(R.string.today_sunset), s.sunsetLabel?.substringBefore(" Uhr") ?: "–")
-            }
 }
 
 @Composable

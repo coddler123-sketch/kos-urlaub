@@ -76,7 +76,6 @@ internal fun TodayBefore(
             PerforationEdge(modifier = Modifier.align(Alignment.BottomCenter))
         }
         Text(s.phrase, style = PostcardType.Quote, color = KosInk)
-        KosWeatherRow(s)
         if (s.days == 1L) {
             PaperPanel {
                 PostcardLabel(stringResource(R.string.today_before_soon_label))
