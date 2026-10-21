@@ -122,8 +122,8 @@ class MainActivitySmokeTest {
         pressBack()
         composeRule.onNodeWithTag("guide-hub").assertIsDisplayed()
 
-        composeRule.onNodeWithTag("guide-category-Unterkünfte").performScrollTo().performClick()
-        composeRule.onNodeWithText("1 Treffer").assertIsDisplayed()
+        composeRule.onNodeWithTag("guide-category-Tigaki").performScrollTo().performClick()
+        composeRule.onNodeWithTag("compass-screen").assertIsDisplayed()
 
         pressBack()
         composeRule.onNodeWithTag("guide-hub").assertIsDisplayed()
@@ -161,17 +161,17 @@ class MainActivitySmokeTest {
     }
 
     @Test
-    fun hotelTipOpensWithDirectMapLink() {
+    fun tipOpensWithDirectMapLink() {
         composeRule.onNodeWithTag("main-nav-discover").performClick()
         composeRule.onNodeWithTag("guide-search").performClick()
-        composeRule.onNodeWithTag("compass-search").performTextInput("Ilios")
-        composeRule.onNodeWithTag("compass-tip-hotel-ilios-k-village").performClick()
+        composeRule.onNodeWithTag("compass-search").performTextInput("Asklepieion")
+        composeRule.onNodeWithTag("compass-tip-trip-asklepieion").performClick()
 
         composeRule.onNodeWithTag("compass-tip-overlay").assertIsDisplayed()
-        composeRule.onNodeWithTag("compass-map-hotel-ilios-k-village")
+        composeRule.onNodeWithTag("compass-map-trip-asklepieion")
             .performScrollTo()
             .assertIsDisplayed()
-        composeRule.onNodeWithTag("compass-note-hotel-ilios-k-village")
+        composeRule.onNodeWithTag("compass-note-trip-asklepieion")
             .performScrollTo()
             .assertIsDisplayed()
     }

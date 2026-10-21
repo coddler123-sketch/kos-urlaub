@@ -33,8 +33,6 @@ internal fun TripInfoCard(onOpenMap: (String) -> Unit) {
                 "(max. ${TripData.CARRY_ON_SIZE}) pro Person"
         )
         InfoLine("Hotel", "${TripData.HOTEL_NAME}, ${TripData.HOTEL_PLACE}, ${TripData.HOTEL_POSTAL_CODE} Kos")
-        InfoLine("Zimmer", "${TripData.ROOM}, ${TripData.BOARD}")
-        InfoLine("Check-in / Check-out", "${TripData.HOTEL_CHECK_IN} / ${TripData.HOTEL_CHECK_OUT}")
         InfoLine("Veranstalter", TripData.OPERATOR)
         Spacer(Modifier.height(4.dp))
         TextButton(
@@ -43,6 +41,18 @@ internal fun TripInfoCard(onOpenMap: (String) -> Unit) {
         ) {
             Text("HOTEL AUF DER KARTE", style = PostcardType.Label, color = HomeAccent)
         }
+    }
+}
+
+@Composable
+internal fun HotelInfoCard() {
+    TravelCardContainer {
+        PostcardLabel("Hotel auf einen Blick", Modifier.testTag("hotel-info-card"))
+        Spacer(Modifier.height(8.dp))
+        hotelDetails.forEach { InfoLine(it.title, it.text) }
+        InfoLine("Bewertungen", HOTEL_REVIEW_SUMMARY)
+        Spacer(Modifier.height(4.dp))
+        Text(HOTEL_SOURCE_NOTE, style = PostcardType.Label, color = KosInk.copy(alpha = 0.7f))
     }
 }
 

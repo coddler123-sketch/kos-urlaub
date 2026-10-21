@@ -25,8 +25,6 @@ import com.example.kosurlaub.ui.compass.compassTips
 import com.example.kosurlaub.ui.compass.tipOfTheDay
 import com.example.kosurlaub.ui.home.AppClock
 import com.example.kosurlaub.ui.home.HomeState
-import com.example.kosurlaub.ui.home.DayEntry
-import com.example.kosurlaub.ui.home.DayEntryStore
 import com.example.kosurlaub.ui.home.TripDays
 import com.example.kosurlaub.ui.home.localEpochDay
 import com.example.kosurlaub.ui.theme.*
@@ -39,7 +37,7 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
 
-/** Heute auf Kos: Wetter und Meer, Tagesplan (gemerkte Tipps), nächster Bus, Tipp des Tages. */
+/** Heute auf Kos: Wetter und Meer, nächster Bus, Tipp des Tages. */
 @Composable
 internal fun TodayOnKos(
     s: HomeState,
@@ -51,13 +49,6 @@ internal fun TodayOnKos(
     val athens = TimeZone.getTimeZone("Europe/Athens")
     val kosNow = Calendar.getInstance(athens).apply { timeInMillis = now }
     val date = SimpleDateFormat("EEEE, d. MMMM", Locale.GERMAN).apply { timeZone = athens }.format(kosNow.time)
-    val plan = TripDays.today(now)?.let { DayEntryStore.load(context, it.index) }.orEmpty().mapNotNull { entry ->
-        when (entry.kind) {
-            DayEntry.Kind.PLACE -> compassTips.firstOrNull { it.id == entry.value }?.title
-            DayEntry.Kind.NOTE -> entry.value
-            DayEntry.Kind.PHOTO -> null
-        }
-    }
     val rawWeather: KosWeather? = WeatherRepository.cached(context)
     val bus = nextBus("Tigaki", "Kos-Stadt", kosNow)
     val tip = tipOfTheDay(compassTips, rawWeather, localEpochDay())
@@ -90,14 +81,6 @@ internal fun TodayOnKos(
                     "${back.weekday} %02d.%02d. · ${stringResource(R.string.today_return_checkout)}".format(back.day, back.month),
                     "${TripData.HOTEL_CHECK_OUT} · ${TripData.HOTEL_NAME}"
                 )
-            }
-            PaperPanel(modifier = Modifier.clickable(onClick = onOpenTips)) {
-                PostcardLabel(stringResource(R.string.today_plan))
-                if (plan.isEmpty()) {
-                    Text(stringResource(R.string.today_plan_empty), style = PostcardType.Body, color = KosInk)
-                } else {
-                    plan.forEach { Text("• $it", style = PostcardType.Body, color = KosInk) }
-                }
             }
             PaperPanel {
                 PostcardLabel(stringResource(R.string.today_next_bus))

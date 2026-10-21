@@ -2,7 +2,6 @@
     <string name="app_name">Kos Urlaub</string>
     <string name="main_nav_today">Heute</string>
     <string name="main_nav_discover">Guide</string>
-    <string name="main_nav_diary">Tagebuch</string>
     <string name="discover_tab_tips">Tipps</string>
     <string name="discover_tab_travel">Reise</string>
     <string name="community_title">Kos-Gruppen auf Facebook</string>
@@ -524,8 +523,6 @@
     <string name="today_sea">Meer</string>
     <string name="today_wind">Wind</string>
     <string name="today_sunset">Sonne ↓</string>
-    <string name="today_plan">Heute vorgemerkt</string>
-    <string name="today_plan_empty">Noch nichts gemerkt. Tipps findest du im Guide.</string>
     <string name="today_next_bus">Nächster Bus</string>
     <string name="today_bus_none">Heute keine Abfahrt mehr</string>
     <string name="today_bus_source">Referenzfahrplan, Stand %1$s</string>
@@ -533,5 +530,4 @@
     <string name="today_after_title">Schön war es.</string>
     <string name="today_after_days">Tage</string>
     <string name="today_after_visited">Tipps besucht</string>
-    <string name="today_after_entries">Einträge</string>
 </resources>

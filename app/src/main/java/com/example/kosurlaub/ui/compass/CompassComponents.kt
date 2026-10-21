@@ -222,7 +222,6 @@ internal fun CompassTipCard(
                 )
                 PostcardChip(if (isVisited) "✓ Erledigt" else "Als erledigt", isVisited, onToggleVisited)
             }
-            TipDayPlanner(tip.id)
             if (tip.tags.isNotEmpty()) {
                 Text(tip.tags.joinToString("  ·  "), style = PostcardType.Label, color = KosInk.copy(alpha = 0.75f))
             }
@@ -231,30 +230,21 @@ internal fun CompassTipCard(
                     Text(summary, style = PostcardType.Body, color = KosInk)
                 }
             }
-            if (tip.hotelDetails.isNotEmpty()) {
-                TipPanel("Hotel auf einen Blick", Modifier.testTag("compass-hotel-details-${tip.id}")) {
-                    tip.hotelDetails.forEachIndexed { index, detail ->
-                        if (index > 0) Spacer(Modifier.height(6.dp))
-                        PostcardLabel(detail.title)
-                        Text(detail.text, style = PostcardType.Body, color = KosInk)
-                    }
-                }
-            } else {
-                Column {
-                    CompassFactRow("Dauer", editorial.duration)
-                    CompassFactRow("Beste Zeit", editorial.bestTime)
-                    CompassFactRow("Ab Hotel", editorial.fromHotel)
-                    CompassFactRow("Anreise", editorial.transport)
-                }
-                TipPanel("Im September") {
-                    Text(editorial.septemberNote, style = PostcardType.Body, color = KosInk)
-                }
-                Column {
-                    CompassFactRow("Gut kombinierbar", editorial.combination)
-                    CompassFactRow("Rückfahrt", editorial.returnTip)
-                    CompassFactRow("Vor Ort", editorial.facilities)
-                }
+            Column {
+                CompassFactRow("Dauer", editorial.duration)
+                CompassFactRow("Beste Zeit", editorial.bestTime)
+                CompassFactRow("Ab Hotel", editorial.fromHotel)
+                CompassFactRow("Anreise", editorial.transport)
             }
+            TipPanel("Im September") {
+                Text(editorial.septemberNote, style = PostcardType.Body, color = KosInk)
+            }
+            Column {
+                CompassFactRow("Gut kombinierbar", editorial.combination)
+                CompassFactRow("Rückfahrt", editorial.returnTip)
+                CompassFactRow("Vor Ort", editorial.facilities)
+            }
+        
             TipPanel("Ehrlich eingeschätzt", labelColor = KosStamp) {
                 Text(editorial.counterRecommendation, style = PostcardType.Body, color = KosInk)
             }
@@ -368,27 +358,4 @@ internal fun tipPainter(tip: CompassTip, @DrawableRes fallback: Int): androidx.c
         PrivateImages.tipBitmap(context, tip.id)?.asImageBitmap()
     }
     return photo?.let { androidx.compose.ui.graphics.painter.BitmapPainter(it) } ?: painterResource(fallback)
-}
-
-/** Tage wählen, an denen der Tipp im Tagesplan auf Heute steht. */
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun TipDayPlanner(tipId: String) {
-    val context = LocalContext.current
-    var planned by remember(tipId) { mutableStateOf(DayEntryStore.plannedDays(context, tipId)) }
-    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        PostcardLabel("Im Tagesplan")
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            TripDays.all.forEach { day ->
-                PostcardChip(
-                    "${day.weekday} ${day.day}.", day.index in planned,
-                    {
-                        DayEntryStore.togglePlace(context, day.index, tipId)
-                        planned = DayEntryStore.plannedDays(context, tipId)
-                    },
-                    Modifier.testTag("compass-plan-${tipId}-${day.index}")
-                )
-            }
-        }
-    }
 }

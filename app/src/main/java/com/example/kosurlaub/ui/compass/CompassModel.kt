@@ -20,7 +20,6 @@ data class CompassTip(
     val journey: String = "",
     val tags: List<String> = emptyList(),
     val reviewSummary: String? = null,
-    val hotelDetails: List<CompassTipDetail> = emptyList(),
     val source: CompassTipSource = CompassTipSource.COMMUNITY,
     val sourceUrl: String? = null,
     val mapsUrl: String? = null,
@@ -44,7 +43,6 @@ enum class CompassTipKind(val label: String) {
 }
 
 internal val compassTipIds = listOf(
-    "hotel-ilios-k-village",
     "trip-kos-town",
     "trip-asklepieion",
     "trip-zia-sunset",
@@ -93,7 +91,6 @@ internal fun filterCompassTips(
             tip.location,
             tip.journey,
             tip.reviewSummary.orEmpty(),
-            tip.hotelDetails.joinToString(" ") { "${it.title} ${it.text}" },
             tip.tags.joinToString(" ")
         ).joinToString(" ").lowercase()
         matchesCategory && (normalizedQuery.isEmpty() || normalizedQuery in searchable)

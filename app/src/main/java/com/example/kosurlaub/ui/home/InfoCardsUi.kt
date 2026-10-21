@@ -56,7 +56,7 @@ fun CompassCard(onClick: () -> Unit) {
         Spacer(Modifier.height(5.dp))
         Text("${compassTips.size} ausgewählte Kos-Tipps", color = KosInk, fontSize = PostcardMetrics.BODY_SP.sp, fontWeight = FontWeight.SemiBold, fontFamily = KosSans)
         Spacer(Modifier.height(4.dp))
-        Text("Strände, Essen, Unterkünfte und Mobilität entdecken  ›", color = KosInk.copy(alpha = 0.8f), fontSize = PostcardMetrics.LABEL_SP.sp, lineHeight = 16.sp, fontFamily = KosSans)
+        Text("Strände, Essen und Mobilität entdecken  ›", color = KosInk.copy(alpha = 0.8f), fontSize = PostcardMetrics.LABEL_SP.sp, lineHeight = 16.sp, fontFamily = KosSans)
     }
 }
 

@@ -128,7 +128,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private enum class MainDestination { TODAY, DISCOVER, DIARY }
+private enum class MainDestination { TODAY, DISCOVER }
 
 @Composable
 private fun KosApp(
@@ -145,7 +145,7 @@ private fun KosApp(
     val scrollToTopRequest = remember { mutableIntStateOf(0) }
     val selectedDay = rememberSaveable { mutableIntStateOf(0) }
     val todayIndex = remember { TripDays.today(AppClock.nowMillis())?.index }
-    val destination = MainDestination.valueOf(destinationName.value)
+    val destination = MainDestination.entries.firstOrNull { it.name == destinationName.value } ?: MainDestination.TODAY
 
     BackHandler(enabled = !nestedDetailVisible.value && destination != MainDestination.TODAY) {
         if (destination == MainDestination.DISCOVER && guidePage.value != null) {
@@ -206,12 +206,6 @@ private fun KosApp(
                                 onOpenCommunity = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_URL))) },
                 onDetailVisibilityChanged = { nestedDetailVisible.value = it }
             )
-            MainDestination.DIARY -> DiaryScreen(
-                padding = padding,
-                scrollToTopRequest = scrollToTopRequest.intValue,
-                phase = TripPhase.of(AppClock.nowMillis()),
-                onOpenTips = { guidePage.value = null; destinationName.value = MainDestination.DISCOVER.name }
-            )
         }
     }
 }
@@ -226,12 +220,10 @@ private fun MainNavigationBar(
             val labelRes = when (destination) {
                 MainDestination.TODAY -> R.string.main_nav_today
                 MainDestination.DISCOVER -> R.string.main_nav_discover
-                MainDestination.DIARY -> R.string.main_nav_diary
             }
             val iconRes = when (destination) {
                 MainDestination.TODAY -> R.drawable.ic_nav_home
                 MainDestination.DISCOVER -> R.drawable.ic_nav_compass
-                MainDestination.DIARY -> R.drawable.ic_nav_diary
             }
             NavigationBarItem(
                 selected = destination == selected,
@@ -417,10 +409,7 @@ private fun KosHome(
                         onOpenEmergency = { onOpenTravel("HELP") }
                     )
                 }
-                TripPhase.AFTER -> TodayAfter(
-                    s, heroPhoto,
-                    entriesCount = TripDays.all.sumOf { DayEntryStore.load(context, it.index).size }
-                )
+                TripPhase.AFTER -> TodayAfter(s, heroPhoto)
             }
             if (phase != TripPhase.AFTER) {
                 Spacer(Modifier.height(12.dp))

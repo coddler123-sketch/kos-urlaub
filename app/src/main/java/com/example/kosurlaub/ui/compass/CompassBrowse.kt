@@ -75,8 +75,7 @@ internal val compassCategories = listOf(
     CompassCategory("Essen", "Griechische Klassiker probieren", R.drawable.category_greek_food),
     CompassCategory("Strände", "Tigaki, Marmari und ruhige Badetage", R.drawable.excursion_marmari),
     CompassCategory("Ausflüge", "Orte, Besuchszeiten und Kombinationen", R.drawable.kos_rot_11),
-    CompassCategory("Mobilität", "Bus, Mietwagen und sichere Rückfahrten", R.drawable.kos_rot_19),
-    CompassCategory("Unterkünfte", "Euer Hotel und weitere Erfahrungen", R.drawable.kos_rot_25)
+    CompassCategory("Mobilität", "Bus, Mietwagen und sichere Rückfahrten", R.drawable.kos_rot_19)
 )
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)

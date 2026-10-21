@@ -30,7 +30,6 @@ data class CompassEditorial(
 private const val PLACEHOLDER_IMAGE = R.drawable.ic_sparkle
 
 private val tipImages = mapOf(
-    "hotel-ilios-k-village" to R.drawable.kos_rot_25,
     "trip-kos-town" to R.drawable.excursion_old_town,
     "trip-asklepieion" to R.drawable.excursion_kos_stadt,
     "trip-zia-sunset" to R.drawable.tip_zia_sunset,
@@ -54,11 +53,6 @@ private val tipImages = mapOf(
 
 internal fun editorialFor(tip: CompassTip): CompassEditorial {
     val fallback = when (tip.category) {
-        "Unterkünfte" -> CompassEditorial(
-            "", "", "", "", "", "", "", "",
-            "Verbindlich sind euer Reisevoucher und die Angaben der Rezeption.",
-            imageRes = PLACEHOLDER_IMAGE
-        )
         "Essen" -> CompassEditorial(
             "1–2 Stunden", "Abends", "Je nach Lokal", "Zu Fuß, Bus oder Taxi",
             "Öffnungstage und Reservierung kurz prüfen.",

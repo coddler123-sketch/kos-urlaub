@@ -17,7 +17,7 @@ import com.example.kosurlaub.ui.theme.*
 
 /** Heute nach dem Urlaub: Rückblick mit Foto und Zahlen. */
 @Composable
-internal fun TodayAfter(s: HomeState, heroPhoto: ImageBitmap?, entriesCount: Int) {
+internal fun TodayAfter(s: HomeState, heroPhoto: ImageBitmap?) {
     val context = LocalContext.current
     val visited = CompassPreferences.visited(context).size
     Column(verticalArrangement = Arrangement.spacedBy(PostcardSpace.Gap), horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
@@ -26,7 +26,6 @@ internal fun TodayAfter(s: HomeState, heroPhoto: ImageBitmap?, entriesCount: Int
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
             Stat(TripDays.all.size.toString(), stringResource(R.string.today_after_days))
             Stat(visited.toString(), stringResource(R.string.today_after_visited))
-            Stat(entriesCount.toString(), stringResource(R.string.today_after_entries))
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.example.kosurlaub
 
+import com.example.kosurlaub.ui.travel.HOTEL_REVIEW_SUMMARY
+import com.example.kosurlaub.ui.travel.hotelDetails
 import com.example.kosurlaub.R
 import com.example.kosurlaub.MainActivity
 import com.example.kosurlaub.ui.home.*
@@ -17,7 +19,7 @@ import org.junit.Test
 class CompassTipsTest {
     @Test
     fun `tip collection has one stable id per tip`() {
-        assertEquals(20, compassTips.size)
+        assertEquals(19, compassTips.size)
         assertEquals(compassTips.size, compassTips.map { it.id }.distinct().size)
         assertTrue(compassTips.all { it.id.isNotBlank() && it.id != it.title })
         assertTrue(compassTips.all { it.source == CompassTipSource.RESEARCHED })
@@ -50,13 +52,10 @@ class CompassTipsTest {
     }
 
     @Test
-    fun `hotel tip carries sourced details`() {
-        val hotel = compassTips.first { it.id == "hotel-ilios-k-village" }
-
-        assertEquals("Unterkünfte", hotel.category)
-        assertTrue(hotel.hotelDetails.any { it.title == "ALL INCLUSIVE" })
-        assertTrue(hotel.sourceUrl?.startsWith("https://") == true)
-        assertEquals("Tigaki, Kos", hotel.location)
+    fun `hotel info carries sourced details`() {
+        assertTrue(hotelDetails.any { it.title == "ALL INCLUSIVE" })
+        assertTrue(hotelDetails.any { it.title == "KONTAKT" })
+        assertTrue(HOTEL_REVIEW_SUMMARY.isNotBlank())
     }
 
     @Test

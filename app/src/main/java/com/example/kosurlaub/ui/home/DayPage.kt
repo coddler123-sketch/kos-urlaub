@@ -77,8 +77,6 @@ fun DayPage(day: TripDay, onOpenTips: () -> Unit) {
         Spacer(Modifier.height(12.dp))
         BusFactCard(day)
         Spacer(Modifier.height(12.dp))
-        YourDayCard(day)
-        Spacer(Modifier.height(12.dp))
         Text(
             "Tipps ansehen  ›",
             color = KosInk.copy(alpha = 0.75f), fontSize = PostcardMetrics.BODY_SP.sp, fontFamily = KosSerif,
@@ -151,93 +149,3 @@ private fun BusFactCard(day: TripDay) {
 }
 
 private fun List<BusDeparture>.times() = joinToString(" · ") { it.time }
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun YourDayCard(day: TripDay) {
-    val context = LocalContext.current
-    var entries by remember(day) { mutableStateOf(DayEntryStore.load(context, day.index)) }
-    var draft by remember(day) { mutableStateOf("") }
-    var showPlaces by remember(day) { mutableStateOf(false) }
-
-    fun update(new: List<DayEntry>) {
-        entries = new
-        DayEntryStore.save(context, day.index, new)
-    }
-
-    val picker = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri != null) {
-            val dir = File(context.filesDir, "day_photos").apply { mkdirs() }
-            val file = File(dir, "day${day.index}_${System.currentTimeMillis()}.jpg")
-            runCatching {
-                context.contentResolver.openInputStream(uri)?.use { input -> file.outputStream().use { input.copyTo(it) } }
-            }.onSuccess { update(entries + DayEntry(DayEntry.Kind.PHOTO, file.name)) }
-        }
-    }
-    val savedIds = remember(day, showPlaces) { CompassPreferences.saved(context) }
-
-    DayCard("EUER TAG") {
-        if (entries.isEmpty()) Line("Noch leer. Ihr entscheidet, was hier steht.", alpha = 0.7f)
-        entries.forEachIndexed { index, entry ->
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-                Column(modifier = Modifier.weight(1f)) {
-                    when (entry.kind) {
-                        DayEntry.Kind.NOTE -> Line(entry.value)
-                        DayEntry.Kind.PLACE -> Line("Ort: " + (compassTips.firstOrNull { it.id == entry.value }?.title ?: entry.value))
-                        DayEntry.Kind.PHOTO -> DayPhoto(File(File(context.filesDir, "day_photos"), entry.value))
-                    }
-                }
-                TextButton(onClick = { update(entries.filterIndexed { i, _ -> i != index }) }) {
-                    Text("×", color = KosInk.copy(alpha = 0.6f), fontSize = 20.sp)
-                }
-            }
-        }
-        Spacer(Modifier.height(6.dp))
-        PostcardTextField(
-            value = draft, onValueChange = { draft = it },
-            placeholder = { Text("Notiz", fontFamily = KosSans, fontSize = PostcardMetrics.BODY_SP.sp) },
-            modifier = Modifier.fillMaxWidth().testTag("day-note-input")
-        )
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            TextButton(onClick = {
-                val text = draft.trim()
-                if (text.isNotEmpty()) { update(entries + DayEntry(DayEntry.Kind.NOTE, text)); draft = "" }
-            }, modifier = Modifier.testTag("day-add-note")) { Text("+ Notiz", color = HomeAccent, fontFamily = KosSans, fontWeight = FontWeight.SemiBold) }
-            TextButton(onClick = {
-                picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-            }, modifier = Modifier.testTag("day-add-photo")) { Text("+ Foto", color = HomeAccent, fontFamily = KosSans, fontWeight = FontWeight.SemiBold) }
-            TextButton(onClick = { showPlaces = !showPlaces }, modifier = Modifier.testTag("day-add-place")) {
-                Text("+ Ort von der Merkliste", color = HomeAccent, fontFamily = KosSans, fontWeight = FontWeight.SemiBold)
-            }
-        }
-        if (showPlaces) {
-            val tips = compassTips.filter { it.id in savedIds }
-            if (tips.isEmpty()) Line("Eure Merkliste ist noch leer.", alpha = 0.7f, size = 12)
-            tips.forEach { tip ->
-                Text(
-                    tip.title, color = KosInk, fontSize = PostcardMetrics.BODY_SP.sp, fontFamily = KosSans,
-                    modifier = Modifier.fillMaxWidth().clickable {
-                        update(entries + DayEntry(DayEntry.Kind.PLACE, tip.id)); showPlaces = false
-                    }.padding(vertical = 8.dp)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-internal fun DayPhoto(file: File) {
-    val bitmap = remember(file.path) {
-        runCatching {
-            BitmapFactory.decodeFile(file.path, BitmapFactory.Options().apply { inSampleSize = 4 })
-        }.getOrNull()
-    }
-    if (bitmap != null) {
-        Image(
-            bitmap = bitmap.asImageBitmap(), contentDescription = "Euer Foto", contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxWidth().height(160.dp).clip(PostcardShape.Tile)
-        )
-    } else {
-        Line("Foto nicht mehr vorhanden", alpha = 0.6f, size = 12)
-    }
-}

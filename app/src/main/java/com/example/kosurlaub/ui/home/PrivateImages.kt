@@ -30,7 +30,6 @@ object PrivateImages {
     val version = mutableIntStateOf(0)
 
     val TIPS = mapOf(
-        "hotel-ilios-k-village" to "hotel-und-alte-webp/hotel_ilios_village.webp",
         "trip-kos-town" to "kosurlaub-de/07.jpg",
         "trip-asklepieion" to "kosurlaub-de/08.jpg",
         "trip-zia-sunset" to "kosurlaub-de/02.jpg",
