@@ -8,6 +8,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,7 +59,12 @@ internal fun TodayOnKos(
     val date = SimpleDateFormat("EEEE, d. MMMM", Locale.GERMAN).apply { timeZone = athens }.format(kosNow.time)
     val saved = compassTips.filter { it.id in CompassPreferences.saved(context) }
     val rawWeather: KosWeather? = WeatherRepository.cached(context)
-    val sea = MarineWeatherRepository.cached(context)?.seaSurfaceTemperatureCelsius
+    var sea by remember { mutableStateOf(MarineWeatherRepository.cached(context)?.seaSurfaceTemperatureCelsius) }
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            MarineWeatherRepository.fetch()?.also { MarineWeatherRepository.save(context.applicationContext, it) }
+        }?.let { sea = it.seaSurfaceTemperatureCelsius }
+    }
     val bus = nextBus("Tigaki", "Kos-Stadt", kosNow)
     val tip = tipOfTheDay(compassTips, rawWeather, localEpochDay())
 
