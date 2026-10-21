@@ -28,6 +28,14 @@ class DailyPhraseTest {
     }
 
     @Test
+    fun `far ahead uses the far pool, closer days the daily pool`() {
+        val far = arrayOf("f0", "f1")
+        assertEquals("f0", phraseOfTheDay(countdown, daily, 300, 20_000, far))
+        assertEquals("f1", phraseOfTheDay(countdown, daily, 300, 20_001, far))
+        assertEquals("d0", phraseOfTheDay(countdown, daily, 200, 20_000, far))
+    }
+
+    @Test
     fun `after the departure the last countdown phrase stays`() {
         assertEquals("c2", phraseOfTheDay(countdown, daily, -1, 20_000))
     }

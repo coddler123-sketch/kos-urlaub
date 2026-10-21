@@ -59,12 +59,6 @@ internal fun TodayOnKos(
     val date = SimpleDateFormat("EEEE, d. MMMM", Locale.GERMAN).apply { timeZone = athens }.format(kosNow.time)
     val saved = compassTips.filter { it.id in CompassPreferences.saved(context) }
     val rawWeather: KosWeather? = WeatherRepository.cached(context)
-    var sea by remember { mutableStateOf(MarineWeatherRepository.cached(context)?.seaSurfaceTemperatureCelsius) }
-    LaunchedEffect(Unit) {
-        withContext(Dispatchers.IO) {
-            MarineWeatherRepository.fetch()?.also { MarineWeatherRepository.save(context.applicationContext, it) }
-        }?.let { sea = it.seaSurfaceTemperatureCelsius }
-    }
     val bus = nextBus("Tigaki", "Kos-Stadt", kosNow)
     val tip = tipOfTheDay(compassTips, rawWeather, localEpochDay())
 
@@ -87,12 +81,7 @@ internal fun TodayOnKos(
                 }
                 PerforationEdge(modifier = Modifier.align(Alignment.BottomCenter))
             }
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Fact(stringResource(R.string.today_air), s.weather?.temperatureLabel ?: "–")
-                Fact(stringResource(R.string.today_sea), sea?.let { "${Math.round(it)}°" } ?: "–")
-                Fact(stringResource(R.string.today_wind), s.weather?.windSpeedLabel ?: "–")
-                Fact(stringResource(R.string.today_sunset), s.sunsetLabel?.substringBefore(" Uhr") ?: "–")
-            }
+            KosWeatherRow(s)
             if (isReturnPassVisible(now)) {
                 val back = TripData.inbound
                 BoardingPass(
@@ -131,6 +120,24 @@ internal fun TodayOnKos(
             }
         }
     }
+}
+
+/** Luft, Meer, Wind und Sonnenuntergang auf Kos; die Meer-Temperatur wird beim Anzeigen frisch geladen. */
+@Composable
+internal fun KosWeatherRow(s: HomeState) {
+    val context = LocalContext.current
+    var sea by remember { mutableStateOf(MarineWeatherRepository.cached(context)?.seaSurfaceTemperatureCelsius) }
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) {
+            MarineWeatherRepository.fetch()?.also { MarineWeatherRepository.save(context.applicationContext, it) }
+        }?.let { sea = it.seaSurfaceTemperatureCelsius }
+    }
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Fact(stringResource(R.string.today_air), s.weather?.temperatureLabel ?: "–")
+                Fact(stringResource(R.string.today_sea), sea?.let { "${Math.round(it)}°" } ?: "–")
+                Fact(stringResource(R.string.today_wind), s.weather?.windSpeedLabel ?: "–")
+                Fact(stringResource(R.string.today_sunset), s.sunsetLabel?.substringBefore(" Uhr") ?: "–")
+            }
 }
 
 @Composable

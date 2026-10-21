@@ -298,7 +298,8 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
                 context.resources.getStringArray(R.array.widget_phrases),
                 context.resources.getStringArray(R.array.widget_phrases_daily),
                 CountdownCalculator.daysUntilDeparture(),
-                localEpochDay()
+                localEpochDay(),
+                context.resources.getStringArray(R.array.widget_phrases_far)
             )
         }
 
