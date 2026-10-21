@@ -24,6 +24,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -212,6 +214,7 @@ internal fun CompassTipCard(
                 )
                 PostcardChip(if (isVisited) "✓ Erledigt" else "Als erledigt", isVisited, onToggleVisited)
             }
+            TipDayPlanner(tip.id)
             if (tip.tags.isNotEmpty()) {
                 Text(tip.tags.joinToString("  ·  "), style = PostcardType.Label, color = KosInk.copy(alpha = 0.75f))
             }
@@ -357,4 +360,27 @@ internal fun tipPainter(tip: CompassTip, @DrawableRes fallback: Int): androidx.c
         PrivateImages.tipBitmap(context, tip.id)?.asImageBitmap()
     }
     return photo?.let { androidx.compose.ui.graphics.painter.BitmapPainter(it) } ?: painterResource(fallback)
+}
+
+/** Tage wählen, an denen der Tipp im Tagesplan auf Heute steht. */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun TipDayPlanner(tipId: String) {
+    val context = LocalContext.current
+    var planned by remember(tipId) { mutableStateOf(DayEntryStore.plannedDays(context, tipId)) }
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        PostcardLabel("Im Tagesplan")
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            TripDays.all.forEach { day ->
+                PostcardChip(
+                    "${day.weekday} ${day.day}.", day.index in planned,
+                    {
+                        DayEntryStore.togglePlace(context, day.index, tipId)
+                        planned = DayEntryStore.plannedDays(context, tipId)
+                    },
+                    Modifier.testTag("compass-plan-${tipId}-${day.index}")
+                )
+            }
+        }
+    }
 }

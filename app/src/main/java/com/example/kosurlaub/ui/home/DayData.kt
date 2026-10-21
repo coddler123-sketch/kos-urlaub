@@ -62,6 +62,19 @@ object DayEntryStore {
     fun load(context: Context, dayIndex: Int): List<DayEntry> =
         decode(context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString("day$dayIndex", null))
 
+    /** Tage (Index ab 1), an denen der Tipp als Ort eingeplant ist. */
+    fun plannedDays(context: Context, tipId: String): Set<Int> =
+        TripDays.all.map { it.index }.filter { day ->
+            load(context, day).any { it.kind == DayEntry.Kind.PLACE && it.value == tipId }
+        }.toSet()
+
+    /** Plant den Tipp für den Tag ein oder nimmt ihn wieder heraus. */
+    fun togglePlace(context: Context, dayIndex: Int, tipId: String) {
+        val entries = load(context, dayIndex)
+        val place = DayEntry(DayEntry.Kind.PLACE, tipId)
+        save(context, dayIndex, if (place in entries) entries - place else entries + place)
+    }
+
     fun save(context: Context, dayIndex: Int, entries: List<DayEntry>) {
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
             .putString("day$dayIndex", encode(entries)).apply()

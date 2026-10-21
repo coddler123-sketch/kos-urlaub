@@ -157,7 +157,7 @@ private fun KosApp(
         bottomBar = {
             if (!nestedDetailVisible.value) {
                 Column {
-                    if (destination == MainDestination.TODAY) {
+                    if (destination == MainDestination.TODAY && TripPhase.of(AppClock.nowMillis()) != TripPhase.BEFORE) {
                         DayStrip(
                             days = TripDays.all,
                             todayIndex = todayIndex,
