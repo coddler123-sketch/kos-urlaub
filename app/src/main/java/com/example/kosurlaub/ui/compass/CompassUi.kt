@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
@@ -53,6 +54,11 @@ import androidx.compose.ui.unit.sp
 fun CompassScreen(
     padding: PaddingValues,
     scrollToTopRequest: Int = 0,
+    selectedCategory: String?,
+    onSelectCategory: (String?) -> Unit,
+    onSelectTravel: (String) -> Unit,
+    chipListState: LazyListState,
+    travelChipListState: LazyListState,
     onOpenCommunity: () -> Unit,
     onDetailVisibilityChanged: (Boolean) -> Unit = {}
 ) {
@@ -62,17 +68,6 @@ fun CompassScreen(
     LaunchedEffect(scrollToTopRequest) {
         if (scrollToTopRequest > 0) gridState.animateScrollToItem(0)
     }
-    val categories = remember {
-        listOf(
-            CompassCategory("Tigaki", "Tipps direkt rund um euren Urlaubsort", R.drawable.kos_rot_23),
-            CompassCategory("Essen", "Griechische Klassiker probieren", R.drawable.category_greek_food),
-            CompassCategory("Strände", "Tigaki, Marmari und ruhige Badetage", R.drawable.excursion_marmari),
-            CompassCategory("Ausflüge", "Orte, Besuchszeiten und Kombinationen", R.drawable.kos_rot_11),
-            CompassCategory("Mobilität", "Bus, Mietwagen und sichere Rückfahrten", R.drawable.kos_rot_19),
-            CompassCategory("Unterkünfte", "Euer Hotel und weitere Erfahrungen", R.drawable.kos_rot_25)
-        )
-    }
-    var selectedCategory by rememberSaveable { mutableStateOf<String?>(null) }
     var searchQuery by rememberSaveable { mutableStateOf("") }
     var selectedFilter by rememberSaveable { mutableStateOf<String?>(null) }
     var selectedTipId by rememberSaveable { mutableStateOf<String?>(null) }
@@ -119,7 +114,7 @@ fun CompassScreen(
         if (selectedTipId != null) {
             closeTip()
         } else {
-            selectedCategory = null
+            onSelectCategory(null)
             searchQuery = ""
             selectedFilter = null
             categorySelectionRequest += 1
@@ -155,9 +150,12 @@ fun CompassScreen(
             }
             item(key = "chips", span = full) {
                 CompassChipRow(
-                    categories = categories,
                     selected = selectedCategory,
-                    onSelected = { selectedCategory = it },
+                    selectedTravel = null,
+                    listState = chipListState,
+                    travelListState = travelChipListState,
+                    onSelected = onSelectCategory,
+                    onSelectTravel = onSelectTravel,
                     filterActive = selectedFilter != null,
                     onOpenFilter = { showFilter = true }
                 )

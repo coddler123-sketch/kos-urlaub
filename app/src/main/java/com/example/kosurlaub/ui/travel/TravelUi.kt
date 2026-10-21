@@ -87,8 +87,11 @@ private enum class TravelArea {
 fun TravelScreen(
     padding: PaddingValues,
     scrollToTopRequest: Int = 0,
-    openAreaRequest: Int = 0,
-    openArea: String = "",
+    area: String = "TODAY",
+    chipListState: LazyListState,
+    travelChipListState: LazyListState,
+    onSelectCategory: (String?) -> Unit,
+    onSelectTravel: (String) -> Unit,
     onBack: () -> Unit,
     onDetailVisibilityChanged: (Boolean) -> Unit = {}
 ) {
@@ -107,12 +110,7 @@ fun TravelScreen(
     var favorites by remember(context) {
         mutableStateOf(TravelPreferences.favorites(context))
     }
-    var selectedArea by rememberSaveable { mutableStateOf(TravelArea.TODAY) }
-    LaunchedEffect(openAreaRequest) {
-        if (openAreaRequest > 0) {
-            selectedArea = TravelArea.entries.firstOrNull { it.name == openArea } ?: TravelArea.TODAY
-        }
-    }
+    val selectedArea = TravelArea.entries.firstOrNull { it.name == area } ?: TravelArea.TODAY
     var showMobilitySources by rememberSaveable { mutableStateOf(false) }
     var showFerrySources by rememberSaveable { mutableStateOf(false) }
     var showMoreHelp by rememberSaveable { mutableStateOf(false) }
@@ -162,9 +160,13 @@ fun TravelScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
-            TravelSubTabRow(
-                selectedArea = selectedArea,
-                onSelectArea = { selectedArea = it }
+            CompassChipRow(
+                selected = null,
+                selectedTravel = selectedArea.name,
+                listState = chipListState,
+                travelListState = travelChipListState,
+                onSelected = onSelectCategory,
+                onSelectTravel = onSelectTravel
             )
         }
         when (selectedArea) {

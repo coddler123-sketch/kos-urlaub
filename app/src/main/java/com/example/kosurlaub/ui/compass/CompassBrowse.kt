@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import com.example.kosurlaub.R
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -66,32 +69,74 @@ internal val quickFilterGroups = listOf(
 )
 
 /** Eine Zeile: Kategorien als Chips (wischbar) und rechts fest der Knopf "Filter". */
+/** Kategorien der Tipps, gemeinsam für Chip-Reihe und Filter. */
+internal val compassCategories = listOf(
+    CompassCategory("Tigaki", "Tipps direkt rund um euren Urlaubsort", R.drawable.kos_rot_23),
+    CompassCategory("Essen", "Griechische Klassiker probieren", R.drawable.category_greek_food),
+    CompassCategory("Strände", "Tigaki, Marmari und ruhige Badetage", R.drawable.excursion_marmari),
+    CompassCategory("Ausflüge", "Orte, Besuchszeiten und Kombinationen", R.drawable.kos_rot_11),
+    CompassCategory("Mobilität", "Bus, Mietwagen und sichere Rückfahrten", R.drawable.kos_rot_19),
+    CompassCategory("Unterkünfte", "Euer Hotel und weitere Erfahrungen", R.drawable.kos_rot_25)
+)
+
+/** Praktische Reise-Bereiche, die im Guide neben den Tipp-Kategorien stehen: Schlüssel zu Beschriftung. */
+internal val guideTravelChips = listOf(
+    "HELP" to "SOS & Hilfe",
+    "MOBILITY" to "Bus & Mobil",
+    "TODAY" to "Reise & Meer",
+    "EXPLORE" to "Ausflüge & Sprache"
+)
+
+/** Chips für den ganzen Guide: oben Alle und die Tipp-Kategorien (mit Filter), darunter die praktischen Reise-Bereiche. */
 @Composable
 internal fun CompassChipRow(
-    categories: List<CompassCategory>,
     selected: String?,
+    selectedTravel: String?,
+    listState: LazyListState,
+    travelListState: LazyListState,
     onSelected: (String?) -> Unit,
-    filterActive: Boolean,
-    onOpenFilter: () -> Unit
+    onSelectTravel: (String) -> Unit,
+    filterActive: Boolean = false,
+    onOpenFilter: (() -> Unit)? = null
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        LazyRow(modifier = Modifier.weight(1f).testTag("compass-category-row"), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            item {
-                PostcardChip("Alle", selected == null, { onSelected(null) }, Modifier.testTag("compass-category-filter-all"))
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            LazyRow(
+                state = listState,
+                modifier = Modifier.weight(1f).testTag("compass-category-row"),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                item {
+                    PostcardChip("Alle", selected == null && selectedTravel == null, { onSelected(null) }, Modifier.testTag("compass-category-filter-all"))
+                }
+                items(compassCategories, key = { it.title }) { category ->
+                    PostcardChip(
+                        category.title, selectedTravel == null && selected == category.title, { onSelected(category.title) },
+                        Modifier.testTag("compass-category-filter-${category.title}")
+                    )
+                }
             }
-            items(categories, key = { it.title }) { category ->
+            if (onOpenFilter != null) {
                 PostcardChip(
-                    category.title, selected == category.title, { onSelected(category.title) },
-                    Modifier.testTag("compass-category-filter-${category.title}")
+                    label = if (filterActive) "Filter · 1" else "Filter",
+                    selected = filterActive,
+                    onClick = onOpenFilter,
+                    modifier = Modifier.testTag("compass-filter-button")
                 )
             }
         }
-        PostcardChip(
-            label = if (filterActive) "Filter · 1" else "Filter",
-            selected = filterActive,
-            onClick = onOpenFilter,
-            modifier = Modifier.testTag("compass-filter-button")
-        )
+        LazyRow(
+            state = travelListState,
+            modifier = Modifier.fillMaxWidth().testTag("travel-sub-tabs"),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(guideTravelChips, key = { it.first }) { (area, label) ->
+                PostcardChip(
+                    label, selectedTravel == area, { onSelectTravel(area) },
+                    Modifier.testTag("travel-area-${area.lowercase()}")
+                )
+            }
+        }
     }
 }
 

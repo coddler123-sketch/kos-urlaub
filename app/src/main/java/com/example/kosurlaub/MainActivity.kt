@@ -25,6 +25,7 @@ import androidx.core.view.WindowCompat
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -138,11 +139,10 @@ private fun KosApp(
     val destinationName = rememberSaveable {
         mutableStateOf(if (startInTravel) MainDestination.DISCOVER.name else MainDestination.TODAY.name)
     }
-    val discoverTab = rememberSaveable { mutableStateOf(if (startInTravel) "TRAVEL" else "TIPS") }
+    val guideCategory = rememberSaveable { mutableStateOf<String?>(null) }
+    val guideTravel = rememberSaveable { mutableStateOf<String?>(if (startInTravel) "TODAY" else null) }
     val nestedDetailVisible = remember { mutableStateOf(false) }
     val scrollToTopRequest = remember { mutableIntStateOf(0) }
-    val areaRequest = remember { mutableIntStateOf(0) }
-    val travelArea = remember { mutableStateOf("HELP") }
     val selectedDay = rememberSaveable { mutableIntStateOf(0) }
     val todayIndex = remember { TripDays.today(AppClock.nowMillis())?.index }
     val destination = MainDestination.valueOf(destinationName.value)
@@ -182,23 +182,21 @@ private fun KosApp(
             MainDestination.TODAY -> KosHome(
                 padding = padding,
                 selectedDay = TripDays.all.firstOrNull { it.index == selectedDay.intValue },
-                onOpenTips = { discoverTab.value = "TIPS"; destinationName.value = MainDestination.DISCOVER.name },
+                onOpenTips = { guideTravel.value = null; destinationName.value = MainDestination.DISCOVER.name },
                 themeMode = themeMode,
                 onThemeMode = onThemeMode,
                 scrollToTopRequest = scrollToTopRequest.intValue,
                 onOpenTravel = { area ->
-                    travelArea.value = area
-                    discoverTab.value = "TRAVEL"
+                    guideTravel.value = area
                     destinationName.value = MainDestination.DISCOVER.name
-                    areaRequest.intValue++
                 }
             )
             MainDestination.DISCOVER -> DiscoverScreen(
                 padding = padding,
-                tab = discoverTab.value,
-                onTab = { discoverTab.value = it },
-                openAreaRequest = areaRequest.intValue,
-                openArea = travelArea.value,
+                category = guideCategory.value,
+                travel = guideTravel.value,
+                onCategory = { guideCategory.value = it; guideTravel.value = null },
+                onTravel = { guideTravel.value = it },
                 scrollToTopRequest = scrollToTopRequest.intValue,
                 onBack = { destinationName.value = MainDestination.TODAY.name },
                 onOpenCommunity = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_URL))) },
@@ -208,7 +206,7 @@ private fun KosApp(
                 padding = padding,
                 scrollToTopRequest = scrollToTopRequest.intValue,
                 phase = TripPhase.of(AppClock.nowMillis()),
-                onOpenTips = { discoverTab.value = "TIPS"; destinationName.value = MainDestination.DISCOVER.name }
+                onOpenTips = { guideTravel.value = null; destinationName.value = MainDestination.DISCOVER.name }
             )
         }
     }
@@ -252,48 +250,43 @@ private fun MainNavigationBar(
 @Composable
 private fun DiscoverScreen(
     padding: PaddingValues,
-    tab: String,
-    onTab: (String) -> Unit,
-    openAreaRequest: Int,
-    openArea: String,
+    category: String?,
+    travel: String?,
+    onCategory: (String?) -> Unit,
+    onTravel: (String?) -> Unit,
     scrollToTopRequest: Int,
     onBack: () -> Unit,
     onOpenCommunity: () -> Unit,
     onDetailVisibilityChanged: (Boolean) -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding())) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            listOf("TIPS" to R.string.discover_tab_tips, "TRAVEL" to R.string.discover_tab_travel).forEach { (key, label) ->
-                PostcardChip(
-                    label = stringResource(label),
-                    selected = tab == key,
-                    onClick = { onTab(key) },
-                    modifier = Modifier.testTag("discover-tab-${key.lowercase()}")
-                )
-            }
-        }
+    val chipListState = rememberLazyListState()
+    val travelChipListState = rememberLazyListState()
+    Box(modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding())) {
         val inner = PaddingValues(bottom = padding.calculateBottomPadding())
-        Box(modifier = Modifier.weight(1f)) {
-            if (tab == "TRAVEL") {
-                TravelScreen(
-                    padding = inner,
-                    openAreaRequest = openAreaRequest,
-                    openArea = openArea,
-                    scrollToTopRequest = scrollToTopRequest,
-                    onBack = onBack,
-                    onDetailVisibilityChanged = onDetailVisibilityChanged
-                )
-            } else {
-                CompassScreen(
-                    padding = inner,
-                    scrollToTopRequest = scrollToTopRequest,
-                    onOpenCommunity = onOpenCommunity,
-                    onDetailVisibilityChanged = onDetailVisibilityChanged
-                )
-            }
+        if (travel != null) {
+            TravelScreen(
+                padding = inner,
+                scrollToTopRequest = scrollToTopRequest,
+                area = travel,
+                chipListState = chipListState,
+                travelChipListState = travelChipListState,
+                onSelectCategory = onCategory,
+                onSelectTravel = onTravel,
+                onBack = onBack,
+                onDetailVisibilityChanged = onDetailVisibilityChanged
+            )
+        } else {
+            CompassScreen(
+                padding = inner,
+                scrollToTopRequest = scrollToTopRequest,
+                selectedCategory = category,
+                onSelectCategory = onCategory,
+                onSelectTravel = onTravel,
+                chipListState = chipListState,
+                travelChipListState = travelChipListState,
+                onOpenCommunity = onOpenCommunity,
+                onDetailVisibilityChanged = onDetailVisibilityChanged
+            )
         }
     }
 }
