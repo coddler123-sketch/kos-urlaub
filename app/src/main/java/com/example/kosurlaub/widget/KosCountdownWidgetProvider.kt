@@ -239,11 +239,42 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
             views.setTextViewText(R.id.widget_date_text, dateLabel)
             views.setTextViewText(R.id.widget_glass_departure, context.getString(R.string.widget_glass_departure, dateLabel))
 
-            views.setProgressBar(
-                R.id.widget_progress_bar, 1000,
-                widgetProgressValue(CountdownCalculator.progressFraction()), false
-            )
+            val progress = widgetProgressValue(CountdownCalculator.progressFraction())
+            views.setProgressBar(R.id.widget_progress_bar, 1000, progress, false)
+            bindPlane(views, progress)
         }
+
+        /** Zeigt das Flugzeug an der Stelle des Fortschritts; RemoteViews kennen keine dynamische Position, daher 21 feste Plätze. */
+        private fun bindPlane(views: RemoteViews, progress: Int) {
+            val active = progress * (PLANE_IDS.size - 1) / 1000
+            PLANE_IDS.forEachIndexed { i, id ->
+                views.setViewVisibility(id, if (i == active) View.VISIBLE else View.INVISIBLE)
+            }
+        }
+
+        private val PLANE_IDS = intArrayOf(
+            R.id.widget_plane_0,
+            R.id.widget_plane_1,
+            R.id.widget_plane_2,
+            R.id.widget_plane_3,
+            R.id.widget_plane_4,
+            R.id.widget_plane_5,
+            R.id.widget_plane_6,
+            R.id.widget_plane_7,
+            R.id.widget_plane_8,
+            R.id.widget_plane_9,
+            R.id.widget_plane_10,
+            R.id.widget_plane_11,
+            R.id.widget_plane_12,
+            R.id.widget_plane_13,
+            R.id.widget_plane_14,
+            R.id.widget_plane_15,
+            R.id.widget_plane_16,
+            R.id.widget_plane_17,
+            R.id.widget_plane_18,
+            R.id.widget_plane_19,
+            R.id.widget_plane_20
+        )
 
         private const val BOARD_PHRASE_MIN_HEIGHT_DP = 140
 

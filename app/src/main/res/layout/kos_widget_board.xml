@@ -298,16 +298,388 @@
                         android:textColor="@color/widget_ink"
                         android:textSize="9sp" />
 
-                    <ProgressBar
-                        android:id="@+id/widget_progress_bar"
-                        style="@android:style/Widget.ProgressBar.Horizontal"
+                    <FrameLayout
                         android:layout_width="0dp"
-                        android:layout_height="3dp"
+                        android:layout_height="13dp"
                         android:layout_marginLeft="6dp"
                         android:layout_marginRight="6dp"
                         android:layout_weight="1"
-                        android:max="1000"
-                        android:progressDrawable="@drawable/widget_board_progress_drawable" />
+                        android:clipChildren="false">
+
+                        <ProgressBar
+                            android:id="@+id/widget_progress_bar"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:layout_gravity="center_vertical"
+                            android:max="1000"
+                            android:progressDrawable="@drawable/widget_board_progress_drawable" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clipChildren="false"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_0"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_1"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_2"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_3"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_4"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_5"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_6"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_7"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_8"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_9"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_10"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_11"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_12"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_13"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_14"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_15"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_16"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_17"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_18"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_19"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clipChildren="false">
+
+                                <ImageView
+                                    android:id="@+id/widget_plane_20"
+                                    android:layout_width="11dp"
+                                    android:layout_height="11dp"
+                                    android:layout_gravity="center"
+                                    android:importantForAccessibility="no"
+                                    android:rotation="90"
+                                    android:src="@drawable/ic_plane"
+                                    android:tint="@color/widget_board_red"
+                                    android:visibility="invisible" />
+                            </FrameLayout>
+                        </LinearLayout>
+                    </FrameLayout>
 
                     <TextView
                         android:id="@+id/widget_to_code"
