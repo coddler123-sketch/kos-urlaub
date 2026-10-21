@@ -79,67 +79,6 @@ internal val compassCategories = listOf(
     CompassCategory("Unterkünfte", "Euer Hotel und weitere Erfahrungen", R.drawable.kos_rot_25)
 )
 
-/** Praktische Reise-Bereiche, die im Guide neben den Tipp-Kategorien stehen: Schlüssel zu Beschriftung. */
-internal val guideTravelChips = listOf(
-    "HELP" to "SOS & Hilfe",
-    "MOBILITY" to "Bus & Mobil",
-    "TODAY" to "Reise & Meer",
-    "EXPLORE" to "Ausflüge & Sprache"
-)
-
-/** Chips für den ganzen Guide: oben Alle und die Tipp-Kategorien (mit Filter), darunter die praktischen Reise-Bereiche. */
-@Composable
-internal fun CompassChipRow(
-    selected: String?,
-    selectedTravel: String?,
-    listState: LazyListState,
-    travelListState: LazyListState,
-    onSelected: (String?) -> Unit,
-    onSelectTravel: (String) -> Unit,
-    filterActive: Boolean = false,
-    onOpenFilter: (() -> Unit)? = null
-) {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            LazyRow(
-                state = listState,
-                modifier = Modifier.weight(1f).testTag("compass-category-row"),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                item {
-                    PostcardChip("Alle", selected == null && selectedTravel == null, { onSelected(null) }, Modifier.testTag("compass-category-filter-all"))
-                }
-                items(compassCategories, key = { it.title }) { category ->
-                    PostcardChip(
-                        category.title, selectedTravel == null && selected == category.title, { onSelected(category.title) },
-                        Modifier.testTag("compass-category-filter-${category.title}")
-                    )
-                }
-            }
-            if (onOpenFilter != null) {
-                PostcardChip(
-                    label = if (filterActive) "Filter · 1" else "Filter",
-                    selected = filterActive,
-                    onClick = onOpenFilter,
-                    modifier = Modifier.testTag("compass-filter-button")
-                )
-            }
-        }
-        LazyRow(
-            state = travelListState,
-            modifier = Modifier.fillMaxWidth().testTag("travel-sub-tabs"),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(guideTravelChips, key = { it.first }) { (area, label) ->
-                PostcardChip(
-                    label, selectedTravel == area, { onSelectTravel(area) },
-                    Modifier.testTag("travel-area-${area.lowercase()}")
-                )
-            }
-        }
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 internal fun CompassFilterSheet(

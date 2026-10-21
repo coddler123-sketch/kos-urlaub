@@ -24,6 +24,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Column
@@ -70,14 +73,17 @@ internal data class CompassCategory(
     @param:DrawableRes val imageRes: Int
 )
 
+/** Kopf einer Guide-Unterseite: Zurück-Pfeil zur Startseite, Titel und optional eine Aktion rechts. */
 @Composable
-internal fun CompassOverviewHeader(count: Int, onRandomTip: () -> Unit = {}) {
-    Row(verticalAlignment = Alignment.Bottom) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text("Tipps & Orte", style = PostcardType.Title, color = KosInk)
-            PostcardLabel("$count ausgewählte Tipps")
+internal fun GuideBackHeader(title: String, onBack: () -> Unit, action: (@Composable () -> Unit)? = null) {
+    Column {
+        TextButton(onClick = onBack, modifier = Modifier.testTag("guide-back")) {
+            Text(stringResource(R.string.travel_back), color = HomeAccent)
         }
-        PostcardChip("Überrascht uns!", false, onRandomTip, Modifier.testTag("compass-random-tip-button"))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(title, style = PostcardType.Title, color = KosInk, modifier = Modifier.weight(1f))
+            action?.invoke()
+        }
     }
 }
 
@@ -110,13 +116,15 @@ internal fun CompassDayPlanCard(tips: List<CompassTip>) {
 @Composable
 internal fun CompassSearchField(
     query: String,
-    onQueryChange: (String) -> Unit
+    onQueryChange: (String) -> Unit,
+    focusRequester: FocusRequester = remember { FocusRequester() }
 ) {
     PostcardTextField(
         value = query,
         onValueChange = onQueryChange,
         modifier = Modifier
             .fillMaxWidth()
+            .focusRequester(focusRequester)
             .testTag("compass-search"),
         singleLine = true,
         label = { Text("Tipps durchsuchen") },

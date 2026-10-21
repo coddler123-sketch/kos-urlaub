@@ -56,6 +56,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -139,8 +140,7 @@ private fun KosApp(
     val destinationName = rememberSaveable {
         mutableStateOf(if (startInTravel) MainDestination.DISCOVER.name else MainDestination.TODAY.name)
     }
-    val guideCategory = rememberSaveable { mutableStateOf<String?>(null) }
-    val guideTravel = rememberSaveable { mutableStateOf<String?>(if (startInTravel) "TODAY" else null) }
+    val guidePage = rememberSaveable { mutableStateOf<String?>(if (startInTravel) "TRAVEL:TODAY" else null) }
     val nestedDetailVisible = remember { mutableStateOf(false) }
     val scrollToTopRequest = remember { mutableIntStateOf(0) }
     val selectedDay = rememberSaveable { mutableIntStateOf(0) }
@@ -148,7 +148,11 @@ private fun KosApp(
     val destination = MainDestination.valueOf(destinationName.value)
 
     BackHandler(enabled = !nestedDetailVisible.value && destination != MainDestination.TODAY) {
-        destinationName.value = MainDestination.TODAY.name
+        if (destination == MainDestination.DISCOVER && guidePage.value != null) {
+            guidePage.value = null
+        } else {
+            destinationName.value = MainDestination.TODAY.name
+        }
     }
 
     Scaffold(
@@ -170,7 +174,10 @@ private fun KosApp(
                     MainNavigationBar(
                         selected = destination,
                         onSelect = { selected ->
-                            if (selected == destination) scrollToTopRequest.intValue++
+                            if (selected == destination) {
+                                scrollToTopRequest.intValue++
+                                if (selected == MainDestination.DISCOVER) guidePage.value = null
+                            }
                             destinationName.value = selected.name
                         }
                     )
@@ -182,31 +189,28 @@ private fun KosApp(
             MainDestination.TODAY -> KosHome(
                 padding = padding,
                 selectedDay = TripDays.all.firstOrNull { it.index == selectedDay.intValue },
-                onOpenTips = { guideTravel.value = null; destinationName.value = MainDestination.DISCOVER.name },
+                onOpenTips = { guidePage.value = null; destinationName.value = MainDestination.DISCOVER.name },
                 themeMode = themeMode,
                 onThemeMode = onThemeMode,
                 scrollToTopRequest = scrollToTopRequest.intValue,
                 onOpenTravel = { area ->
-                    guideTravel.value = area
+                    guidePage.value = "TRAVEL:$area"
                     destinationName.value = MainDestination.DISCOVER.name
                 }
             )
             MainDestination.DISCOVER -> DiscoverScreen(
                 padding = padding,
-                category = guideCategory.value,
-                travel = guideTravel.value,
-                onCategory = { guideCategory.value = it; guideTravel.value = null },
-                onTravel = { guideTravel.value = it },
+                page = guidePage.value,
+                onPage = { guidePage.value = it },
                 scrollToTopRequest = scrollToTopRequest.intValue,
-                onBack = { destinationName.value = MainDestination.TODAY.name },
-                onOpenCommunity = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_URL))) },
+                                onOpenCommunity = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_URL))) },
                 onDetailVisibilityChanged = { nestedDetailVisible.value = it }
             )
             MainDestination.DIARY -> DiaryScreen(
                 padding = padding,
                 scrollToTopRequest = scrollToTopRequest.intValue,
                 phase = TripPhase.of(AppClock.nowMillis()),
-                onOpenTips = { guideTravel.value = null; destinationName.value = MainDestination.DISCOVER.name }
+                onOpenTips = { guidePage.value = null; destinationName.value = MainDestination.DISCOVER.name }
             )
         }
     }
@@ -250,43 +254,35 @@ private fun MainNavigationBar(
 @Composable
 private fun DiscoverScreen(
     padding: PaddingValues,
-    category: String?,
-    travel: String?,
-    onCategory: (String?) -> Unit,
-    onTravel: (String?) -> Unit,
+    page: String?,
+    onPage: (String?) -> Unit,
     scrollToTopRequest: Int,
-    onBack: () -> Unit,
     onOpenCommunity: () -> Unit,
     onDetailVisibilityChanged: (Boolean) -> Unit
 ) {
-    val chipListState = rememberLazyListState()
-    val travelChipListState = rememberLazyListState()
     Box(modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding())) {
         val inner = PaddingValues(bottom = padding.calculateBottomPadding())
-        if (travel != null) {
-            TravelScreen(
-                padding = inner,
-                scrollToTopRequest = scrollToTopRequest,
-                area = travel,
-                chipListState = chipListState,
-                travelChipListState = travelChipListState,
-                onSelectCategory = onCategory,
-                onSelectTravel = onTravel,
-                onBack = onBack,
-                onDetailVisibilityChanged = onDetailVisibilityChanged
-            )
-        } else {
-            CompassScreen(
-                padding = inner,
-                scrollToTopRequest = scrollToTopRequest,
-                selectedCategory = category,
-                onSelectCategory = onCategory,
-                onSelectTravel = onTravel,
-                chipListState = chipListState,
-                travelChipListState = travelChipListState,
-                onOpenCommunity = onOpenCommunity,
-                onDetailVisibilityChanged = onDetailVisibilityChanged
-            )
+        key(page) {
+            when {
+                page == null -> GuideHub(inner, scrollToTopRequest, onOpen = onPage)
+                page.startsWith("TRAVEL:") -> TravelScreen(
+                    padding = inner,
+                    scrollToTopRequest = scrollToTopRequest,
+                    area = page.removePrefix("TRAVEL:"),
+                    onBack = { onPage(null) },
+                    onDetailVisibilityChanged = onDetailVisibilityChanged
+                )
+                else -> CompassScreen(
+                    padding = inner,
+                    scrollToTopRequest = scrollToTopRequest,
+                    category = page.removePrefix("CAT:").takeIf { page.startsWith("CAT:") },
+                    savedOnly = page == "SAVED",
+                    autoFocusSearch = page == "SEARCH",
+                    onBack = { onPage(null) },
+                    onOpenCommunity = onOpenCommunity,
+                    onDetailVisibilityChanged = onDetailVisibilityChanged
+                )
+            }
         }
     }
 }

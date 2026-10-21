@@ -88,10 +88,6 @@ fun TravelScreen(
     padding: PaddingValues,
     scrollToTopRequest: Int = 0,
     area: String = "TODAY",
-    chipListState: LazyListState,
-    travelChipListState: LazyListState,
-    onSelectCategory: (String?) -> Unit,
-    onSelectTravel: (String) -> Unit,
     onBack: () -> Unit,
     onDetailVisibilityChanged: (Boolean) -> Unit = {}
 ) {
@@ -160,14 +156,7 @@ fun TravelScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
-            CompassChipRow(
-                selected = null,
-                selectedTravel = selectedArea.name,
-                listState = chipListState,
-                travelListState = travelChipListState,
-                onSelected = onSelectCategory,
-                onSelectTravel = onSelectTravel
-            )
+            TravelAreaDetailHeader(selectedArea, onBack)
         }
         when (selectedArea) {
             TravelArea.TODAY -> {
@@ -899,28 +888,5 @@ private fun SosNumberRow(
             style = if (number.length <= 4) PostcardType.Numeral else PostcardType.Numeral.copy(fontSize = PostcardType.Heading.fontSize),
             color = KosInk
         )
-    }
-}
-
-@Composable
-private fun TravelSubTabRow(
-    selectedArea: TravelArea,
-    onSelectArea: (TravelArea) -> Unit
-) {
-    val items = listOf(
-        Triple(TravelArea.HELP, "SOS & Hilfe", "travel-area-help"),
-        Triple(TravelArea.MOBILITY, "Bus & Mobil", "travel-area-mobility"),
-        Triple(TravelArea.TODAY, "Reise & Meer", "travel-area-today"),
-        Triple(TravelArea.EXPLORE, "Ausflüge & Sprache", "travel-area-explore")
-    )
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(vertical = 4.dp),
-        modifier = Modifier.fillMaxWidth().testTag("travel-sub-tabs")
-    ) {
-        items(items) { (area, label, tag) ->
-            val isSelected = selectedArea == area
-            PostcardChip(label, isSelected, { onSelectArea(area) }, Modifier.testTag(tag))
-        }
     }
 }

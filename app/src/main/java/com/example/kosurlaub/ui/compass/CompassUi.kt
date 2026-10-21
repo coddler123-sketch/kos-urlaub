@@ -39,6 +39,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -54,11 +55,10 @@ import androidx.compose.ui.unit.sp
 fun CompassScreen(
     padding: PaddingValues,
     scrollToTopRequest: Int = 0,
-    selectedCategory: String?,
-    onSelectCategory: (String?) -> Unit,
-    onSelectTravel: (String) -> Unit,
-    chipListState: LazyListState,
-    travelChipListState: LazyListState,
+    category: String?,
+    savedOnly: Boolean,
+    autoFocusSearch: Boolean,
+    onBack: () -> Unit,
     onOpenCommunity: () -> Unit,
     onDetailVisibilityChanged: (Boolean) -> Unit = {}
 ) {
@@ -79,14 +79,17 @@ fun CompassScreen(
     }
     var savedTips by remember(context) { mutableStateOf(persistedTips.first) }
     var visitedTips by remember(context) { mutableStateOf(persistedTips.second) }
-    val visible = remember(selectedCategory, searchQuery, selectedFilter) {
-        filterCompassTips(compassTips, searchQuery, selectedCategory).filter { tip ->
-            selectedFilter == null || matchesCompassQuickFilter(tip, selectedFilter.orEmpty())
-        }
+    val visible = remember(category, savedOnly, savedTips, searchQuery, selectedFilter) {
+        filterCompassTips(compassTips, searchQuery, category)
+            .filter { !savedOnly || it.id in savedTips }
+            .filter { tip -> selectedFilter == null || matchesCompassQuickFilter(tip, selectedFilter.orEmpty()) }
     }
-    val dayPlan = remember(savedTips) { buildCompassDayPlan(compassTips, savedTips) }
+    val searchFocus = remember { FocusRequester() }
+    LaunchedEffect(autoFocusSearch) {
+        if (autoFocusSearch) runCatching { searchFocus.requestFocus() }
+    }
     val selectedTip = remember(selectedTipId) { compassTips.firstOrNull { it.id == selectedTipId } }
-    val isOverview = selectedCategory == null && searchQuery.isBlank() && selectedFilter == null
+    val isOverview = category == null && !savedOnly && searchQuery.isBlank() && selectedFilter == null
 
     fun openTip(id: String) {
         onDetailVisibilityChanged(true)
@@ -107,14 +110,10 @@ fun CompassScreen(
     DisposableEffect(Unit) {
         onDispose { onDetailVisibilityChanged(false) }
     }
-    BackHandler(
-        enabled = selectedTipId != null || selectedCategory != null ||
-            searchQuery.isNotBlank() || selectedFilter != null
-    ) {
+    BackHandler(enabled = selectedTipId != null || searchQuery.isNotBlank() || selectedFilter != null) {
         if (selectedTipId != null) {
             closeTip()
         } else {
-            onSelectCategory(null)
             searchQuery = ""
             selectedFilter = null
             categorySelectionRequest += 1
@@ -143,29 +142,39 @@ fun CompassScreen(
         ) {
             val full: LazyGridItemSpanScope.() -> GridItemSpan = { GridItemSpan(maxLineSpan) }
             item(key = "header", span = full) {
-                CompassOverviewHeader(count = compassTips.size, onRandomTip = { openTip(compassTips.random().id) })
-            }
-            item(key = "search", span = full) {
-                CompassSearchField(query = searchQuery, onQueryChange = { searchQuery = it })
-            }
-            item(key = "chips", span = full) {
-                CompassChipRow(
-                    selected = selectedCategory,
-                    selectedTravel = null,
-                    listState = chipListState,
-                    travelListState = travelChipListState,
-                    onSelected = onSelectCategory,
-                    onSelectTravel = onSelectTravel,
-                    filterActive = selectedFilter != null,
-                    onOpenFilter = { showFilter = true }
+                GuideBackHeader(
+                    title = category ?: if (savedOnly) "Gemerkt" else "Alle Tipps",
+                    onBack = onBack,
+                    action = if (isOverview) {
+                        {
+                            PostcardChip(
+                                "Überrascht uns!", false,
+                                { openTip(compassTips.random().id) },
+                                Modifier.testTag("compass-random-tip-button")
+                            )
+                        }
+                    } else null
                 )
             }
-            if (isOverview && dayPlan.isNotEmpty()) {
-                item(key = "plan", span = full) { CompassDayPlanCard(dayPlan) }
+            item(key = "search", span = full) {
+                CompassSearchField(query = searchQuery, onQueryChange = { searchQuery = it }, focusRequester = searchFocus)
             }
-            if (!isOverview) {
-                item(key = "count", span = full) {
-                    Text("${visible.size} Treffer", color = KosInk.copy(alpha = 0.75f), fontSize = PostcardMetrics.BODY_SP.sp, fontFamily = KosSans)
+            item(key = "filterbar", span = full) {
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        if (visible.size == 1) "1 Treffer" else "${visible.size} Treffer",
+                        color = KosInk.copy(alpha = 0.75f), fontSize = PostcardMetrics.BODY_SP.sp, fontFamily = KosSans
+                    )
+                    PostcardChip(
+                        label = if (selectedFilter != null) "Filter · 1" else "Filter",
+                        selected = selectedFilter != null,
+                        onClick = { showFilter = true },
+                        modifier = Modifier.testTag("compass-filter-button")
+                    )
                 }
             }
             items(visible, key = { it.id }) { tip ->

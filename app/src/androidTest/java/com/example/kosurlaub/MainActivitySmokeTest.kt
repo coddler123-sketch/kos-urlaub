@@ -109,25 +109,24 @@ class MainActivitySmokeTest {
     }
 
     @Test
-    fun compassOpensFromMainNavigationAndReturns() {
+    fun guideHubOpensTipsAndReturns() {
         composeRule.onNodeWithTag("main-nav-discover").performClick()
-        composeRule.onNodeWithText("Tipps & Orte").assertIsDisplayed()
+        composeRule.onNodeWithTag("guide-hub").assertIsDisplayed()
+        composeRule.onNodeWithTag("guide-all").performScrollTo().performClick()
+        composeRule.onNodeWithText("Alle Tipps").assertIsDisplayed()
         composeRule.onNodeWithTag("compass-screen").assertIsDisplayed()
-        composeRule.onNodeWithText("${compassTipIds.size} AUSGEWÄHLTE TIPPS").assertIsDisplayed()
+        composeRule.onNodeWithText("${compassTipIds.size} Treffer").assertIsDisplayed()
         composeRule.onNodeWithTag("compass-screen").performScrollToKey("community")
         composeRule.onNodeWithTag("community-link").assertIsDisplayed()
 
-        composeRule.onNodeWithTag("compass-screen").performScrollToIndex(0)
-        // Index 6: Alle, Tigaki, Essen, Strände, Ausflüge, Mobilität, Unterkünfte (LazyRow, außerhalb des Schirms)
-        composeRule.onNodeWithTag("compass-category-row").performScrollToIndex(6)
-        composeRule.onNodeWithTag("compass-category-filter-Unterkünfte").performClick()
-        composeRule.onNodeWithTag("compass-screen").assertIsDisplayed()
+        pressBack()
+        composeRule.onNodeWithTag("guide-hub").assertIsDisplayed()
+
+        composeRule.onNodeWithTag("guide-category-Unterkünfte").performScrollTo().performClick()
         composeRule.onNodeWithText("1 Treffer").assertIsDisplayed()
 
-        composeRule.onNodeWithTag("compass-category-row").performScrollToIndex(0)
-        composeRule.onNodeWithTag("compass-category-filter-all").performClick()
-        composeRule.onNodeWithText("${compassTipIds.size} AUSGEWÄHLTE TIPPS").assertIsDisplayed()
-
+        pressBack()
+        composeRule.onNodeWithTag("guide-hub").assertIsDisplayed()
         pressBack()
 
         composeRule.onAllNodesWithText("KOS").onFirst().assertIsDisplayed()
@@ -135,19 +134,18 @@ class MainActivitySmokeTest {
 
     @Test
     fun filterSheetNarrowsTipsAndResets() {
-        composeRule.onNodeWithTag("main-nav-discover").performClick()
+        openAllTips()
         composeRule.onNodeWithTag("compass-filter-button").performClick()
         composeRule.onNodeWithTag("compass-filter-sheet").assertIsDisplayed()
         composeRule.onNodeWithTag("compass-filter-Ruhig").performClick()
         composeRule.onNodeWithTag("compass-filter-done").performClick()
-        composeRule.onNodeWithText("Filter · 1").assertIsDisplayed()
-        composeRule.onNodeWithTag("compass-category-filter-all").performClick()
         composeRule.onNodeWithText("Filter · 1").assertIsDisplayed()
     }
 
     @Test
     fun compassSearchAndSavedTipPersistAfterRecreation() {
         composeRule.onNodeWithTag("main-nav-discover").performClick()
+        composeRule.onNodeWithTag("guide-search").performClick()
         composeRule.onNodeWithTag("compass-search").performTextInput("Marmari")
         composeRule.onNodeWithTag("compass-tip-beach-marmari").assertIsDisplayed()
         composeRule.onNodeWithTag("compass-tip-image-beach-marmari-card", useUnmergedTree = true)
@@ -165,6 +163,7 @@ class MainActivitySmokeTest {
     @Test
     fun hotelTipOpensWithDirectMapLink() {
         composeRule.onNodeWithTag("main-nav-discover").performClick()
+        composeRule.onNodeWithTag("guide-search").performClick()
         composeRule.onNodeWithTag("compass-search").performTextInput("Ilios")
         composeRule.onNodeWithTag("compass-tip-hotel-ilios-k-village").performClick()
 
@@ -180,7 +179,7 @@ class MainActivitySmokeTest {
     @Test
     fun excursionTipCloseReturnsToTipsOverview() {
         composeRule.onNodeWithTag("main-nav-discover").performClick()
-        composeRule.onNodeWithTag("compass-category-filter-Ausflüge").performClick()
+        composeRule.onNodeWithTag("guide-category-Ausflüge").performScrollTo().performClick()
         composeRule.onNodeWithTag("compass-screen").performScrollToKey("trip-asklepieion")
         composeRule.onNodeWithTag("compass-tip-trip-asklepieion").performClick()
         composeRule.onNodeWithTag("compass-tip-overlay").assertIsDisplayed()
@@ -203,28 +202,33 @@ class MainActivitySmokeTest {
         composeRule.onNodeWithTag("main-nav-today").assertIsSelected()
 
         composeRule.onNodeWithTag("main-nav-discover").performClick().assertIsSelected()
-        composeRule.onNodeWithTag("compass-screen").assertIsDisplayed()
+        composeRule.onNodeWithTag("guide-hub").assertIsDisplayed()
 
         composeRule.onNodeWithTag("main-nav-today").performClick().assertIsSelected()
         composeRule.onAllNodesWithText("KOS").onFirst().assertIsDisplayed()
     }
 
     @Test
-    fun tappingActiveTabReturnsToTop() {
-        composeRule.onNodeWithTag("main-nav-discover").performClick()
+    fun tappingActiveTabReturnsToGuideHub() {
+        openAllTips()
         composeRule.onNodeWithTag("compass-screen").performScrollToIndex(3)
 
         composeRule.onNodeWithTag("main-nav-discover").performClick()
 
-        composeRule.onNodeWithText("Tipps & Orte").assertIsDisplayed()
+        composeRule.onNodeWithTag("guide-hub").assertIsDisplayed()
     }
 
     @Test
     fun randomTipButtonOpensDetailOverlay() {
-        composeRule.onNodeWithTag("main-nav-discover").performClick()
+        openAllTips()
         composeRule.onNodeWithTag("compass-random-tip-button").performClick()
 
         composeRule.onNodeWithTag("compass-tip-overlay").assertIsDisplayed()
+    }
+
+    private fun openAllTips() {
+        composeRule.onNodeWithTag("main-nav-discover").performClick()
+        composeRule.onNodeWithTag("guide-all").performScrollTo().performClick()
     }
 
     private fun pressBack() {
