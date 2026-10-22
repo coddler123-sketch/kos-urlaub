@@ -94,6 +94,9 @@ private const val COMMUNITY_URL = "https://www.facebook.com/search/groups/?q=kos
 class MainActivity : ComponentActivity() {
     companion object {
         const val EXTRA_OPEN_TRAVEL = "open_travel"
+
+        /** Ziel eines App-Shortcuts: "PASSES" (Bordkarten) oder ein Guide-Schlüssel wie "TRAVEL:HELP". */
+        const val EXTRA_OPEN_PAGE = "open_page"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,6 +121,7 @@ class MainActivity : ComponentActivity() {
             KosWidgetTheme(themeMode.value) {
                 KosApp(
                     startInTravel = intent.getBooleanExtra(EXTRA_OPEN_TRAVEL, false),
+                    startPage = intent.getStringExtra(EXTRA_OPEN_PAGE),
                     themeMode = themeMode.value,
                     onThemeMode = {
                         ThemeMode.save(applicationContext, it)
@@ -134,14 +138,27 @@ private enum class MainDestination { TODAY, DISCOVER, LISTS }
 @Composable
 private fun KosApp(
     startInTravel: Boolean = false,
+    startPage: String? = null,
     themeMode: ThemeMode,
     onThemeMode: (ThemeMode) -> Unit
 ) {
     val context = LocalContext.current
     val destinationName = rememberSaveable {
-        mutableStateOf(if (startInTravel) MainDestination.DISCOVER.name else MainDestination.TODAY.name)
+        mutableStateOf(
+            when {
+                startPage == "PASSES" -> MainDestination.LISTS.name
+                startInTravel || startPage != null -> MainDestination.DISCOVER.name
+                else -> MainDestination.TODAY.name
+            }
+        )
     }
-    val guidePage = rememberSaveable { mutableStateOf<String?>(if (startInTravel) "TRAVEL:TODAY" else null) }
+    val guidePage = rememberSaveable { mutableStateOf<String?>(
+            when {
+                startPage != null && startPage != "PASSES" -> startPage
+                startInTravel -> "TRAVEL:TODAY"
+                else -> null
+            }
+        ) }
     val nestedDetailVisible = remember { mutableStateOf(false) }
     val scrollToTopRequest = remember { mutableIntStateOf(0) }
     val selectedDay = rememberSaveable { mutableIntStateOf(0) }
@@ -209,7 +226,8 @@ private fun KosApp(
             )
             MainDestination.LISTS -> ListsScreen(
                 padding = PaddingValues(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
-                scrollToTopRequest = scrollToTopRequest.intValue
+                scrollToTopRequest = scrollToTopRequest.intValue,
+                startOnPasses = startPage == "PASSES"
             )
         }
     }

@@ -34,12 +34,12 @@ private const val PASSES = "passes"
 
 /** Tab "Listen": Packliste (nach Taschen) und Aufgaben vor der Abreise, alles lokal gespeichert. */
 @Composable
-fun ListsScreen(padding: PaddingValues, scrollToTopRequest: Int) {
+fun ListsScreen(padding: PaddingValues, scrollToTopRequest: Int, startOnPasses: Boolean = false) {
     val listState = rememberLazyListState()
     LaunchedEffect(scrollToTopRequest) {
         if (scrollToTopRequest > 0) listState.animateScrollToItem(0)
     }
-    var key by rememberSaveable { mutableStateOf(ListStore.PACKING) }
+    var key by rememberSaveable { mutableStateOf(if (startOnPasses) PASSES else ListStore.PACKING) }
     LazyColumn(
         state = listState,
         modifier = Modifier.fillMaxWidth().testTag("lists-screen").padding(padding),
