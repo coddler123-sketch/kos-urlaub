@@ -30,6 +30,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.kosurlaub.ui.theme.*
 
+private const val PASSES = "passes"
+
 /** Tab "Listen": Packliste (nach Taschen) und Aufgaben vor der Abreise, alles lokal gespeichert. */
 @Composable
 fun ListsScreen(padding: PaddingValues, scrollToTopRequest: Int) {
@@ -54,9 +56,10 @@ fun ListsScreen(padding: PaddingValues, scrollToTopRequest: Int) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 PostcardChip("Packen", key == ListStore.PACKING, { key = ListStore.PACKING })
                 PostcardChip("Aufgaben", key == ListStore.TASKS, { key = ListStore.TASKS })
+                PostcardChip("Bordkarten", key == PASSES, { key = PASSES })
             }
         }
-        item(key = key) { ListPanel(key) }
+        item(key = key) { if (key == PASSES) PassesPanel() else ListPanel(key) }
     }
 }
 

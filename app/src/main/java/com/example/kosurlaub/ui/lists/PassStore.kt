@@ -1,0 +1,83 @@
+package com.example.kosurlaub.ui.lists
+
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.pdf.PdfRenderer
+import android.net.Uri
+import android.os.ParcelFileDescriptor
+import java.io.File
+import java.util.UUID
+
+/** Eine abgelegte Bordkarte. Die Datei liegt unter filesDir/passes/<id>. */
+data class Pass(val id: String, val label: String, val pdf: Boolean)
+
+/** Bordkarten als Foto oder PDF, nur auf diesem Gerät (nicht im Backup: nur sharedpref wird gesichert). */
+object PassStore {
+    private const val PREFS = "kos_passes"
+    private const val KEY = "items"
+
+    fun label(leg: String, person: String): String = if (person.isBlank()) leg else "$leg · ${person.trim()}"
+
+    fun encode(items: List<Pass>): String =
+        items.joinToString("\n") { "${it.id}\t${it.label.replace(Regex("[\t\n]"), " ")}\t${if (it.pdf) 1 else 0}" }
+
+    fun decode(raw: String): List<Pass> = raw.lines().mapNotNull {
+        val f = it.split("\t")
+        if (f.size < 3 || f[0].isBlank()) null else Pass(f[0], f[1], f[2] == "1")
+    }
+
+    fun load(context: Context): List<Pass> =
+        decode(context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY, "").orEmpty())
+
+    private fun save(context: Context, items: List<Pass>) {
+        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString(KEY, encode(items)).apply()
+    }
+
+    private fun file(context: Context, id: String) = File(context.filesDir, "passes/$id")
+
+    /** Kopiert die gewählte Datei in den privaten Speicher. Null, wenn sie sich nicht lesen lässt. */
+    fun add(context: Context, uri: Uri, label: String): List<Pass>? {
+        val pdf = context.contentResolver.getType(uri) == "application/pdf"
+        val pass = Pass(UUID.randomUUID().toString(), label, pdf)
+        val target = file(context, pass.id)
+        val copied = runCatching {
+            target.parentFile?.mkdirs()
+            context.contentResolver.openInputStream(uri)!!.use { input -> target.outputStream().use { input.copyTo(it) } }
+        }.isSuccess
+        if (!copied || render(context, pass, 200) == null) {
+            target.delete()
+            return null
+        }
+        return (load(context) + pass).also { save(context, it) }
+    }
+
+    fun remove(context: Context, id: String): List<Pass> {
+        file(context, id).delete()
+        return load(context).filter { it.id != id }.also { save(context, it) }
+    }
+
+    /** Bild bzw. erste PDF-Seite, auf [maxWidth] verkleinert. */
+    fun render(context: Context, pass: Pass, maxWidth: Int): Bitmap? = runCatching {
+        val f = file(context, pass.id)
+        if (pass.pdf) {
+            ParcelFileDescriptor.open(f, ParcelFileDescriptor.MODE_READ_ONLY).use { fd ->
+                PdfRenderer(fd).use { renderer ->
+                    renderer.openPage(0).use { page ->
+                        val scale = maxWidth.toFloat() / page.width
+                        val bmp = Bitmap.createBitmap(maxWidth, (page.height * scale).toInt(), Bitmap.Config.ARGB_8888)
+                        bmp.eraseColor(android.graphics.Color.WHITE)
+                        page.render(bmp, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
+                        bmp
+                    }
+                }
+            }
+        } else {
+            val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            BitmapFactory.decodeFile(f.path, bounds)
+            BitmapFactory.decodeFile(f.path, BitmapFactory.Options().apply {
+                inSampleSize = (bounds.outWidth / maxWidth).coerceAtLeast(1)
+            })
+        }
+    }.getOrNull()
+}
