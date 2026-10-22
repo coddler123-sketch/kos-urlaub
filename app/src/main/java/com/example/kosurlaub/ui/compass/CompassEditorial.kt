@@ -49,6 +49,9 @@ private val tipImages = mapOf(
     "food-alikes" to R.drawable.excursion_seven_springs,
     "food-ikaros" to R.drawable.category_greek_food,
     "food-plori" to R.drawable.category_greek_food,
+    "beach-agios-stefanos" to R.drawable.tip_agios_stefanos,
+    "beach-paradise" to R.drawable.tip_paradise_beach,
+    "trip-palio-pyli" to R.drawable.tip_palio_pyli,
 )
 
 internal fun editorialFor(tip: CompassTip): CompassEditorial {

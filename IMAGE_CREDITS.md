@@ -69,6 +69,9 @@ Urheber und Lizenz wie in `TravelContent.kt` (`imageCredit`, `imageUrl`).
 | tip_zia_sunset | https://commons.wikimedia.org/wiki/File:Zonsondergang_Zia.jpg | Rob Koster | CC BY-SA 4.0 |
 | tip_embros_therme | https://commons.wikimedia.org/wiki/File:Embros_thermes_Kos_10.jpg | Karelj | Public domain |
 | tip_antimachia_castle | https://commons.wikimedia.org/wiki/File:Antimachia_Kós_1.jpg | Karelj | Public domain |
+| tip_agios_stefanos | https://commons.wikimedia.org/wiki/File:Kefalos_beach._Kastri_island_and_chapel_of_St._Nicholas._Kos,_Greece.jpg | Ввласенко | CC BY-SA 4.0 |
+| tip_paradise_beach | https://commons.wikimedia.org/wiki/File:Paradise_Beach.jpg | Michal Osmenda | CC BY-SA 2.0 |
+| tip_palio_pyli | https://commons.wikimedia.org/wiki/File:Kos-Palio_Pyli-castle-13%CE%91SD.jpg | Asurnipal | CC BY-SA 4.0 |
 
 Weitere Tipp-Zuordnungen nutzen bestehende, frei lizenzierte Bilder (kos_rot_*, excursion_*, category_greek_food), auch die Restaurant- und Hotel-Tipps.
 

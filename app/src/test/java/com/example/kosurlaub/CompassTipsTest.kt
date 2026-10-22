@@ -19,7 +19,7 @@ import org.junit.Test
 class CompassTipsTest {
     @Test
     fun `tip collection has one stable id per tip`() {
-        assertEquals(19, compassTips.size)
+        assertEquals(22, compassTips.size)
         assertEquals(compassTips.size, compassTips.map { it.id }.distinct().size)
         assertTrue(compassTips.all { it.id.isNotBlank() && it.id != it.title })
         assertTrue(compassTips.all { it.source == CompassTipSource.RESEARCHED })

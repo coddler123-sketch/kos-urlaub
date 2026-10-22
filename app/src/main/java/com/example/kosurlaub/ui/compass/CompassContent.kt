@@ -222,6 +222,39 @@ internal val compassTips = listOf(
         tags = listOf("Essen", "Taverne", "Fisch"),
         reviewSummary = "Google 4,8 von 5 (1.158 Bewertungen)",
         source = CompassTipSource.RESEARCHED,
-        sourceUrl = "https://www.kosurlaub.de/tigaki/"
+        sourceUrl = "https://www.kosurlaub.de/tigaki/"    ),
+    CompassTip(
+        category = "Strände",
+        title = "Agios Stefanos und Kastri",
+        description = "Strand bei Kefalos im Südwesten mit den Ruinen einer frühchristlichen Basilika direkt am Wasser. Gegenüber liegt die kleine Felseninsel Kastri mit einer weißen Kapelle des heiligen Nikolaus.",
+        note = "Sand mit kleinen Kieseln, Wasserschuhe helfen. Gegen späten Nachmittag lässt der Wind oft nach. Von Tigaki gut 40 km (Schätzung), Busverbindung vorab prüfen",
+        location = "Agios Stefanos, Kefalos",
+        journey = "Mietwagen oder Taxi, gut 40 km",
+        tags = listOf("Strand", "Kultur", "Aussicht", "Halbtag"),
+        source = CompassTipSource.RESEARCHED,
+        sourceUrl = "https://greeka.com/dodecanese/kos/beaches/agios-stefanos"
+    ),
+    CompassTip(
+        category = "Strände",
+        title = "Paradise Beach",
+        description = "Langer heller Sandstrand an der Südküste bei Kefalos mit flach abfallendem Wasser, Strandbars und Tavernen. Beliebt und im Sommer oft voll.",
+        note = "Liegen kosten extra (ein Bericht nennt 20 € für zwei Liegen mit Schirm, Preise vor Ort klären). Busse fahren selten, Fahrplan vorab prüfen; viele kommen per Mietwagen oder Tagestour",
+        location = "Paradise Beach, Kefalos",
+        journey = "Mietwagen, Taxi oder Tour, gut 40 km",
+        tags = listOf("Strand", "Baden", "Halbtag"),
+        source = CompassTipSource.RESEARCHED,
+        sourceUrl = "https://greeka.com/dodecanese/kos/beaches/paradise"
+    ),
+    CompassTip(
+        category = "Ausflüge",
+        title = "Palio Pyli – Geisterdorf und Burgruine",
+        description = "Verlassene mittelalterliche Siedlung am Westhang des Inselgebirges mit einer Burgruine oberhalb. Der Aufstieg dauert je nach Bericht 20 bis 30 Minuten über steile Stufen.",
+        note = "Ruine ungesichert, feste Schuhe nötig. Laut einer Burgenseite jederzeit frei zugänglich ohne Eintritt. Parken an einer kleinen Kirche oder an der Quelle Richtung Pyli. Gut mit Zia zu verbinden",
+        kind = CompassTipKind.CAUTION,
+        location = "Palio Pyli, bei Zia",
+        journey = "Mietwagen oder Taxi",
+        tags = listOf("Geschichte", "Aussicht", "Natur", "Halbtag"),
+        source = CompassTipSource.RESEARCHED,
+        sourceUrl = "https://www.burgenwelt.org/griechenland/paliopyli/burgenwelt-paliopyli-objektseite.pdf"
     )
 ).let(::attachCompassTipIds)
