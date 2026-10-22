@@ -232,6 +232,7 @@ private fun KosApp(
                 padding = padding,
                 selectedDay = TripDays.all.firstOrNull { it.index == selectedDay.intValue },
                 onOpenTips = { guidePage.value = null; destinationName.value = MainDestination.DISCOVER.name },
+                onOpenPasses = { destinationName.value = MainDestination.PASSES.name },
                 themeMode = themeMode,
                 onThemeMode = onThemeMode,
                 scrollToTopRequest = scrollToTopRequest.intValue,
@@ -266,7 +267,8 @@ private fun MainNavigationBar(
     onSelect: (MainDestination) -> Unit
 ) {
     NavigationBar(containerColor = KosNav) {
-        MainDestination.entries.forEach { destination ->
+        // PASSES ist kein Tab, sondern wird über das Icon im Startseiten-Header geöffnet.
+        MainDestination.entries.filter { it != MainDestination.PASSES }.forEach { destination ->
             val labelRes = when (destination) {
                 MainDestination.TODAY -> R.string.main_nav_today
                 MainDestination.DISCOVER -> R.string.main_nav_discover
@@ -339,6 +341,7 @@ private fun KosHome(
     padding: PaddingValues,
     selectedDay: TripDay?,
     onOpenTips: () -> Unit,
+    onOpenPasses: () -> Unit,
     themeMode: ThemeMode,
     onThemeMode: (ThemeMode) -> Unit,
     scrollToTopRequest: Int,
@@ -426,6 +429,7 @@ private fun KosHome(
             }
             HeaderSection(
                 s = s,
+                onPasses = onOpenPasses,
                 onSettings = { showSettings.value = true }
             )
             Spacer(Modifier.height(18.dp))
@@ -589,6 +593,7 @@ private fun showUpdateDownloadError(context: android.content.Context) {
 @Composable
 private fun HeaderSection(
     s: HomeState,
+    onPasses: () -> Unit,
     onSettings: () -> Unit
 ) {
     Row(verticalAlignment = Alignment.Top) {
@@ -613,6 +618,35 @@ private fun HeaderSection(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.offset(x = 12.dp)
         ) {
+            Box(
+                modifier = Modifier
+                    .size(44.dp)
+                    .testTag("passes-button")
+                    .clickable(onClick = onPasses)
+                    .clearAndSetSemantics {
+                        contentDescription = "Bordkarten öffnen"
+                        onClick {
+                            onPasses()
+                            true
+                        }
+                    }
+            ) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .size(34.dp)
+                        .clip(CircleShape)
+                        .background(HomeCardColor)
+                        .border(1.dp, HomeCardBorder, CircleShape)
+                ) {
+                    androidx.compose.material3.Icon(
+                        painter = androidx.compose.ui.res.painterResource(R.drawable.ic_nav_pass),
+                        contentDescription = null,
+                        tint = KosInk,
+                        modifier = Modifier.align(Alignment.Center).size(20.dp)
+                    )
+                }
+            }
             // Settings Button
             Box(
                 modifier = Modifier
