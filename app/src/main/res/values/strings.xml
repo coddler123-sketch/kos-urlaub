@@ -224,7 +224,6 @@
     </string-array>
     <string-array name="widget_phrases_far">
         <item>Noch ein langer Weg, aber ein schöner.</item>
-        <item>Kos ist weit weg. Die Vorfreude ist trotzdem schon da.</item>
         <item>Der Urlaub ist gebucht, der Rest ist Geduld.</item>
         <item>Heute zählt der Alltag, aber das Ziel steht fest.</item>
         <item>Irgendwo scheint gerade die Sonne auf unseren Strand.</item>
@@ -239,13 +238,11 @@
         <item>Heute einfach Tag, später Meer.</item>
         <item>Kos wartet. Wir arbeiten dran.</item>
         <item>Ein Haken im Kalender: September, Kos.</item>
-        <item>Die Insel liegt noch im Winterschlaf, wir träumen weiter.</item>
         <item>Gute Dinge brauchen Zeit, gute Urlaube auch.</item>
         <item>Bis zum Meer ist es noch ein Stück. Wir gehen es gemeinsam.</item>
         <item>Etwas, worauf man sich freut, macht jeden Tag heller.</item>
         <item>Heute noch kein Sand, aber schon eine Idee davon.</item>
         <item>Noch fern, aber fest eingeplant.</item>
-        <item>Irgendwo hinter dem Winter liegt die Ägäis.</item>
         <item>Der Kalender weiß es: Kos kommt.</item>
         <item>Jeder gewöhnliche Tag ist ein Schritt Richtung Urlaub.</item>
         <item>Wer lange vorfreut, hat länger Urlaub.</item>
@@ -256,7 +253,6 @@
         <item>Heute kein Meer, dafür ein Plan für später.</item>
         <item>Die Ägäis rührt sich nicht, sie wartet auf uns.</item>
         <item>Zeit ist relativ. Vor allem vor dem Urlaub.</item>
-        <item>Gedanken an Kos wärmen auch im November.</item>
         <item>Die beste Reisezeit beginnt im Kopf.</item>
         <item>Ein Jahr voller Tage, und am Ende wartet Tigaki.</item>
         <item>Langer Atem, schöner Strand.</item>
@@ -269,12 +265,10 @@
         <item>Der Plan steht, das Meer wartet.</item>
         <item>Bald ist nicht heute. Aber es kommt.</item>
         <item>Nichts eilt, Kos läuft nicht weg.</item>
-        <item>Erst Pullover, dann Sandalen.</item>
         <item>Manche Orte lohnen das lange Warten.</item>
         <item>Die Ägäis bleibt blau, auch wenn wir noch nicht da sind.</item>
         <item>Heute schon gelächelt, weil Kos kommt?</item>
         <item>Wir sammeln Tage wie Muscheln.</item>
-        <item>Winterzeit ist Planungszeit.</item>
         <item>Je länger der Weg, desto schöner der erste Sprung ins Wasser.</item>
         <item>Kos im Kalender, Kos im Kopf.</item>
         <item>Der erste Schritt in den Sand ist schon gebucht.</item>
@@ -287,9 +281,7 @@
         <item>Das Meer macht keine Pause, wir bald schon.</item>
         <item>Sonnenschein ist zurzeit eine Erinnerung und ein Versprechen.</item>
         <item>Ein stiller Tag mit einem großen Ziel.</item>
-        <item>Noch ein Winter, dann ein Sommer am Meer.</item>
         <item>Das Beste am Warten: Man darf sich ausmalen, wie schön es wird.</item>
-        <item>Heute noch Mütze, bald nur noch Sonnenhut.</item>
         <item>Unser Strand wartet unter einem anderen Himmel.</item>
         <item>Mit jedem Tag ein winziges Stück näher an Tigaki.</item>
         <item>Eine Idee, die wächst: Kos im September.</item>
@@ -301,58 +293,34 @@
         <item>Der Urlaub ist ein ruhiger Punkt am Horizont.</item>
         <item>Es lohnt sich, auf etwas zu warten.</item>
         <item>Zeit, sich einen Lieblingsstrand auszusuchen.</item>
-        <item>Zeit, im Guide ein paar Orte zu merken.</item>
         <item>Ein guter Tag, um sich auf Griechenland zu freuen.</item>
         <item>Die Welt dreht sich weiter, auch Richtung Kos.</item>
         <item>Fernweh darf wachsen, es wird noch gebraucht.</item>
         <item>Neue Woche, gleiches Ziel: Meer.</item>
         <item>Der Sommer wartet geduldig, so wie wir.</item>
-        <item>Ein Wintertag mit Sommersehnsucht.</item>
-        <item>Wenn es draußen grau ist, hilft ein Blick auf die Karte von Kos.</item>
         <item>Lange Abende, kurze Vorfreude. Oder umgekehrt.</item>
         <item>Der Countdown läuft leise im Hintergrund.</item>
         <item>Bis September ist noch Zeit für alles, nur nicht für Langeweile.</item>
         <item>Der Kaffee schmeckt heute nach Frappé, fast.</item>
-        <item>Draußen Dunkelheit, im Kopf Sonnenuntergang über Tigaki.</item>
         <item>Irgendwann ist heute ein Tag am Strand.</item>
         <item>Wir haben noch eine ganze Menge Vorfreude übrig.</item>
-        <item>Erst Weihnachten, dann Neujahr, dann irgendwann Meer.</item>
-        <item>Das Jahr hat noch viel vor, bevor wir ans Wasser dürfen.</item>
         <item>Ein gutes Gefühl: Der Sommer ist schon verplant.</item>
-        <item>Dunkle Tage sind gute Tage, um von Licht zu träumen.</item>
         <item>Über den Wolken ist es wahrscheinlich gerade schön, über Kos sicher.</item>
         <item>Schön, dass es etwas gibt, das auf uns wartet.</item>
-        <item>Ein Tag Frühling mehr, ein Tag Kos näher.</item>
-        <item>Die ersten warmen Strahlen sind ein Vorgeschmack.</item>
-        <item>Wenn die Tage länger werden, ist Kos nicht mehr weit.</item>
         <item>Jetzt wird es hell am Horizont.</item>
-        <item>Der Winter verliert, der Urlaub gewinnt.</item>
-        <item>Der Frühling schickt schon Grüße aus der Ägäis.</item>
-        <item>Bald ist die Zeit, in der man Sandalen sucht.</item>
-        <item>Das Jahr dreht sich zu unseren Gunsten.</item>
-        <item>Langsam duftet es nach Sommer.</item>
-        <item>Koffer suchen, Sonnencreme prüfen: Es wird konkret.</item>
         <item>Die Planung macht Spaß, wenn das Ziel so schön ist.</item>
-        <item>Zeit, die Playlist für den Strand zu bauen.</item>
         <item>Ein neuer Monat, ein neuer Schritt Richtung Insel.</item>
         <item>Kos liegt nicht mehr hinter dem Winter, sondern vor dem Sommer.</item>
         <item>Heute schon ein bisschen Sonnenbrille.</item>
         <item>Es dauert nicht mehr ewig, nur noch eine Weile.</item>
-        <item>Das Kalenderblatt riecht schon nach Salz.</item>
         <item>Die Vorfreude hat Anlauf genommen.</item>
-        <item>Draußen wird es grün, drüben bald blau.</item>
         <item>Ein Blick in den Guide, ein Stück Kos im Kopf.</item>
-        <item>Der Sommer ist schon unterwegs, wir fahren ihm entgegen.</item>
-        <item>Die Tage werden länger und die Wartezeit kürzer.</item>
-        <item>Noch ein paar Wochen Alltag, dann Inselzeit.</item>
         <item>Zeit, Griechisch zu üben: Kalimera.</item>
         <item>Die Aufgabenliste wird kürzer, die Vorfreude länger.</item>
         <item>Der Strand ist noch leer, bald nicht mehr ganz.</item>
         <item>Die Insel macht sich schön für uns.</item>
         <item>Gut Ding will Weile haben, guter Urlaub auch.</item>
         <item>Alles auf Kurs. Ziel: Ägäis.</item>
-        <item>Erste Wolken weichen, das Blau kommt zurück.</item>
-        <item>Die Sonne gewinnt jeden Tag ein paar Minuten.</item>
         <item>Wir sammeln noch ein paar Gründe zum Lächeln.</item>
         <item>Der Urlaub nimmt Gestalt an.</item>
         <item>Ein gutes Gefühl: Es ist alles gebucht.</item>
@@ -376,11 +344,6 @@
         <item>Auf Kos gehen die Uhren anders. Bald auch unsere.</item>
         <item>Noch eine Weile, aber die Richtung stimmt.</item>
         <item>Aus Plänen werden Koffer, aus Koffern wird Strand.</item>
-        <item>Der erste Sommertag hier ist der Auftakt für Kos.</item>
-        <item>Frühstück auf dem Balkon, nur eben noch in Deutschland.</item>
-        <item>Wenn die Eisdiele öffnet, rückt die Taverne näher.</item>
-        <item>Im Garten wird es bunt, am Meer bald auch.</item>
-        <item>Die Badesaison hier fängt an, unsere dort noch nicht.</item>
         <item>Die Zeit rennt gerade in unsere Richtung.</item>
         <item>Langsam kommen Gedanken an Gepäck und Sonnenhut.</item>
         <item>Der Reisepass freut sich schon auf seinen Auftritt.</item>
@@ -388,33 +351,52 @@
         <item>Condor bringt uns hin, der Rest ist Genuss.</item>
         <item>Hamburg, Kos, Sonne: Die Reihenfolge steht.</item>
         <item>Ein paar Wochen weniger bis zum Wasser.</item>
-        <item>Noch Frühlingsluft, bald Meeresluft.</item>
         <item>Sonne im Kalender, Sand im Plan.</item>
         <item>Der Urlaub wartet im besten Sinn: geduldig.</item>
         <item>Der Sommer macht sich bereit und wir uns auch.</item>
+        <item>Der Meltemi übt schon mal Pusten.</item>
+        <item>Im Guide warten ein paar Strände auf euch.</item>
+        <item>Frappé, Fischtaverne, Fußabdrücke im Sand.</item>
+        <item>Kalimera, Kos. Bis bald.</item>
+        <item>Ein Platz am Meer ist in Planung.</item>
+        <item>Sonnencreme kann man später kaufen. Vorfreude gibt es jetzt.</item>
+        <item>Zwei Wochen Ägäis, einmal gebucht.</item>
+        <item>Heute schon einen Tipp im Guide gemerkt?</item>
+        <item>Souvlaki, Sonne, Siesta.</item>
+        <item>Der Strand von Tigaki ist lang genug für uns beide.</item>
+        <item>Hamburg ist schön. Kos auch, nur wärmer.</item>
+        <item>Kein Wecker, kein Plan, nur Meer. Bald.</item>
+        <item>Wer wartet, kann schon mal Griechisch üben: Efcharistó.</item>
+        <item>Die Ägäis hat schon unsere Liegen gezählt.</item>
+        <item>Wir haben Zeit. Die Insel auch.</item>
+        <item>Ein Fischteller am Hafen, mehr braucht es nicht.</item>
+        <item>Noch ein Tag ohne Sonnenbrand. Das ändert sich.</item>
+        <item>Oregano, Meersalz, Sonnenuntergang: Das wird gut.</item>
+        <item>Ein Abend in Zia, ein Morgen in Tigaki: So stellen wir uns das vor.</item>
+        <item>Heute noch Alltag, in ein paar Monaten Salz auf der Haut.</item>
     </string-array>
     <string-array name="widget_phrases">
         <!-- 101 Tage -->
         <item>Kos rückt näher.</item>
         <item>Die Insel lockt.</item>
-        <item>Vorfreude wächst.</item>
+        <item>Tigaki wartet schon, wir kommen.</item>
         <item>Die Ägäis wartet.</item>
         <item>Zeit für Inselträume.</item>
         <item>Sommer wartet auf uns.</item>
         <item>Sonne in Sicht.</item>
         <item>Die Tage sind gezählt.</item>
-        <item>Urlaub wird geladen.</item>
+        <item>Wetterbericht Kos: Sonne, mit Aussicht auf mehr Sonne.</item>
         <item>Die Auszeit kommt.</item>
-        <item>Das Meer ruft.</item>
+        <item>Das Meer hat angerufen. Es wartet.</item>
         <item>Noch näher ans Meer.</item>
         <item>Fast am Ziel.</item>
-        <item>Kos zählt mit.</item>
+        <item>Wir zählen Tage, Kos zählt Wellen.</item>
         <item>Bald unter Palmen.</item>
         <item>Die Koffer träumen schon.</item>
-        <item>Urlaub naht.</item>
-        <item>Inselträume beginnen.</item>
-        <item>Die Insel wartet.</item>
-        <item>Urlaubshorizont voraus.</item>
+        <item>Das Frühstücksbuffet im ILIOS.K weiß noch nichts von uns.</item>
+        <item>Kalimera, Kos. Bald auch live.</item>
+        <item>Der erste Frappé wartet schon.</item>
+        <item>Condor kennt den Weg, wir freuen uns.</item>
         <item>Der Sommer ruft.</item>
         <item>Bald beginnt die Auszeit.</item>
         <item>Die Insel lächelt schon.</item>
@@ -445,17 +427,17 @@
         <item>Die Sonne wartet.</item>
         <item>Der Strand zählt mit.</item>
         <item>Inselmomente voraus.</item>
-        <item>Die Insel ruft uns.</item>
+        <item>Zia bei Sonnenuntergang steht auf der Wunschliste.</item>
         <item>Bald nur noch entspannen.</item>
-        <item>Meerzeit kommt näher.</item>
+        <item>Der Meltemi übt schon für uns.</item>
         <item>Die Ägäis glitzert schon.</item>
         <item>Inselabende kommen.</item>
         <item>Meerblick kommt näher.</item>
-        <item>Inselglück voraus.</item>
+        <item>Nächster Halt: Meer.</item>
         <item>Die Sonne wird wärmer.</item>
         <item>Meer statt Termine.</item>
         <item>Sonne statt To-do-Liste.</item>
-        <item>Inselenergie voraus.</item>
+        <item>Salzwasser statt Schreibtisch.</item>
         <item>Bald nur noch Meer.</item>
         <!-- 40 Tage -->
         <item>Gemeinsam ans Meer.</item>
@@ -474,7 +456,7 @@
         <item>Noch näher an der Auszeit.</item>
         <item>Urlaub für zwei.</item>
         <item>Bald am Lieblingsort.</item>
-        <item>Inselträume werden wahr.</item>
+        <item>Aus dem Guide wird bald Wirklichkeit.</item>
         <item>Vorfreude geteilt.</item>
         <item>Bald wieder unterwegs.</item>
         <item>Gemeinsam dem Alltag davon.</item>
@@ -486,7 +468,7 @@
         <item>Koffer gedanklich gepackt.</item>
         <item>Der Strand reserviert Plätze.</item>
         <item>Urlaub gewinnt.</item>
-        <item>Kos hält durch.</item>
+        <item>Kos hält die Stellung, wir kommen.</item>
         <item>Fast bereit zum Abflug.</item>
         <!-- 10 Tage -->
         <item>Noch etwas Geduld.</item>
