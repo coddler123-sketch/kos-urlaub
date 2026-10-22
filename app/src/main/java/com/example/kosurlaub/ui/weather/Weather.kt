@@ -36,7 +36,8 @@ data class KosWeather(
     val forecast: List<KosForecastDay> = emptyList(),
     val sunsetIso: String? = null,
     val sunriseIso: String? = null,
-    val uvIndex: Double? = null
+    val uvIndex: Double? = null,
+    val windDirectionDegrees: Int? = null
 ) {
     val temperatureLabel: String
         get() = "$temperatureCelsius°"
@@ -135,6 +136,7 @@ object WeatherRepository {
     private const val KEY_SUNSET = "sunset"
     private const val KEY_SUNRISE = "sunrise"
     private const val KEY_UV_INDEX = "uv_index"
+    private const val KEY_WIND_DIR = "wind_dir"
 
     /** Live-Abruf bei Open-Meteo. Gibt null zurueck, wenn etwas schiefgeht. */
     fun fetch(): KosWeather? {
@@ -142,7 +144,7 @@ object WeatherRepository {
             "https://api.open-meteo.com/v1/forecast" +
                 "?latitude=$LATITUDE&longitude=$LONGITUDE" +
                 "&current=temperature_2m,apparent_temperature,relative_humidity_2m," +
-                "precipitation,weather_code,wind_speed_10m,is_day,uv_index" +
+                "precipitation,weather_code,wind_speed_10m,wind_direction_10m,is_day,uv_index" +
                 "&daily=weather_code,temperature_2m_max,temperature_2m_min," +
                 "precipitation_probability_max,precipitation_sum,sunset,sunrise" +
                 "&timezone=auto&forecast_days=8"
@@ -168,7 +170,8 @@ object WeatherRepository {
                 forecast = parseForecast(root.optJSONObject("daily")),
                 sunsetIso = root.optJSONObject("daily")?.optJSONArray("sunset")?.optString(0),
                 sunriseIso = root.optJSONObject("daily")?.optJSONArray("sunrise")?.optString(0),
-                uvIndex = current.optDouble("uv_index").takeIf { it.isFinite() }
+                uvIndex = current.optDouble("uv_index").takeIf { it.isFinite() },
+                windDirectionDegrees = current.optDouble("wind_direction_10m").takeIf { it.isFinite() }?.roundToInt()
             )
         } catch (error: Exception) {
             Log.w("KosWeather", "Weather fetch failed", error)
@@ -191,6 +194,7 @@ object WeatherRepository {
             .putString(KEY_SUNSET, weather.sunsetIso)
             .putString(KEY_SUNRISE, weather.sunriseIso)
             .putFloat(KEY_UV_INDEX, weather.uvIndex?.toFloat() ?: -1f)
+            .putInt(KEY_WIND_DIR, weather.windDirectionDegrees ?: -1)
             .putBoolean(KEY_HAS_DATA, true)
             .putLong(KEY_LAST_FETCH, System.currentTimeMillis())
             .apply()
@@ -216,7 +220,8 @@ object WeatherRepository {
             forecast = forecastFromJson(prefs.getString(KEY_FORECAST, null)),
             sunsetIso = prefs.getString(KEY_SUNSET, null),
             sunriseIso = prefs.getString(KEY_SUNRISE, null),
-            uvIndex = prefs.getFloat(KEY_UV_INDEX, -1f).toDouble().takeIf { it >= 0.0 }
+            uvIndex = prefs.getFloat(KEY_UV_INDEX, -1f).toDouble().takeIf { it >= 0.0 },
+            windDirectionDegrees = prefs.getInt(KEY_WIND_DIR, -1).takeIf { it >= 0 }
         )
     }
 

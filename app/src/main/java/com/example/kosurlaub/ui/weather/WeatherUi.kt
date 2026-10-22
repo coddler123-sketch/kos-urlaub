@@ -37,6 +37,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -212,6 +213,12 @@ fun BeachWindRadarCard(modifier: Modifier = Modifier) {
         PostcardLabel("Strand- & Wind-Radar")
         Spacer(Modifier.height(4.dp))
         Text("Welcher Strand passt heute am besten?", style = PostcardType.Heading, color = KosInk)
+        WeatherRepository.cached(LocalContext.current)?.let { w ->
+            Spacer(Modifier.height(8.dp))
+            val from = w.windDirectionDegrees?.let { "aus ${BeachAdvice.directionName(it)}, " }.orEmpty()
+            Text("Jetzt: Wind $from${w.windSpeedKmh} km/h", style = PostcardType.Body.copy(fontWeight = FontWeight.Bold), color = KosInk)
+            Text(BeachAdvice.advice(w.windSpeedKmh, w.windDirectionDegrees), style = PostcardType.Body, color = KosInk)
+        }
         Spacer(Modifier.height(8.dp))
         BeachOption(
             "Nordküste (Tigaki & Umgebung)",
