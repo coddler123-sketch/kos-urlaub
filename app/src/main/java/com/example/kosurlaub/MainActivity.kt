@@ -99,6 +99,14 @@ class MainActivity : ComponentActivity() {
         const val EXTRA_OPEN_PAGE = "open_page"
     }
 
+    /** Ziel eines App-Shortcuts, der die schon laufende App erreicht. */
+    private val shortcutPage = mutableStateOf<String?>(null)
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        shortcutPage.value = intent.getStringExtra(EXTRA_OPEN_PAGE)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppClock.init(applicationContext)
@@ -122,6 +130,8 @@ class MainActivity : ComponentActivity() {
                 KosApp(
                     startInTravel = intent.getBooleanExtra(EXTRA_OPEN_TRAVEL, false),
                     startPage = intent.getStringExtra(EXTRA_OPEN_PAGE),
+                    shortcutPage = shortcutPage.value,
+                    onShortcutHandled = { shortcutPage.value = null },
                     themeMode = themeMode.value,
                     onThemeMode = {
                         ThemeMode.save(applicationContext, it)
@@ -139,6 +149,8 @@ private enum class MainDestination { TODAY, DISCOVER, LISTS }
 private fun KosApp(
     startInTravel: Boolean = false,
     startPage: String? = null,
+    shortcutPage: String? = null,
+    onShortcutHandled: () -> Unit = {},
     themeMode: ThemeMode,
     onThemeMode: (ThemeMode) -> Unit
 ) {
@@ -164,6 +176,19 @@ private fun KosApp(
     val selectedDay = rememberSaveable { mutableIntStateOf(0) }
     val todayIndex = remember { TripDays.today(AppClock.nowMillis())?.index }
     val destination = MainDestination.entries.firstOrNull { it.name == destinationName.value } ?: MainDestination.TODAY
+    val passesRequest = remember { mutableIntStateOf(0) }
+
+    LaunchedEffect(shortcutPage) {
+        if (shortcutPage == null) return@LaunchedEffect
+        if (shortcutPage == "PASSES") {
+            passesRequest.intValue++
+            destinationName.value = MainDestination.LISTS.name
+        } else {
+            guidePage.value = shortcutPage
+            destinationName.value = MainDestination.DISCOVER.name
+        }
+        onShortcutHandled()
+    }
 
     BackHandler(enabled = !nestedDetailVisible.value && destination != MainDestination.TODAY) {
         if (destination == MainDestination.DISCOVER && guidePage.value != null) {
@@ -224,11 +249,13 @@ private fun KosApp(
                                 onOpenCommunity = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_URL))) },
                 onDetailVisibilityChanged = { nestedDetailVisible.value = it }
             )
-            MainDestination.LISTS -> ListsScreen(
-                padding = PaddingValues(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
-                scrollToTopRequest = scrollToTopRequest.intValue,
-                startOnPasses = startPage == "PASSES"
-            )
+            MainDestination.LISTS -> key(passesRequest.intValue) {
+                ListsScreen(
+                    padding = PaddingValues(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                    scrollToTopRequest = scrollToTopRequest.intValue,
+                    startOnPasses = startPage == "PASSES" || passesRequest.intValue > 0
+                )
+            }
         }
     }
 }

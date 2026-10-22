@@ -216,6 +216,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.zxing.core)
     testImplementation(libs.junit)
     testImplementation(libs.json)
     testImplementation(libs.kotlinx.coroutines.test)

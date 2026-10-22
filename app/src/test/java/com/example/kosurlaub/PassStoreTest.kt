@@ -11,6 +11,11 @@ class PassStoreTest {
         assertEquals(items, PassStore.decode(PassStore.encode(items)))
     }
 
+    @Test fun roundTripKeepsBarcodePayload() {
+        val items = listOf(Pass("a", "Hin", true, "M1MUELLER/ANNA       EABC123 HAMKGSDE 1640 256Y012A0001 100^äß", "AZTEC"))
+        assertEquals(items, PassStore.decode(PassStore.encode(items)))
+    }
+
     @Test fun labelSkipsEmptyName() {
         assertEquals("Hin", PassStore.label("Hin", " "))
         assertEquals("Rück · Kim", PassStore.label("Rück", " Kim "))

@@ -9,8 +9,17 @@ import android.os.ParcelFileDescriptor
 import java.io.File
 import java.util.UUID
 
-/** Eine abgelegte Bordkarte. Die Datei liegt unter filesDir/passes/<id>. */
-data class Pass(val id: String, val label: String, val pdf: Boolean)
+/**
+ * Eine abgelegte Bordkarte. Die Datei liegt unter filesDir/passes/<id>.
+ * [payload] und [format] stehen nur da, wenn in der Datei ein Barcode gefunden wurde.
+ */
+data class Pass(
+    val id: String,
+    val label: String,
+    val pdf: Boolean,
+    val payload: String? = null,
+    val format: String? = null
+)
 
 /** Bordkarten als Foto oder PDF, nur auf diesem Gerät (nicht im Backup: nur sharedpref wird gesichert). */
 object PassStore {
@@ -19,12 +28,22 @@ object PassStore {
 
     fun label(leg: String, person: String): String = if (person.isBlank()) leg else "$leg · ${person.trim()}"
 
-    fun encode(items: List<Pass>): String =
-        items.joinToString("\n") { "${it.id}\t${it.label.replace(Regex("[\t\n]"), " ")}\t${if (it.pdf) 1 else 0}" }
+    fun encode(items: List<Pass>): String = items.joinToString("\n") {
+        val code = it.payload?.toByteArray()?.joinToString("") { b -> "%02x".format(b) }.orEmpty()
+        "${it.id}\t${it.label.replace(Regex("[\t\n]"), " ")}\t${if (it.pdf) 1 else 0}\t$code\t${it.format.orEmpty()}"
+    }
+
+    private fun fromHex(hex: String): String =
+        String(ByteArray(hex.length / 2) { i -> hex.substring(2 * i, 2 * i + 2).toInt(16).toByte() })
 
     fun decode(raw: String): List<Pass> = raw.lines().mapNotNull {
         val f = it.split("\t")
-        if (f.size < 3 || f[0].isBlank()) null else Pass(f[0], f[1], f[2] == "1")
+        if (f.size < 3 || f[0].isBlank()) {
+            null
+        } else {
+            val payload = f.getOrNull(3)?.takeIf { it.isNotEmpty() }?.let { c -> fromHex(c) }
+            Pass(f[0], f[1], f[2] == "1", payload, f.getOrNull(4)?.takeIf { it.isNotEmpty() })
+        }
     }
 
     fun load(context: Context): List<Pass> =
@@ -49,7 +68,9 @@ object PassStore {
             target.delete()
             return null
         }
-        return (load(context) + pass).also { save(context, it) }
+        val code = render(context, pass, 1600)?.let { BarcodeCodec.decode(it) }
+        val stored = if (code == null) pass else pass.copy(payload = code.first, format = code.second)
+        return (load(context) + stored).also { save(context, it) }
     }
 
     fun remove(context: Context, id: String): List<Pass> {
