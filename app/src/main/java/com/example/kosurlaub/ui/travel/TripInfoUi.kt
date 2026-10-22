@@ -63,3 +63,20 @@ private fun InfoLine(label: String, text: String) {
         Text(text, style = PostcardType.Body, color = KosInk)
     }
 }
+
+private val goodToKnow = listOf(
+    "Geld" to "Auf Kos gilt der Euro. Karte geht in Supermärkten und den meisten Tavernen. Bargeld für Bus, Boote und kleine Kioske.",
+    "Strom" to "Wie zu Hause: Typ C und F, 230 Volt. Kein Adapter nötig.",
+    "Flughafen" to "KGS ist klein, der Ausgang ist zu Fuß. Tigaki liegt rund 15 Minuten vom Flughafen. Den Transfer vorher klären.",
+    "Sonne und Wind" to "Mittags Schatten suchen, Wasser mitnehmen. Der Meltemi (Nordwind) ist im September schwächer als im Hochsommer, Südstrände sind bei Wind oft ruhiger.",
+    "Rückreise" to "Der Rückflug geht um 11:35 Uhr. Transfer am Vorabend an der Rezeption bestätigen und früh frühstücken."
+)
+
+@Composable
+internal fun GoodToKnowCard() {
+    TravelCardContainer {
+        PostcardLabel("Gut zu wissen", Modifier.testTag("good-to-know-card"))
+        Spacer(Modifier.height(8.dp))
+        goodToKnow.forEach { (label, text) -> InfoLine(label, text) }
+    }
+}

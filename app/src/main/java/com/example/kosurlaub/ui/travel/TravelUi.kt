@@ -163,6 +163,7 @@ fun TravelScreen(
                 item { TripInfoCard(onOpenMap = openMap) }
                 item { HotelSecretsCard() }
                 item { HotelInfoCard() }
+                item { GoodToKnowCard() }
                 item {
                     MarineWeatherCard(
                         marineWeather = marineWeather,
