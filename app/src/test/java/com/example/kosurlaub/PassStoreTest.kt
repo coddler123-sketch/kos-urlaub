@@ -38,4 +38,11 @@ class PassStoreTest {
         val back = Pass("b", "Hin", false, payload, "AZTEC")
         assertEquals(TripData.inbound.departureMillis(), PassTiming.departureMillis(back))
     }
+
+    @Test fun legAndLabelComeFromBarcode() {
+        val payload = "M1MUELLER/KIM MRS     EN7K4Q2 HAMKGSDE 1640 256Y012B0001 100"
+        assertEquals("Hin · Kim Mueller", PassTiming.autoLabel(payload))
+        assertEquals("Rück", PassTiming.leg(Pass("x", "irgendwas", false, "M1MUELLER/KIM MRS     EN7K4Q2 KGSHAMDE 1641 271Y012B0001 100", "AZTEC")))
+        assertEquals(null, PassTiming.autoLabel("https://example.com"))
+    }
 }

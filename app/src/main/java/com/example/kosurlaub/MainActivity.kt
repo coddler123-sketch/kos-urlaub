@@ -81,6 +81,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kosurlaub.ui.lists.ListsScreen
+import com.example.kosurlaub.ui.lists.PassesScreen
 import com.example.kosurlaub.ui.theme.KosWidgetTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -143,7 +144,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private enum class MainDestination { TODAY, DISCOVER, LISTS }
+private enum class MainDestination { TODAY, DISCOVER, LISTS, PASSES }
 
 @Composable
 private fun KosApp(
@@ -158,7 +159,7 @@ private fun KosApp(
     val destinationName = rememberSaveable {
         mutableStateOf(
             when {
-                startPage == "PASSES" -> MainDestination.LISTS.name
+                startPage == "PASSES" -> MainDestination.PASSES.name
                 startInTravel || startPage != null -> MainDestination.DISCOVER.name
                 else -> MainDestination.TODAY.name
             }
@@ -176,13 +177,11 @@ private fun KosApp(
     val selectedDay = rememberSaveable { mutableIntStateOf(0) }
     val todayIndex = remember { TripDays.today(AppClock.nowMillis())?.index }
     val destination = MainDestination.entries.firstOrNull { it.name == destinationName.value } ?: MainDestination.TODAY
-    val passesRequest = remember { mutableIntStateOf(0) }
 
     LaunchedEffect(shortcutPage) {
         if (shortcutPage == null) return@LaunchedEffect
         if (shortcutPage == "PASSES") {
-            passesRequest.intValue++
-            destinationName.value = MainDestination.LISTS.name
+            destinationName.value = MainDestination.PASSES.name
         } else {
             guidePage.value = shortcutPage
             destinationName.value = MainDestination.DISCOVER.name
@@ -249,13 +248,14 @@ private fun KosApp(
                                 onOpenCommunity = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_URL))) },
                 onDetailVisibilityChanged = { nestedDetailVisible.value = it }
             )
-            MainDestination.LISTS -> key(passesRequest.intValue) {
-                ListsScreen(
-                    padding = PaddingValues(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
-                    scrollToTopRequest = scrollToTopRequest.intValue,
-                    startOnPasses = startPage == "PASSES" || passesRequest.intValue > 0
-                )
-            }
+            MainDestination.LISTS -> ListsScreen(
+                padding = PaddingValues(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                scrollToTopRequest = scrollToTopRequest.intValue
+            )
+            MainDestination.PASSES -> PassesScreen(
+                padding = PaddingValues(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                scrollToTopRequest = scrollToTopRequest.intValue
+            )
         }
     }
 }
@@ -271,11 +271,13 @@ private fun MainNavigationBar(
                 MainDestination.TODAY -> R.string.main_nav_today
                 MainDestination.DISCOVER -> R.string.main_nav_discover
                 MainDestination.LISTS -> R.string.main_nav_lists
+                MainDestination.PASSES -> R.string.main_nav_passes
             }
             val iconRes = when (destination) {
                 MainDestination.TODAY -> R.drawable.ic_nav_home
                 MainDestination.DISCOVER -> R.drawable.ic_nav_compass
                 MainDestination.LISTS -> R.drawable.ic_nav_list
+                MainDestination.PASSES -> R.drawable.ic_nav_pass
             }
             NavigationBarItem(
                 selected = destination == selected,

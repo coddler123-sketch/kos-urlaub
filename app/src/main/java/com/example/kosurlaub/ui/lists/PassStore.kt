@@ -70,7 +70,11 @@ object PassStore {
             return null
         }
         val code = render(context, pass, 1600)?.let { BarcodeCodec.decode(it) }
-        val stored = if (code == null) pass else pass.copy(payload = code.first, format = code.second)
+        val stored = if (code == null) {
+            pass
+        } else {
+            pass.copy(label = PassTiming.autoLabel(code.first) ?: label, payload = code.first, format = code.second)
+        }
         return (load(context) + stored).also { save(context, it) }
     }
 
@@ -104,19 +108,37 @@ object PassStore {
     }.getOrNull()
 }
 
-/** Wann eine Bordkarte abläuft: nach dem Abflug des passenden Flugs rutscht sie unter "Vergangene Flüge". */
+/** Ordnet Bordkarten dem Hin- oder Rückflug zu und sagt, wann sie abläuft. */
 object PassTiming {
-    fun departureMillis(pass: Pass): Long? {
-        val flights = listOf(TripData.outbound, TripData.inbound)
-        val data = pass.payload?.let { Bcbp.parse(it) }
-        data?.let { d -> flights.firstOrNull { it.fromAirport == d.from && it.toAirport == d.to } }
-            ?.let { return it.departureMillis() }
-        return when {
-            pass.label.startsWith("Hin") -> TripData.outbound.departureMillis()
-            pass.label.startsWith("Rück") -> TripData.inbound.departureMillis()
-            else -> null
-        }
+    private fun legOf(data: BoardingData): String? = when {
+        data.from == TripData.outbound.fromAirport && data.to == TripData.outbound.toAirport -> "Hin"
+        data.from == TripData.inbound.fromAirport && data.to == TripData.inbound.toAirport -> "Rück"
+        else -> null
     }
+
+    /** "Hin" oder "Rück": zuerst nach der Strecke im Barcode, sonst nach dem Namen der Karte. */
+    fun leg(pass: Pass): String? =
+        pass.payload?.let { Bcbp.parse(it) }?.let { legOf(it) }
+            ?: when {
+                pass.label.startsWith("Hin") -> "Hin"
+                pass.label.startsWith("Rück") -> "Rück"
+                else -> null
+            }
+
+    fun flight(leg: String?): TripData.Flight? = when (leg) {
+        "Hin" -> TripData.outbound
+        "Rück" -> TripData.inbound
+        else -> null
+    }
+
+    /** Name der Karte aus dem Barcode, z. B. "Hin · Anna Mueller", oder null ohne lesbaren Barcode. */
+    fun autoLabel(payload: String): String? {
+        val data = Bcbp.parse(payload) ?: return null
+        val leg = legOf(data) ?: return null
+        return PassStore.label(leg, data.passenger)
+    }
+
+    fun departureMillis(pass: Pass): Long? = flight(leg(pass))?.departureMillis()
 
     fun isPast(pass: Pass, nowMillis: Long): Boolean = departureMillis(pass)?.let { nowMillis > it } ?: false
 }

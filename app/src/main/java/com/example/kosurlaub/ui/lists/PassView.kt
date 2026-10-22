@@ -2,6 +2,7 @@ package com.example.kosurlaub.ui.lists
 
 import android.app.Activity
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -55,15 +58,17 @@ private val Ink = Color(0xFF2B3A30)
 private val Muted = Color(0xFF6B665C)
 private val Stamp = Color(0xFFB5442E)
 
-/** Bordkarte allein auf dem Bildschirm: kein App-Rahmen, volle Helligkeit, Systemleisten weg. */
+/**
+ * Bordkarte allein auf dem Bildschirm: kein App-Rahmen, volle Helligkeit, Systemleisten weg.
+ * Mit mehreren Karten (z. B. beide Reisenden) wischt man zwischen ihnen.
+ */
 @Composable
-internal fun PassView(pass: Pass, onClose: () -> Unit) {
+@OptIn(ExperimentalFoundationApi::class)
+internal fun PassView(passes: List<Pass>, start: Int, onClose: () -> Unit) {
     val context = LocalContext.current
-    val barcode = remember(pass.id) { pass.payload?.let { BarcodeCodec.encode(it, pass.format.orEmpty(), 1000) } }
-    val data = remember(pass.id) { pass.payload?.let { Bcbp.parse(it) } }
-    var showFile by remember(pass.id) { mutableStateOf(barcode == null) }
+    val pager = rememberPagerState(initialPage = start.coerceIn(0, passes.lastIndex)) { passes.size }
 
-    DisposableEffect(pass.id) {
+    DisposableEffect(Unit) {
         val window = (context as? Activity)?.window
         val before = window?.attributes?.screenBrightness
         window?.attributes = window?.attributes?.apply { screenBrightness = 1f }
@@ -80,33 +85,48 @@ internal fun PassView(pass: Pass, onClose: () -> Unit) {
             WindowCompat.getInsetsController(window, view).hide(WindowInsetsCompat.Type.systemBars())
         }
         Box(Modifier.fillMaxSize().background(Backdrop).testTag("pass-view")) {
-            Column(
-                Modifier.fillMaxSize().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    TextButton(onClose, Modifier.testTag("pass-close")) { Text("Schließen  ×", color = Paper, fontFamily = KosSans) }
-                }
-                if (showFile || barcode == null) {
-                    val big = remember(pass.id) { PassStore.render(context, pass, 1400) }
-                    if (big != null) {
-                        Image(
-                            big.asImageBitmap(), pass.label,
-                            Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Color.White),
-                            contentScale = ContentScale.FillWidth
-                        )
-                    }
-                } else {
-                    Ticket(pass.label, data, barcode.asImageBitmap())
-                }
-                if (barcode != null) {
-                    TextButton({ showFile = !showFile }) {
-                        Text(if (showFile) "Zurück zur Bordkarte" else "Original ansehen", color = Paper.copy(alpha = 0.8f), fontFamily = KosSans)
-                    }
-                }
-                Spacer(Modifier.height(24.dp))
+            HorizontalPager(pager, Modifier.fillMaxSize()) { page ->
+                PassPage(passes[page], page, passes.size, onClose)
             }
         }
+    }
+}
+
+@Composable
+private fun PassPage(pass: Pass, index: Int, total: Int, onClose: () -> Unit) {
+    val context = LocalContext.current
+    val barcode = remember(pass.id) { pass.payload?.let { BarcodeCodec.encode(it, pass.format.orEmpty(), 1000) } }
+    val data = remember(pass.id) { pass.payload?.let { Bcbp.parse(it) } }
+    var showFile by remember(pass.id) { mutableStateOf(barcode == null) }
+    Column(
+        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = 20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(
+                if (total > 1) "Karte ${index + 1} von $total · wischen" else "",
+                color = Paper.copy(alpha = 0.7f), fontFamily = KosSans, fontSize = 13.sp, modifier = Modifier.padding(start = 4.dp)
+            )
+            TextButton(onClose, Modifier.testTag("pass-close")) { Text("Schließen  ×", color = Paper, fontFamily = KosSans) }
+        }
+        if (showFile || barcode == null) {
+            val big = remember(pass.id) { PassStore.render(context, pass, 1400) }
+            if (big != null) {
+                Image(
+                    big.asImageBitmap(), pass.label,
+                    Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Color.White),
+                    contentScale = ContentScale.FillWidth
+                )
+            }
+        } else {
+            Ticket(pass.label, data, barcode.asImageBitmap())
+        }
+        if (barcode != null) {
+            TextButton({ showFile = !showFile }) {
+                Text(if (showFile) "Zurück zur Bordkarte" else "Original ansehen", color = Paper.copy(alpha = 0.8f), fontFamily = KosSans)
+            }
+        }
+        Spacer(Modifier.height(24.dp))
     }
 }
 

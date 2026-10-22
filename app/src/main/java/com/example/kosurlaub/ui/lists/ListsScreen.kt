@@ -30,16 +30,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.kosurlaub.ui.theme.*
 
-private const val PASSES = "passes"
-
 /** Tab "Listen": Packliste (nach Taschen) und Aufgaben vor der Abreise, alles lokal gespeichert. */
 @Composable
-fun ListsScreen(padding: PaddingValues, scrollToTopRequest: Int, startOnPasses: Boolean = false) {
+fun ListsScreen(padding: PaddingValues, scrollToTopRequest: Int) {
     val listState = rememberLazyListState()
     LaunchedEffect(scrollToTopRequest) {
         if (scrollToTopRequest > 0) listState.animateScrollToItem(0)
     }
-    var key by rememberSaveable { mutableStateOf(if (startOnPasses) PASSES else ListStore.PACKING) }
+    var key by rememberSaveable { mutableStateOf(ListStore.PACKING) }
     LazyColumn(
         state = listState,
         modifier = Modifier.fillMaxWidth().testTag("lists-screen").padding(padding),
@@ -56,10 +54,9 @@ fun ListsScreen(padding: PaddingValues, scrollToTopRequest: Int, startOnPasses: 
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 PostcardChip("Packen", key == ListStore.PACKING, { key = ListStore.PACKING })
                 PostcardChip("Aufgaben", key == ListStore.TASKS, { key = ListStore.TASKS })
-                PostcardChip("Bordkarten", key == PASSES, { key = PASSES })
             }
         }
-        item(key = key) { if (key == PASSES) PassesPanel() else ListPanel(key) }
+        item(key = key) { ListPanel(key) }
     }
 }
 
