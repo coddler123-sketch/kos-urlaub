@@ -2,6 +2,7 @@ package com.example.kosurlaub
 
 import com.example.kosurlaub.ui.lists.Pass
 import com.example.kosurlaub.ui.lists.PassStore
+import com.example.kosurlaub.ui.lists.PassTiming
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -19,5 +20,22 @@ class PassStoreTest {
     @Test fun labelSkipsEmptyName() {
         assertEquals("Hin", PassStore.label("Hin", " "))
         assertEquals("Rück · Kim", PassStore.label("Rück", " Kim "))
+    }
+
+    @Test fun passBecomesPastAfterDeparture() {
+        val out = Pass("a", "Hin · Anna", false)
+        val back = Pass("b", "Rück", false)
+        val beforeOut = TripData.outbound.departureMillis() - 1
+        val afterOut = TripData.outbound.departureMillis() + 1
+        assertEquals(false, PassTiming.isPast(out, beforeOut))
+        assertEquals(true, PassTiming.isPast(out, afterOut))
+        assertEquals(false, PassTiming.isPast(back, afterOut))
+        assertEquals(true, PassTiming.isPast(back, TripData.inbound.departureMillis() + 1))
+    }
+
+    @Test fun barcodeRouteBeatsLabel() {
+        val payload = "M1MUELLER/ANNA MRS    EN7K4Q2 KGSHAMDE 1641 271Y012A0001 100"
+        val back = Pass("b", "Hin", false, payload, "AZTEC")
+        assertEquals(TripData.inbound.departureMillis(), PassTiming.departureMillis(back))
     }
 }

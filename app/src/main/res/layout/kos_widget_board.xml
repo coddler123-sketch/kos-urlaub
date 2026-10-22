@@ -127,35 +127,34 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Wetter als gestempelter Kreis -->
+            <!-- Wetterblase oben rechts, wie beim Postkarten-Widget -->
             <LinearLayout
                 android:id="@+id/widget_weather_pill"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="62dp"
+                android:layout_height="62dp"
                 android:layout_gravity="top|right"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/widget_board_weather_background"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="14dp"
+                android:background="@drawable/widget_bubble_background"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/widget_weather_icon"
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:contentDescription="@string/widget_weather_description"
                     android:src="@drawable/ic_sun"
-                    android:tint="@color/widget_board_red" />
+                    android:tint="@color/widget_gold" />
 
                 <TextView
                     android:id="@+id/widget_weather_temp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-condensed"
                     android:includeFontPadding="false"
                     android:text="@string/widget_weather_temp"
-                    android:textColor="@color/widget_board_red"
-                    android:textSize="12sp"
+                    android:textColor="@color/widget_on_photo"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
 

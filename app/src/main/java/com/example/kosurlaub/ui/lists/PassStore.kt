@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.graphics.pdf.PdfRenderer
 import android.net.Uri
 import android.os.ParcelFileDescriptor
+import com.example.kosurlaub.TripData
 import java.io.File
 import java.util.UUID
 
@@ -101,4 +102,21 @@ object PassStore {
             })
         }
     }.getOrNull()
+}
+
+/** Wann eine Bordkarte abläuft: nach dem Abflug des passenden Flugs rutscht sie unter "Vergangene Flüge". */
+object PassTiming {
+    fun departureMillis(pass: Pass): Long? {
+        val flights = listOf(TripData.outbound, TripData.inbound)
+        val data = pass.payload?.let { Bcbp.parse(it) }
+        data?.let { d -> flights.firstOrNull { it.fromAirport == d.from && it.toAirport == d.to } }
+            ?.let { return it.departureMillis() }
+        return when {
+            pass.label.startsWith("Hin") -> TripData.outbound.departureMillis()
+            pass.label.startsWith("Rück") -> TripData.inbound.departureMillis()
+            else -> null
+        }
+    }
+
+    fun isPast(pass: Pass, nowMillis: Long): Boolean = departureMillis(pass)?.let { nowMillis > it } ?: false
 }
