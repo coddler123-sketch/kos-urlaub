@@ -122,7 +122,7 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
                     views.setViewVisibility(R.id.widget_vacation_subtitle, View.VISIBLE)
                     views.setViewVisibility(R.id.widget_phrase_container, View.GONE)
                     views.setTextViewText(R.id.widget_arrival_message,
-                        context.getString(R.string.widget_vacation_line1))
+                        WidgetPhaseText.vacationDay(AppClock.nowMillis()) ?: context.getString(R.string.widget_vacation_line1))
                     applyDayImage(context, views)
                 }
                 remaining.isReached -> {
@@ -131,8 +131,7 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
                     views.setViewVisibility(R.id.widget_arrival_message, View.VISIBLE)
                     views.setViewVisibility(R.id.widget_vacation_subtitle, View.GONE)
                     views.setViewVisibility(R.id.widget_phrase_container, View.GONE)
-                    views.setTextViewText(R.id.widget_arrival_message,
-                        context.getString(R.string.widget_arrival_message))
+                    views.setTextViewText(R.id.widget_arrival_message, WidgetPhaseText.departureDay())
                     views.setImageViewResource(R.id.widget_background_image, ARRIVAL_BACKGROUND)
                 }
                 else -> {
@@ -190,11 +189,14 @@ class KosCountdownLargeWidgetProvider : AppWidgetProvider() {
                     applyDayImage(context, views)
                 }
                 remaining.isOnVacation -> {
-                    views.setTextViewText(R.id.widget_arrival_message, context.getString(R.string.widget_vacation_line1))
+                    views.setTextViewText(
+                        R.id.widget_arrival_message,
+                        WidgetPhaseText.vacationDay(AppClock.nowMillis()) ?: context.getString(R.string.widget_vacation_line1)
+                    )
                     applyDayImage(context, views)
                 }
                 remaining.isReached -> {
-                    views.setTextViewText(R.id.widget_arrival_message, context.getString(R.string.widget_arrival_message))
+                    views.setTextViewText(R.id.widget_arrival_message, WidgetPhaseText.departureDay())
                     views.setImageViewResource(R.id.widget_background_image, ARRIVAL_BACKGROUND)
                 }
                 else -> {

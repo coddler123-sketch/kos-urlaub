@@ -161,7 +161,6 @@ fun TravelScreen(
         when (selectedArea) {
             TravelArea.TODAY -> {
                 item { TripInfoCard(onOpenMap = openMap) }
-                item { HotelSecretsCard() }
                 item { HotelInfoCard() }
                 item { GoodToKnowCard() }
                 item {
