@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kosurlaub.TripData
+import com.example.kosurlaub.ui.compass.compassTips
 import com.example.kosurlaub.ui.theme.HomeAccent
 import com.example.kosurlaub.ui.theme.KosInk
 
@@ -78,5 +79,17 @@ internal fun GoodToKnowCard() {
         PostcardLabel("Gut zu wissen", Modifier.testTag("good-to-know-card"))
         Spacer(Modifier.height(8.dp))
         goodToKnow.forEach { (label, text) -> InfoLine(label, text) }
+    }
+}
+
+/** Die Mobilitäts-Tipps des Guides, hier gebündelt statt als eigene Kategorie. */
+@Composable
+internal fun MobilityTipsCard() {
+    val tips = compassTips.filter { it.category == "Mobilität" }
+    if (tips.isEmpty()) return
+    TravelCardContainer {
+        PostcardLabel("Tipps zu Bus und Rückfahrt", Modifier.testTag("mobility-tips-card"))
+        Spacer(Modifier.height(8.dp))
+        tips.forEach { InfoLine(it.title, "${it.description} ${it.note}.") }
     }
 }

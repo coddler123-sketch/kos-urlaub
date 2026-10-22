@@ -176,6 +176,7 @@ fun TravelScreen(
             TravelArea.MOBILITY -> {
                 item { BusCard(onOpenSite = { openSource(KtelKosTimetable.OFFICIAL_URL) }) }
                 item { BusOverviewCard() }
+                item { MobilityTipsCard() }
                 item {
                     ExpandableTravelGroup(
                         titleRes = R.string.travel_more_mobility_sources,

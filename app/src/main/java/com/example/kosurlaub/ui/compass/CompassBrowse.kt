@@ -69,13 +69,12 @@ internal val quickFilterGroups = listOf(
 )
 
 /** Eine Zeile: Kategorien als Chips (wischbar) und rechts fest der Knopf "Filter". */
-/** Kategorien der Tipps, gemeinsam für Chip-Reihe und Filter. */
+/** Kategorien der Tipps, gemeinsam für Chip-Reihe und Filter. Mobilität lebt auf der Seite Bus & Mobil. */
 internal val compassCategories = listOf(
     CompassCategory("Tigaki", "Tipps direkt rund um euren Urlaubsort", R.drawable.kos_rot_23),
     CompassCategory("Essen", "Griechische Klassiker probieren", R.drawable.category_greek_food),
     CompassCategory("Strände", "Tigaki, Marmari und ruhige Badetage", R.drawable.excursion_marmari),
-    CompassCategory("Ausflüge", "Orte, Besuchszeiten und Kombinationen", R.drawable.kos_rot_11),
-    CompassCategory("Mobilität", "Bus, Mietwagen und sichere Rückfahrten", R.drawable.kos_rot_19)
+    CompassCategory("Ausflüge", "Orte, Besuchszeiten und Kombinationen", R.drawable.kos_rot_11)
 )
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)

@@ -52,6 +52,9 @@ private val tipImages = mapOf(
     "beach-agios-stefanos" to R.drawable.tip_agios_stefanos,
     "beach-paradise" to R.drawable.tip_paradise_beach,
     "trip-palio-pyli" to R.drawable.tip_palio_pyli,
+    "tigaki-overview" to R.drawable.kos_rot_31,
+    "tigaki-bike" to R.drawable.kos_rot_36,
+    "tigaki-watersports" to R.drawable.kos_rot_05,
 )
 
 internal fun editorialFor(tip: CompassTip): CompassEditorial {

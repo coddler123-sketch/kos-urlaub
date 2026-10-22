@@ -255,6 +255,38 @@ internal val compassTips = listOf(
         journey = "Mietwagen oder Taxi",
         tags = listOf("Geschichte", "Aussicht", "Natur", "Halbtag"),
         source = CompassTipSource.RESEARCHED,
-        sourceUrl = "https://www.burgenwelt.org/griechenland/paliopyli/burgenwelt-paliopyli-objektseite.pdf"
+        sourceUrl = "https://www.burgenwelt.org/griechenland/paliopyli/burgenwelt-paliopyli-objektseite.pdf"    ),
+    CompassTip(
+        category = "Tigaki",
+        title = "Tigaki auf einen Blick",
+        description = "Tigaki liegt gut 10 km westlich von Kos-Stadt. Vom Ortszentrum sind es etwa 150 m zum Meer und rund 400 m zum Alikes-Salzsee. Der lange Sandstrand zieht sich etwa 10 km am Ort entlang, gesäumt von Bars und Tavernen.",
+        note = "Entfernungen stammen aus Reiseportalen und sind Richtwerte. Flughafen etwa 12 bis 13 km, Kos-Stadt mit Bus oder Taxi grob 15 bis 30 Minuten",
+        location = "Tigaki",
+        journey = "zu Fuß",
+        tags = listOf("Tigaki", "Orientierung", "zu Fuß"),
+        source = CompassTipSource.RESEARCHED,
+        sourceUrl = "https://www.discoveringkos.com/destination-item/tigkaki-or-tigaki/"
+    ),
+    CompassTip(
+        category = "Tigaki",
+        title = "Mit dem Rad an der Küste",
+        description = "Die Gegend um Tigaki ist flach, deshalb lässt sie sich gut mit dem Fahrrad erkunden, etwa zum Salzsee oder an der Küste entlang. Nach Kos-Stadt braucht man mit dem Rad länger als mit dem Bus.",
+        note = "Leihmöglichkeiten und Preise im Ort erfragen. Mittags Sonne und Wind einplanen, Wasser mitnehmen",
+        location = "Tigaki",
+        journey = "Fahrrad, vom Ort aus",
+        tags = listOf("Tigaki", "Rad", "Natur", "ohne Auto möglich"),
+        source = CompassTipSource.RESEARCHED,
+        sourceUrl = "https://www.onthebeach.co.uk/destinations/greece/kos/tigaki"
+    ),
+    CompassTip(
+        category = "Tigaki",
+        title = "Wassersport am Tigaki-Strand",
+        description = "Am Strand sind Windsurfen, Stand-up-Paddling und Schnorcheln möglich, in der Gegend auch Kitesurfen. Das flache Wasser macht den Strand für Anfänger und Familien angenehm.",
+        note = "Angebote und Preise der Stationen vor Ort prüfen. Bei Nordwind wird es wellig, im September ist der Meltemi meist schwächer",
+        location = "Tigaki",
+        journey = "zu Fuß je nach Hotel",
+        tags = listOf("Tigaki", "Strand", "Aktiv"),
+        source = CompassTipSource.RESEARCHED,
+        sourceUrl = "https://www.hotelplan.ch/ferien/tigaki-kos-griechenland/f-40488"
     )
 ).let(::attachCompassTipIds)
