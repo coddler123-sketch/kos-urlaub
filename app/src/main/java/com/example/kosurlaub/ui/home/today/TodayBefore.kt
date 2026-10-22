@@ -91,6 +91,7 @@ internal fun TodayBefore(
             "${flight.weekday} %02d.%02d. · ${stringResource(R.string.today_before_hotel)}".format(flight.day, flight.month),
             "${TripData.HOTEL_NAME} · ${TripData.HOTEL_PLACE}"
         )
+        CheckInCard()
         if (saved.isNotEmpty()) {
             PaperPanel(modifier = Modifier.clickable(onClick = onOpenTips)) {
                 PostcardLabel("${stringResource(R.string.today_before_saved)} · ${saved.size}")
