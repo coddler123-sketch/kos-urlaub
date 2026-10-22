@@ -24,6 +24,8 @@ import com.example.kosurlaub.R
 import com.example.kosurlaub.ui.compass.compassTips
 import com.example.kosurlaub.ui.compass.tipOfTheDay
 import com.example.kosurlaub.ui.home.AppClock
+import com.example.kosurlaub.ui.home.CustomizableCards
+import com.example.kosurlaub.ui.home.HomeCard
 import com.example.kosurlaub.ui.home.HomeState
 import com.example.kosurlaub.ui.home.TripDays
 import com.example.kosurlaub.ui.home.localEpochDay
@@ -72,35 +74,46 @@ internal fun TodayOnKos(
                 }
                 PerforationEdge(modifier = Modifier.align(Alignment.BottomCenter))
             }
-            KosWeatherRow(s)
-            if (isReturnPassVisible(now)) {
-                val back = TripData.inbound
-                BoardingPass(
-                    back,
-                    stringResource(R.string.today_return_flight),
-                    "${back.weekday} %02d.%02d. · ${stringResource(R.string.today_return_checkout)}".format(back.day, back.month),
-                    "${TripData.HOTEL_CHECK_OUT} · ${TripData.HOTEL_NAME}"
-                )
-            }
-            PaperPanel {
-                PostcardLabel(stringResource(R.string.today_next_bus))
-                if (bus == null) {
-                    Text(stringResource(R.string.today_bus_none), style = PostcardType.Body, color = KosInk)
-                } else {
-                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                        Text("Tigaki → Kos-Stadt · ${bus.time}", style = PostcardType.Body, color = KosInk)
-                        Text("${bus.minutesUntil} Min", style = PostcardType.Numeral, color = KosStamp)
+            CustomizableCards(
+                "onkos",
+                listOf(
+                    HomeCard("weather", "Wetter") { KosWeatherRow(s) },
+                    HomeCard("return", "Rückflug") {
+                        if (isReturnPassVisible(now)) {
+                            val back = TripData.inbound
+                            BoardingPass(
+                                back,
+                                stringResource(R.string.today_return_flight),
+                                "${back.weekday} %02d.%02d. · ${stringResource(R.string.today_return_checkout)}".format(back.day, back.month),
+                                "${TripData.HOTEL_CHECK_OUT} · ${TripData.HOTEL_NAME}"
+                            )
+                        }
+                    },
+                    HomeCard("bus", "Nächster Bus") {
+                        PaperPanel {
+                            PostcardLabel(stringResource(R.string.today_next_bus))
+                            if (bus == null) {
+                                Text(stringResource(R.string.today_bus_none), style = PostcardType.Body, color = KosInk)
+                            } else {
+                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                                    Text("Tigaki → Kos-Stadt · ${bus.time}", style = PostcardType.Body, color = KosInk)
+                                    Text("${bus.minutesUntil} Min", style = PostcardType.Numeral, color = KosStamp)
+                                }
+                                Text(stringResource(R.string.today_bus_source, bus.route.asOf), style = PostcardType.Label, color = KosInk.copy(alpha = 0.8f))
+                            }
+                        }
+                    },
+                    HomeCard("tip", "Tipp des Tages") {
+                        tip?.let {
+                            PaperPanel(modifier = Modifier.clickable(onClick = onOpenTips)) {
+                                PostcardLabel(stringResource(R.string.today_tip))
+                                Text(it.tip.title, style = PostcardType.Heading, color = KosInk)
+                                Text(it.reason, style = PostcardType.Body, color = KosInk)
+                            }
+                        }
                     }
-                    Text(stringResource(R.string.today_bus_source, bus.route.asOf), style = PostcardType.Label, color = KosInk.copy(alpha = 0.8f))
-                }
-            }
-            tip?.let {
-                PaperPanel(modifier = Modifier.clickable(onClick = onOpenTips)) {
-                    PostcardLabel(stringResource(R.string.today_tip))
-                    Text(it.tip.title, style = PostcardType.Heading, color = KosInk)
-                    Text(it.reason, style = PostcardType.Body, color = KosInk)
-                }
-            }
+                )
+            )
         }
     }
 }

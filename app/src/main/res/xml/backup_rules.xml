@@ -4,4 +4,6 @@
     <include domain="sharedpref" path="." />
     <!-- Zugangscode fuer private Bilder bleibt auf dem Geraet. -->
     <exclude domain="sharedpref" path="kos_private.xml" />
+    <exclude domain="sharedpref" path="kos_passes.xml" />
+    <exclude domain="sharedpref" path="kos_hotel_secrets.xml" />
 </full-backup-content>

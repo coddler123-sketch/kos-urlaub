@@ -27,6 +27,8 @@ import com.example.kosurlaub.R
 import com.example.kosurlaub.TripData
 import com.example.kosurlaub.ui.compass.CompassPreferences
 import com.example.kosurlaub.ui.compass.compassTips
+import com.example.kosurlaub.ui.home.CustomizableCards
+import com.example.kosurlaub.ui.home.HomeCard
 import com.example.kosurlaub.ui.home.HomeState
 import com.example.kosurlaub.ui.theme.*
 
@@ -75,28 +77,39 @@ internal fun TodayBefore(
             }
             PerforationEdge(modifier = Modifier.align(Alignment.BottomCenter))
         }
-        Text(s.phrase, style = PostcardType.Quote, color = KosInk)
-        if (s.days == 1L) {
-            PaperPanel {
-                PostcardLabel(stringResource(R.string.today_before_soon_label))
-                Text(
-                    stringResource(R.string.today_before_soon_body, TripData.CHECKED_BAG_KG, TripData.CARRY_ON_KG),
-                    style = PostcardType.Body, color = KosInk
-                )
-            }
-        }
-        BoardingPass(
-            flight,
-            stringResource(R.string.today_before_flight_hotel),
-            "${flight.weekday} %02d.%02d. · ${stringResource(R.string.today_before_hotel)}".format(flight.day, flight.month),
-            "${TripData.HOTEL_NAME} · ${TripData.HOTEL_PLACE}"
+        CustomizableCards(
+            "before",
+            listOfNotNull(
+                HomeCard("phrase", "Satz des Tages") { Text(s.phrase, style = PostcardType.Quote, color = KosInk) },
+                HomeCard("soon", "Hinweis vor dem Abflug") {
+                    if (s.days == 1L) {
+                        PaperPanel {
+                            PostcardLabel(stringResource(R.string.today_before_soon_label))
+                            Text(
+                                stringResource(R.string.today_before_soon_body, TripData.CHECKED_BAG_KG, TripData.CARRY_ON_KG),
+                                style = PostcardType.Body, color = KosInk
+                            )
+                        }
+                    }
+                },
+                HomeCard("flight", "Flug und Hotel") {
+                    BoardingPass(
+                        flight,
+                        stringResource(R.string.today_before_flight_hotel),
+                        "${flight.weekday} %02d.%02d. · ${stringResource(R.string.today_before_hotel)}".format(flight.day, flight.month),
+                        "${TripData.HOTEL_NAME} · ${TripData.HOTEL_PLACE}"
+                    )
+                },
+                HomeCard("checkin", "Online-Check-in") { CheckInCard() },
+                HomeCard("saved", "Gemerkte Tipps") {
+                    if (saved.isNotEmpty()) {
+                        PaperPanel(modifier = Modifier.clickable(onClick = onOpenTips)) {
+                            PostcardLabel("${stringResource(R.string.today_before_saved)} · ${saved.size}")
+                            saved.take(4).forEach { Text("• ${it.title}", style = PostcardType.Body, color = KosInk) }
+                        }
+                    }
+                }
+            )
         )
-        CheckInCard()
-        if (saved.isNotEmpty()) {
-            PaperPanel(modifier = Modifier.clickable(onClick = onOpenTips)) {
-                PostcardLabel("${stringResource(R.string.today_before_saved)} · ${saved.size}")
-                saved.take(4).forEach { Text("• ${it.title}", style = PostcardType.Body, color = KosInk) }
-            }
-        }
     }
 }

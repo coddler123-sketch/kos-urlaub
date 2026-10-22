@@ -3,9 +3,13 @@
     <cloud-backup>
         <include domain="sharedpref" path="." />
         <exclude domain="sharedpref" path="kos_private.xml" />
+        <exclude domain="sharedpref" path="kos_passes.xml" />
+        <exclude domain="sharedpref" path="kos_hotel_secrets.xml" />
     </cloud-backup>
     <device-transfer>
         <include domain="sharedpref" path="." />
         <exclude domain="sharedpref" path="kos_private.xml" />
+        <exclude domain="sharedpref" path="kos_passes.xml" />
+        <exclude domain="sharedpref" path="kos_hotel_secrets.xml" />
     </device-transfer>
 </data-extraction-rules>
