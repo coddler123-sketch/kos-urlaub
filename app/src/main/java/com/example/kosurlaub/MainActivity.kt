@@ -400,8 +400,6 @@ private fun KosHome(
                 TripPhase.BEFORE -> {
                     TodayBefore(s, heroPhoto, onOpenTips)
                     Spacer(Modifier.height(16.dp))
-                    FreeChecklistCard()
-                    Spacer(Modifier.height(16.dp))
                     when (Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % 2) {
                         0 -> FactCard(s.factOfTheDay)
                         else -> HighlightCard(kosHighlightOfTheDay())
