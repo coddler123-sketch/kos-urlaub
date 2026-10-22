@@ -80,6 +80,7 @@ import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.kosurlaub.ui.lists.ListsScreen
 import com.example.kosurlaub.ui.theme.KosWidgetTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -128,7 +129,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private enum class MainDestination { TODAY, DISCOVER }
+private enum class MainDestination { TODAY, DISCOVER, LISTS }
 
 @Composable
 private fun KosApp(
@@ -206,6 +207,10 @@ private fun KosApp(
                                 onOpenCommunity = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(COMMUNITY_URL))) },
                 onDetailVisibilityChanged = { nestedDetailVisible.value = it }
             )
+            MainDestination.LISTS -> ListsScreen(
+                padding = PaddingValues(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
+                scrollToTopRequest = scrollToTopRequest.intValue
+            )
         }
     }
 }
@@ -220,10 +225,12 @@ private fun MainNavigationBar(
             val labelRes = when (destination) {
                 MainDestination.TODAY -> R.string.main_nav_today
                 MainDestination.DISCOVER -> R.string.main_nav_discover
+                MainDestination.LISTS -> R.string.main_nav_lists
             }
             val iconRes = when (destination) {
                 MainDestination.TODAY -> R.drawable.ic_nav_home
                 MainDestination.DISCOVER -> R.drawable.ic_nav_compass
+                MainDestination.LISTS -> R.drawable.ic_nav_list
             }
             NavigationBarItem(
                 selected = destination == selected,
