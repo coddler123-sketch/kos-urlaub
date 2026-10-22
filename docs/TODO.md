@@ -18,9 +18,9 @@ Reihenfolge, jedes Teilprojekt einzeln lauffähig und releasebar:
 
 ## Offen aus Teilprojekt 2
 
-- [ ] Schnellzugriff-Karten auf Heute (auf Kos): untere Kante wird von der Tagesleiste überdeckt, Text "Bus Tigaki" abgeschnitten (prüfen, ob schon vorher so)
-- [ ] SOS-Knopf überlagert beim Scrollen Inhalte; Position und Abstand prüfen
-- [ ] Meer-Temperatur zeigt "–", solange keine Meerdaten geladen sind (auf Heute laden anstoßen)
+- [x] Schnellzugriff-Karten auf Heute (auf Kos): geprüft am 22.10.2026 auf dem Xiaomi, sie scrollen nur unter der Tagesleiste durch, am Ende nichts verdeckt
+- [x] SOS-Knopf: ist inzwischen eine Kachel im Schnellzugriff, kein schwebender Knopf mehr
+- [x] Meer-Temperatur: lädt beim Anzeigen von Heute selbst (geprüft)
 - [ ] Instrumentierte Tests komplett auf dem Emulator laufen lassen (nur der Merken-Test wurde einzeln geprüft)
 
 ## Befund Guide-Filter (2026-10-19, Teil von Teilprojekt 3)
