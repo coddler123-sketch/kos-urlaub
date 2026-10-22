@@ -5,6 +5,10 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -92,6 +96,12 @@ internal fun PassView(passes: List<Pass>, start: Int, onClose: () -> Unit) {
             HorizontalPager(pager, Modifier.fillMaxSize()) { page ->
                 PassPage(passes[page], page, passes.size, onClose)
             }
+            Box(
+                Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(bottom = 20.dp)
+                    .heightIn(min = 52.dp).clip(RoundedCornerShape(50)).background(Paper)
+                    .clickable(onClick = onClose).padding(horizontal = 44.dp).testTag("pass-close"),
+                contentAlignment = Alignment.Center
+            ) { Text("Schließen", color = Ink, fontFamily = KosSans, fontWeight = FontWeight.SemiBold, fontSize = 17.sp) }
         }
     }
 }
@@ -106,12 +116,11 @@ private fun PassPage(pass: Pass, index: Int, total: Int, onClose: () -> Unit) {
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).statusBarsPadding().padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+        Row(Modifier.fillMaxWidth().padding(top = 56.dp, bottom = 16.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
             Text(
                 if (total > 1) "Karte ${index + 1} von $total · wischen" else "",
                 color = Paper.copy(alpha = 0.7f), fontFamily = KosSans, fontSize = 13.sp, modifier = Modifier.padding(start = 4.dp)
             )
-            TextButton(onClose, Modifier.testTag("pass-close")) { Text("Schließen  ×", color = Paper, fontFamily = KosSans) }
         }
         if (showFile || barcode == null) {
             val big = remember(pass.id) { PassStore.render(context, pass, 1400) }
@@ -130,7 +139,7 @@ private fun PassPage(pass: Pass, index: Int, total: Int, onClose: () -> Unit) {
                 Text(if (showFile) "Zurück zur Bordkarte" else "Original ansehen", color = Paper.copy(alpha = 0.8f), fontFamily = KosSans)
             }
         }
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(110.dp))
     }
 }
 
