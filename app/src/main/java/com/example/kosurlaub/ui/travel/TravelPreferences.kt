@@ -14,15 +14,8 @@ import android.content.Context
 
 object TravelPreferences {
     private const val PREFS = "kos_travel"
-    private const val KEY_FAVORITES = "favorite_excursions"
     private const val KEY_CHECKLIST = "completed_checklist_items"
     private const val KEY_NOTES = "travel_notes"
-
-    fun favorites(context: Context): Set<String> =
-        stringSet(context, KEY_FAVORITES)
-
-    fun toggleFavorite(context: Context, id: String): Set<String> =
-        toggleAndSave(context, KEY_FAVORITES, id)
 
     fun completedChecklistItems(context: Context): Set<String> =
         stringSet(context, KEY_CHECKLIST)

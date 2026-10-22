@@ -37,7 +37,7 @@ private val practicalTiles = listOf(
     Triple("TRAVEL:HELP", "SOS & Hilfe", "Notruf 112, Arzt, Apotheke"),
     Triple("TRAVEL:MOBILITY", "Bus & Mobil", "Fahrplan Tigaki – Kos-Stadt"),
     Triple("TRAVEL:TODAY", "Reise & Meer", "Hotel, Flug, Meer und Wellen"),
-    Triple("TRAVEL:EXPLORE", "Ausflüge & Sprache", "Sprachführer und Fotospots")
+    Triple("TRAVEL:EXPLORE", "Sprache & Fotospots", "Griechisch und Fotomotive")
 )
 
 /**

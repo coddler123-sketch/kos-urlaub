@@ -37,7 +37,7 @@ object CheckInWindow {
         val days = TimeUnit.MILLISECONDS.toDays(millis)
         val hours = TimeUnit.MILLISECONDS.toHours(millis) % 24
         val minutes = TimeUnit.MILLISECONDS.toMinutes(millis) % 60
-        return if (days > 0) "$days Tage $hours Std" else "$hours Std $minutes Min"
+        return if (days > 0) "$days ${if (days == 1L) "Tag" else "Tage"} $hours Std" else "$hours Std $minutes Min"
     }
 }
 

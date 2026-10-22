@@ -103,9 +103,6 @@ fun TravelScreen(
     }
     var isMarineLoading by remember { mutableStateOf(false) }
     var marineRefreshFailed by remember { mutableStateOf(false) }
-    var favorites by remember(context) {
-        mutableStateOf(TravelPreferences.favorites(context))
-    }
     val selectedArea = TravelArea.entries.firstOrNull { it.name == area } ?: TravelArea.TODAY
     var showMobilitySources by rememberSaveable { mutableStateOf(false) }
     var showFerrySources by rememberSaveable { mutableStateOf(false) }
@@ -195,20 +192,6 @@ fun TravelScreen(
             TravelArea.EXPLORE -> {
                 item { GreekPhrasebookCard() }
                 item { PhotoSpotsCard(onOpenMap = openMap) }
-                items(excursionIdeas, key = { it.id }) { idea ->
-                    ExcursionCard(
-                        idea = idea,
-                        isFavorite = idea.id in favorites,
-                        onToggleFavorite = {
-                            favorites = TravelPreferences.toggleFavorite(context, idea.id)
-                        },
-                        onMap = { openMap(idea.mapQuery) },
-                        onOpenImageSource = {
-                            runCatching { uriHandler.openUri(idea.imageUrl) }
-                        },
-                        onOpen = { openSource(idea.url) }
-                    )
-                }
                 item {
                     ExpandableTravelGroup(
                         titleRes = R.string.travel_more_ferry_sources,
@@ -511,89 +494,6 @@ private fun TravelSourceCard(source: TravelSource, onOpen: () -> Unit) {
         TextButton(onClick = onOpen, contentPadding = PaddingValues(top = 6.dp)) {
             Text(
                 text = stringResource(R.string.travel_open_source),
-                color = HomeAccent,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
-    }
-}
-
-@Composable
-private fun ExcursionCard(
-    idea: ExcursionIdea,
-    isFavorite: Boolean,
-    onToggleFavorite: () -> Unit,
-    onMap: () -> Unit,
-    onOpenImageSource: () -> Unit,
-    onOpen: () -> Unit
-) {
-    TravelCardContainer {
-        Image(
-            painter = painterResource(idea.imageRes),
-            contentDescription = stringResource(idea.titleRes),
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(132.dp)
-                .clip(HomeCardShape)
-        )
-        Text(
-            text = idea.imageCredit,
-            color = KosInk.copy(alpha = 0.6f),
-            fontSize = PostcardMetrics.LABEL_SP.sp,
-            fontFamily = KosSans,
-            modifier = Modifier
-                .align(Alignment.End)
-                .clickable(onClick = onOpenImageSource)
-                .padding(horizontal = 4.dp, vertical = 5.dp)
-        )
-        Spacer(Modifier.height(4.dp))
-        Text(
-            text = stringResource(idea.titleRes),
-            color = KosInk,
-            fontSize = PostcardMetrics.HEADING_SP.sp,
-            fontWeight = FontWeight.SemiBold,
-            fontFamily = KosSerif
-        )
-        Spacer(Modifier.height(3.dp))
-        Text(
-            text = stringResource(idea.metaRes),
-            color = HomeAccent,
-            fontSize = PostcardMetrics.LABEL_SP.sp,
-            fontWeight = FontWeight.SemiBold,
-            fontFamily = KosSans
-        )
-        Spacer(Modifier.height(7.dp))
-        Text(
-            text = stringResource(idea.descriptionRes),
-            color = KosInk.copy(alpha = 0.9f),
-            fontSize = PostcardMetrics.BODY_SP.sp,
-            lineHeight = 18.sp,
-            fontFamily = KosSans
-        )
-        Row(modifier = Modifier.fillMaxWidth()) {
-            TextButton(onClick = onToggleFavorite) {
-                Text(
-                    text = stringResource(
-                        if (isFavorite) R.string.travel_favorite_remove
-                        else R.string.travel_favorite_add
-                    ),
-                    color = if (isFavorite) KosInk else HomeAccent,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
-            Spacer(Modifier.weight(1f))
-            TextButton(onClick = onMap) {
-                Text(
-                    text = stringResource(R.string.travel_map_action),
-                    color = HomeAccent,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
-        }
-        TextButton(onClick = onOpen, contentPadding = PaddingValues(top = 2.dp)) {
-            Text(
-                text = stringResource(R.string.travel_more_information),
                 color = HomeAccent,
                 fontWeight = FontWeight.SemiBold
             )

@@ -21,18 +21,6 @@ internal data class TravelSource(
     val url: String
 )
 
-internal data class ExcursionIdea(
-    val id: String,
-    @param:DrawableRes val imageRes: Int,
-    val imageCredit: String,
-    val imageUrl: String,
-    @param:StringRes val titleRes: Int,
-    @param:StringRes val metaRes: Int,
-    @param:StringRes val descriptionRes: Int,
-    val url: String,
-    val mapQuery: String
-)
-
 internal data class EmergencyContact(
     val number: String,
     @param:StringRes val titleRes: Int
@@ -48,53 +36,6 @@ internal val travelSources = listOf(
         titleRes = R.string.travel_kos_gr_title,
         descriptionRes = R.string.travel_kos_gr_description,
         url = "https://www.kos.gr/"
-    )
-)
-
-internal val excursionIdeas = listOf(
-    ExcursionIdea(
-        id = "kosStadt",
-        imageRes = R.drawable.excursion_kos_stadt,
-        imageCredit = "Foto: Rodw · CC BY-SA 4.0",
-        imageUrl = "https://commons.wikimedia.org/wiki/File:The_ruins_of_Asklepieion_(Kos)_06.jpg",
-        titleRes = R.string.travel_kosStadt_title,
-        metaRes = R.string.travel_kosStadt_meta,
-        descriptionRes = R.string.travel_kosStadt_description,
-        url = "https://de.wikipedia.org/wiki/Asklepieion_von_Kos",
-        mapQuery = "Asklepieion of Kos"
-    ),
-    ExcursionIdea(
-        id = "old_town",
-        imageRes = R.drawable.excursion_old_town,
-        imageCredit = "Foto: Steven Fruitsmaak · CC BY-SA 3.0",
-        imageUrl = "https://commons.wikimedia.org/wiki/File:Plane_tree_of_Hippocrates.jpg",
-        titleRes = R.string.travel_old_town_title,
-        metaRes = R.string.travel_old_town_meta,
-        descriptionRes = R.string.travel_old_town_description,
-        url = "https://de.wikipedia.org/wiki/Neratzia",
-        mapQuery = "Neratzia Castle, Kos"
-    ),
-    ExcursionIdea(
-        id = "seven_springs",
-        imageRes = R.drawable.excursion_seven_springs,
-        imageCredit = "Foto: Tracy Gymellas · CC BY-SA 4.0",
-        imageUrl = "https://commons.wikimedia.org/wiki/File:Flamingo_dance_at_Alykes,Tigaki,Kos_Greece_01.jpg",
-        titleRes = R.string.travel_alikes_title,
-        metaRes = R.string.travel_alikes_meta,
-        descriptionRes = R.string.travel_alikes_description,
-        url = "https://de.wikipedia.org/wiki/Tigaki",
-        mapQuery = "Alikes Salt Lake, Tigaki, Kos"
-    ),
-    ExcursionIdea(
-        id = "marmari",
-        imageRes = R.drawable.excursion_marmari,
-        imageCredit = "Foto: Arne Müseler · CC BY-SA 4.0",
-        imageUrl = "https://commons.wikimedia.org/wiki/File:Greece_kos_marmari_beach_1.jpg",
-        titleRes = R.string.travel_marmari_title,
-        metaRes = R.string.travel_marmari_meta,
-        descriptionRes = R.string.travel_marmari_description,
-        url = "https://de.wikipedia.org/wiki/Marmari_(Kos)",
-        mapQuery = "Marmari Beach, Kos"
     )
 )
 

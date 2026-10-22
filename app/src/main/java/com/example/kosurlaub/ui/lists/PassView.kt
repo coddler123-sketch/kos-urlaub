@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,6 +49,9 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.delay
+import com.example.kosurlaub.ui.home.AppClock
+import com.example.kosurlaub.ui.home.today.CheckInWindow
 import com.example.kosurlaub.TripData
 import com.example.kosurlaub.ui.theme.KosSans
 import com.example.kosurlaub.ui.theme.KosSerif
@@ -137,6 +141,7 @@ private fun Ticket(label: String, data: BoardingData?, barcode: androidx.compose
             val flight = listOf(TripData.outbound, TripData.inbound).firstOrNull {
                 it.fromAirport == data.from && it.toAirport == data.to
             }
+            flight?.let { AirlineBand(it) }
             Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 18.dp)) {
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     Field("BORDKARTE", label.substringBefore(" ·"))
@@ -148,7 +153,7 @@ private fun Ticket(label: String, data: BoardingData?, barcode: androidx.compose
                         Text(data.from, fontFamily = KosSerif, fontWeight = FontWeight.Bold, fontSize = 46.sp, color = Ink)
                         flight?.let { Text(it.fromCity.uppercase(), fontFamily = KosSans, fontSize = 12.sp, color = Muted, letterSpacing = 1.sp) }
                     }
-                    Text("✈", fontSize = 26.sp, color = Stamp)
+                    FlightPath(Modifier.weight(1f).padding(horizontal = 10.dp))
                     Column(horizontalAlignment = Alignment.End) {
                         Text(data.to, fontFamily = KosSerif, fontWeight = FontWeight.Bold, fontSize = 46.sp, color = Ink)
                         flight?.let { Text(it.toCity.uppercase(), fontFamily = KosSans, fontSize = 12.sp, color = Muted, letterSpacing = 1.sp) }
@@ -201,5 +206,49 @@ private fun Tear() {
             drawCircle(Backdrop, radius = 12.dp.toPx(), center = Offset(0f, y))
             drawCircle(Backdrop, radius = 12.dp.toPx(), center = Offset(size.width, y))
         }
+    }
+}
+
+private val CondorYellow = Color(0xFFFFCE00)
+private val BandInk = Color(0xFF1B1B1B)
+
+/** Kopfband in der Farbe der Fluggesellschaft mit Restzeit bis zum Abflug. */
+@Composable
+private fun AirlineBand(flight: TripData.Flight) {
+    var now by remember { mutableStateOf(AppClock.nowMillis()) }
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(30_000)
+            now = AppClock.nowMillis()
+        }
+    }
+    val left = flight.departureMillis() - now
+    Row(
+        Modifier.fillMaxWidth().background(CondorYellow).padding(horizontal = 20.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(flight.airline.uppercase(), fontFamily = KosSans, fontWeight = FontWeight.Bold, fontSize = 15.sp, letterSpacing = 2.sp, color = BandInk)
+        Text(
+            if (left > 0) "Abflug in ${CheckInWindow.remainingLabel(left)}" else "Abgeflogen",
+            fontFamily = KosSans, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, color = BandInk
+        )
+    }
+}
+
+/** Gestrichelte Flugbahn zwischen den Flughäfen mit Flugzeug in der Mitte. */
+@Composable
+private fun FlightPath(modifier: Modifier = Modifier) {
+    Box(modifier.height(40.dp), contentAlignment = Alignment.Center) {
+        Canvas(Modifier.fillMaxSize()) {
+            val y = size.height / 2
+            drawLine(
+                Color(0xFFCFC8BA), Offset(8.dp.toPx(), y), Offset(size.width - 8.dp.toPx(), y),
+                strokeWidth = 2.dp.toPx(), pathEffect = PathEffect.dashPathEffect(floatArrayOf(6.dp.toPx(), 6.dp.toPx()))
+            )
+            drawCircle(Ink, 4.dp.toPx(), Offset(4.dp.toPx(), y))
+            drawCircle(Ink, 4.dp.toPx(), Offset(size.width - 4.dp.toPx(), y))
+        }
+        Text("✈", fontSize = 24.sp, color = Stamp, modifier = Modifier.background(Paper).padding(horizontal = 6.dp))
     }
 }

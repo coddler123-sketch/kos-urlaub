@@ -21,6 +21,7 @@ class CheckInWindowTest {
 
     @Test fun labels() {
         assertEquals("2 Tage 3 Std", CheckInWindow.remainingLabel(51 * hour))
+        assertEquals("1 Tag 2 Std", CheckInWindow.remainingLabel(26 * hour))
         assertEquals("5 Std 10 Min", CheckInWindow.remainingLabel(5 * hour + 10 * 60_000L))
     }
 }

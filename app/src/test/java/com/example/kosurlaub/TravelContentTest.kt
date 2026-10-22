@@ -19,8 +19,7 @@ class TravelContentTest {
     @Test
     fun `all travel links use trusted https sources`() {
         val urls = travelSources.map { it.url } +
-            ferryAndEventSources.map { it.url } +
-            excursionIdeas.map { it.url }
+            ferryAndEventSources.map { it.url }
 
         assertTrue(urls.all(::isTrustedTravelUrl))
     }
