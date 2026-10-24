@@ -37,7 +37,9 @@ data class KosWeather(
     val sunsetIso: String? = null,
     val sunriseIso: String? = null,
     val uvIndex: Double? = null,
-    val windDirectionDegrees: Int? = null
+    val windDirectionDegrees: Int? = null,
+    val todayMaxTemperatureCelsius: Int? = null,
+    val todayRainProbabilityPercent: Int? = null
 ) {
     val temperatureLabel: String
         get() = "$temperatureCelsius°"
@@ -137,6 +139,9 @@ object WeatherRepository {
     private const val KEY_SUNRISE = "sunrise"
     private const val KEY_UV_INDEX = "uv_index"
     private const val KEY_WIND_DIR = "wind_dir"
+    private const val MISSING_INT = Int.MIN_VALUE
+    private const val KEY_TODAY_MAX = "today_max"
+    private const val KEY_TODAY_RAIN_PROB = "today_rain_prob"
 
     /** Live-Abruf bei Open-Meteo. Gibt null zurueck, wenn etwas schiefgeht. */
     fun fetch(): KosWeather? {
@@ -171,7 +176,11 @@ object WeatherRepository {
                 sunsetIso = root.optJSONObject("daily")?.optJSONArray("sunset")?.optString(0),
                 sunriseIso = root.optJSONObject("daily")?.optJSONArray("sunrise")?.optString(0),
                 uvIndex = current.optDouble("uv_index").takeIf { it.isFinite() },
-                windDirectionDegrees = current.optDouble("wind_direction_10m").takeIf { it.isFinite() }?.roundToInt()
+                windDirectionDegrees = current.optDouble("wind_direction_10m").takeIf { it.isFinite() }?.roundToInt(),
+                todayMaxTemperatureCelsius = root.optJSONObject("daily")?.optJSONArray("temperature_2m_max")
+                    ?.optDouble(0)?.takeIf { it.isFinite() }?.roundToInt(),
+                todayRainProbabilityPercent = root.optJSONObject("daily")?.optJSONArray("precipitation_probability_max")
+                    ?.optInt(0, -1)?.takeIf { it >= 0 }
             )
         } catch (error: Exception) {
             Log.w("KosWeather", "Weather fetch failed", error)
@@ -195,6 +204,8 @@ object WeatherRepository {
             .putString(KEY_SUNRISE, weather.sunriseIso)
             .putFloat(KEY_UV_INDEX, weather.uvIndex?.toFloat() ?: -1f)
             .putInt(KEY_WIND_DIR, weather.windDirectionDegrees ?: -1)
+            .putInt(KEY_TODAY_MAX, weather.todayMaxTemperatureCelsius ?: MISSING_INT)
+            .putInt(KEY_TODAY_RAIN_PROB, weather.todayRainProbabilityPercent ?: -1)
             .putBoolean(KEY_HAS_DATA, true)
             .putLong(KEY_LAST_FETCH, System.currentTimeMillis())
             .apply()
@@ -221,7 +232,9 @@ object WeatherRepository {
             sunsetIso = prefs.getString(KEY_SUNSET, null),
             sunriseIso = prefs.getString(KEY_SUNRISE, null),
             uvIndex = prefs.getFloat(KEY_UV_INDEX, -1f).toDouble().takeIf { it >= 0.0 },
-            windDirectionDegrees = prefs.getInt(KEY_WIND_DIR, -1).takeIf { it >= 0 }
+            windDirectionDegrees = prefs.getInt(KEY_WIND_DIR, -1).takeIf { it >= 0 },
+            todayMaxTemperatureCelsius = prefs.getInt(KEY_TODAY_MAX, MISSING_INT).takeIf { it != MISSING_INT },
+            todayRainProbabilityPercent = prefs.getInt(KEY_TODAY_RAIN_PROB, -1).takeIf { it >= 0 }
         )
     }
 

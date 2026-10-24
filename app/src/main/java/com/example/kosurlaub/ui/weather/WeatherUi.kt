@@ -217,7 +217,10 @@ fun BeachWindRadarCard(modifier: Modifier = Modifier) {
             Spacer(Modifier.height(8.dp))
             val from = w.windDirectionDegrees?.let { "aus ${BeachAdvice.directionName(it)}, " }.orEmpty()
             Text("Jetzt: Wind $from${w.windSpeedKmh} km/h", style = PostcardType.Body.copy(fontWeight = FontWeight.Bold), color = KosInk)
-            Text(BeachAdvice.advice(w.windSpeedKmh, w.windDirectionDegrees), style = PostcardType.Body, color = KosInk)
+            Text(BeachAdvice.advice(
+                w.windSpeedKmh, w.windDirectionDegrees, w.temperatureCelsius, w.precipitationMm,
+                w.todayMaxTemperatureCelsius, w.todayRainProbabilityPercent, rememberSeaTemperature()
+            ), style = PostcardType.Body, color = KosInk)
         }
         Spacer(Modifier.height(8.dp))
         BeachOption(
