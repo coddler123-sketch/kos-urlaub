@@ -16,29 +16,32 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
+private val base = androidx.compose.material3.Typography()
+
+private fun TextStyle.serif() = copy(fontFamily = KosSerif)
+private fun TextStyle.sans() = copy(fontFamily = KosSans)
+
+/** Material-Bauteile (Dialoge, Buttons, Navigationsleiste) sprechen dieselben Schriften wie der Rest: Fraunces für Überschriften, Inter sonst. */
 val Typography = Typography(
+    displayLarge = base.displayLarge.serif(),
+    displayMedium = base.displayMedium.serif(),
+    displaySmall = base.displaySmall.serif(),
+    headlineLarge = base.headlineLarge.serif(),
+    headlineMedium = base.headlineMedium.serif(),
+    headlineSmall = base.headlineSmall.serif(),
+    titleLarge = base.titleLarge.serif(),
+    titleMedium = base.titleMedium.sans(),
+    titleSmall = base.titleSmall.sans(),
     bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = KosSans,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
     ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
+    bodyMedium = base.bodyMedium.sans(),
+    bodySmall = base.bodySmall.sans(),
+    labelLarge = base.labelLarge.sans(),
+    labelMedium = base.labelMedium.sans(),
+    labelSmall = base.labelSmall.sans()
 )

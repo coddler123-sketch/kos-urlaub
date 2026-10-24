@@ -9,7 +9,7 @@ object PostcardMetrics {
     const val HEADING_SP = 18f
     const val QUOTE_SP = 14f
     const val BODY_SP = 14f
-    const val LABEL_SP = 11f
+    const val LABEL_SP = 12f
     const val NUMERAL_SP = 28f
 
     const val PANEL_PADDING_DP = 12f

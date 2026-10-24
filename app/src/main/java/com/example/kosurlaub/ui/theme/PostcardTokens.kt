@@ -9,7 +9,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-/** Schmalschrift für Zahlen und Etiketten; wie in den Widgets die System-Schmalschrift. */
+/** Schmalschrift für Zahlen; wie in den Widgets die System-Schmalschrift. */
 val KosCondensed = FontFamily(Typeface.create("sans-serif-condensed", Typeface.BOLD))
 
 /** Textstile des Postkarten-Looks; Größen stehen in [PostcardMetrics]. Farbe setzt der Aufrufer. */
@@ -31,8 +31,8 @@ object PostcardType {
         fontSize = PostcardMetrics.BODY_SP.sp, lineHeight = 20.sp
     )
     val Label = TextStyle(
-        fontFamily = KosCondensed, fontWeight = FontWeight.Bold,
-        fontSize = PostcardMetrics.LABEL_SP.sp, letterSpacing = 1.6.sp
+        fontFamily = KosSans, fontWeight = FontWeight.SemiBold,
+        fontSize = PostcardMetrics.LABEL_SP.sp, letterSpacing = 1.2.sp
     )
     val Numeral = TextStyle(
         fontFamily = KosCondensed, fontWeight = FontWeight.Bold,
