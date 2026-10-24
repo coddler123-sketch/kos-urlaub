@@ -3,7 +3,7 @@
     <string name="main_nav_today">Heute</string>
     <string name="main_nav_discover">Guide</string>
     <string name="main_nav_lists">Listen</string>
-    <string name="main_nav_passes">Bordkarten</string>
+    <string name="main_nav_trip">Reise</string>
     <string name="shortcut_passes_short">Bordkarten</string>
     <string name="shortcut_passes_long">Bordkarten öffnen</string>
     <string name="shortcut_hotel_short">Hotel</string>
@@ -484,7 +484,6 @@
         <!-- Reisetag -->
         <item>Tigaki, wir kommen.</item>
     </string-array>
-    <string name="today_before_flight_hotel">Flug &amp; Hotel</string>
     <string name="today_before_saved">Gemerkte Tipps</string>
     <string name="today_before_hms_label">STD · MIN · SEK</string>
     <string name="today_before_soon_label">Morgen geht\'s los</string>

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
@@ -34,9 +35,14 @@ import com.example.kosurlaub.TripData
 import com.example.kosurlaub.ui.home.AppClock
 import com.example.kosurlaub.ui.theme.*
 
-/** Eigener Tab: Bordkarten aller Reisenden, nach Hin- und Rückflug geordnet. Alles bleibt auf diesem Gerät. */
+/** Bordkarten aller Reisenden, nach Hin- und Rückflug geordnet. Alles bleibt auf diesem Gerät. [top] und [bottom] rahmen die Liste im Reise-Tab ein. */
 @Composable
-fun PassesScreen(padding: PaddingValues, scrollToTopRequest: Int) {
+fun PassesScreen(
+    padding: PaddingValues,
+    scrollToTopRequest: Int,
+    top: LazyListScope.() -> Unit = {},
+    bottom: LazyListScope.() -> Unit = {}
+) {
     val context = LocalContext.current
     val listState = rememberLazyListState()
     LaunchedEffect(scrollToTopRequest) {
@@ -72,6 +78,7 @@ fun PassesScreen(padding: PaddingValues, scrollToTopRequest: Int) {
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
+        top()
         item {
             Column {
                 Text("Bordkarten", style = PostcardType.Title, color = KosInk)
@@ -139,6 +146,7 @@ fun PassesScreen(padding: PaddingValues, scrollToTopRequest: Int) {
                 }
             }
         }
+        bottom()
     }
 
     open?.let { (list, start) -> PassView(list, start, onClose = { open = null }) }

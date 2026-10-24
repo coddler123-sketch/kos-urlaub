@@ -12,7 +12,7 @@
             android:targetClass="com.example.kosurlaub.MainActivity">
             <extra
                 android:name="open_page"
-                android:value="PASSES" />
+                android:value="TRIP" />
         </intent>
     </shortcut>
     <shortcut
@@ -27,7 +27,7 @@
             android:targetClass="com.example.kosurlaub.MainActivity">
             <extra
                 android:name="open_page"
-                android:value="TRAVEL:TODAY" />
+                android:value="TRIP" />
         </intent>
     </shortcut>
     <shortcut

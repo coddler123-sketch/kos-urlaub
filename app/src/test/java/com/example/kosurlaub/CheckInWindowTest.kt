@@ -17,6 +17,12 @@ class CheckInWindowTest {
 
     @Test fun openInsideWindow() = assertTrue(CheckInWindow.state(dep - 2 * hour, dep, 24) is State.Open)
 
+    @Test fun cardHiddenMoreThanAWeekBefore() = assertTrue(!CheckInWindow.isCardVisible(dep - 8 * 24 * hour, dep))
+
+    @Test fun cardVisibleInLastWeek() = assertTrue(CheckInWindow.isCardVisible(dep - 6 * 24 * hour, dep))
+
+    @Test fun cardHiddenAfterDeparture() = assertTrue(!CheckInWindow.isCardVisible(dep, dep))
+
     @Test fun goneAfterDeparture() = assertTrue(CheckInWindow.state(dep, dep, 24) is State.Gone)
 
     @Test fun labels() {

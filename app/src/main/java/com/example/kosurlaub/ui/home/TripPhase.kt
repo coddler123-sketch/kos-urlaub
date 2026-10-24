@@ -19,15 +19,6 @@ enum class TripPhase {
     }
 }
 
-/** Tage vor dem Rückflug, ab denen die Rückflug-Bordkarte auf Heute erscheint. */
-const val RETURN_PASS_LEAD_DAYS = 5
-
-/** Die Rückflug-Bordkarte zeigt sich ab [RETURN_PASS_LEAD_DAYS] Tagen vor dem Rückflug, bis zum Abflug. */
-fun isReturnPassVisible(nowMillis: Long): Boolean {
-    val departure = TripData.inbound.departureMillis()
-    return nowMillis in (departure - RETURN_PASS_LEAD_DAYS * 24L * 60 * 60 * 1000) until departure
-}
-
 /** Ein Reisetag für die Tagesleiste. [index] zählt ab 1 (13.09. = Tag 1). */
 data class TripDay(val index: Int, val year: Int, val month: Int, val day: Int, val weekday: String)
 

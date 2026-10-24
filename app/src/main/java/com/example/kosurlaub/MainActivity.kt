@@ -81,7 +81,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kosurlaub.ui.lists.ListsScreen
-import com.example.kosurlaub.ui.lists.PassesScreen
+import com.example.kosurlaub.ui.travel.TripScreen
 import com.example.kosurlaub.ui.theme.KosWidgetTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -96,7 +96,7 @@ class MainActivity : ComponentActivity() {
     companion object {
         const val EXTRA_OPEN_TRAVEL = "open_travel"
 
-        /** Ziel eines App-Shortcuts: "PASSES" (Bordkarten) oder ein Guide-Schlüssel wie "TRAVEL:HELP". */
+        /** Ziel eines App-Shortcuts: "TRIP" (Reise-Tab) oder ein Guide-Schlüssel wie "TRAVEL:HELP". */
         const val EXTRA_OPEN_PAGE = "open_page"
     }
 
@@ -144,7 +144,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private enum class MainDestination { TODAY, DISCOVER, LISTS, PASSES }
+/** Shortcut-Ziele für den Reise-Tab; "PASSES" für bereits angelegte Shortcuts. */
+private val TRIP_PAGES = setOf("TRIP", "PASSES")
+
+private enum class MainDestination { TODAY, TRIP, DISCOVER, LISTS }
 
 @Composable
 private fun KosApp(
@@ -159,7 +162,7 @@ private fun KosApp(
     val destinationName = rememberSaveable {
         mutableStateOf(
             when {
-                startPage == "PASSES" -> MainDestination.PASSES.name
+                startPage in TRIP_PAGES -> MainDestination.TRIP.name
                 startInTravel || startPage != null -> MainDestination.DISCOVER.name
                 else -> MainDestination.TODAY.name
             }
@@ -167,7 +170,7 @@ private fun KosApp(
     }
     val guidePage = rememberSaveable { mutableStateOf<String?>(
             when {
-                startPage != null && startPage != "PASSES" -> startPage
+                startPage != null && startPage !in TRIP_PAGES -> startPage
                 startInTravel -> "TRAVEL:TODAY"
                 else -> null
             }
@@ -180,8 +183,8 @@ private fun KosApp(
 
     LaunchedEffect(shortcutPage) {
         if (shortcutPage == null) return@LaunchedEffect
-        if (shortcutPage == "PASSES") {
-            destinationName.value = MainDestination.PASSES.name
+        if (shortcutPage in TRIP_PAGES) {
+            destinationName.value = MainDestination.TRIP.name
         } else {
             guidePage.value = shortcutPage
             destinationName.value = MainDestination.DISCOVER.name
@@ -232,7 +235,6 @@ private fun KosApp(
                 padding = padding,
                 selectedDay = TripDays.all.firstOrNull { it.index == selectedDay.intValue },
                 onOpenTips = { guidePage.value = null; destinationName.value = MainDestination.DISCOVER.name },
-                onOpenPasses = { destinationName.value = MainDestination.PASSES.name },
                 themeMode = themeMode,
                 onThemeMode = onThemeMode,
                 scrollToTopRequest = scrollToTopRequest.intValue,
@@ -253,7 +255,7 @@ private fun KosApp(
                 padding = PaddingValues(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
                 scrollToTopRequest = scrollToTopRequest.intValue
             )
-            MainDestination.PASSES -> PassesScreen(
+            MainDestination.TRIP -> TripScreen(
                 padding = PaddingValues(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
                 scrollToTopRequest = scrollToTopRequest.intValue
             )
@@ -267,19 +269,18 @@ private fun MainNavigationBar(
     onSelect: (MainDestination) -> Unit
 ) {
     NavigationBar(containerColor = KosNav) {
-        // PASSES ist kein Tab, sondern wird über das Icon im Startseiten-Header geöffnet.
-        MainDestination.entries.filter { it != MainDestination.PASSES }.forEach { destination ->
+        MainDestination.entries.forEach { destination ->
             val labelRes = when (destination) {
                 MainDestination.TODAY -> R.string.main_nav_today
                 MainDestination.DISCOVER -> R.string.main_nav_discover
                 MainDestination.LISTS -> R.string.main_nav_lists
-                MainDestination.PASSES -> R.string.main_nav_passes
+                MainDestination.TRIP -> R.string.main_nav_trip
             }
             val iconRes = when (destination) {
                 MainDestination.TODAY -> R.drawable.ic_nav_home
                 MainDestination.DISCOVER -> R.drawable.ic_nav_compass
                 MainDestination.LISTS -> R.drawable.ic_nav_list
-                MainDestination.PASSES -> R.drawable.ic_nav_pass
+                MainDestination.TRIP -> R.drawable.ic_nav_pass
             }
             NavigationBarItem(
                 selected = destination == selected,
@@ -341,7 +342,6 @@ private fun KosHome(
     padding: PaddingValues,
     selectedDay: TripDay?,
     onOpenTips: () -> Unit,
-    onOpenPasses: () -> Unit,
     themeMode: ThemeMode,
     onThemeMode: (ThemeMode) -> Unit,
     scrollToTopRequest: Int,
@@ -429,7 +429,6 @@ private fun KosHome(
             }
             HeaderSection(
                 s = s,
-                onPasses = onOpenPasses,
                 onSettings = { showSettings.value = true }
             )
             Spacer(Modifier.height(18.dp))
@@ -593,7 +592,6 @@ private fun showUpdateDownloadError(context: android.content.Context) {
 @Composable
 private fun HeaderSection(
     s: HomeState,
-    onPasses: () -> Unit,
     onSettings: () -> Unit
 ) {
     Row(verticalAlignment = Alignment.Top) {
@@ -618,35 +616,6 @@ private fun HeaderSection(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.offset(x = 12.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .size(44.dp)
-                    .testTag("passes-button")
-                    .clickable(onClick = onPasses)
-                    .clearAndSetSemantics {
-                        contentDescription = "Bordkarten öffnen"
-                        onClick {
-                            onPasses()
-                            true
-                        }
-                    }
-            ) {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .size(34.dp)
-                        .clip(CircleShape)
-                        .background(HomeCardColor)
-                        .border(1.dp, HomeCardBorder, CircleShape)
-                ) {
-                    androidx.compose.material3.Icon(
-                        painter = androidx.compose.ui.res.painterResource(R.drawable.ic_nav_pass),
-                        contentDescription = null,
-                        tint = KosInk,
-                        modifier = Modifier.align(Alignment.Center).size(20.dp)
-                    )
-                }
-            }
             // Settings Button
             Box(
                 modifier = Modifier

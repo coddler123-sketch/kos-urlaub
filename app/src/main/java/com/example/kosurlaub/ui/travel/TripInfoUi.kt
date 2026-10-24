@@ -22,38 +22,35 @@ import com.example.kosurlaub.ui.theme.HomeAccent
 import com.example.kosurlaub.ui.theme.KosInk
 
 @Composable
-internal fun TripInfoCard(onOpenMap: (String) -> Unit) {
+internal fun LuggageInfoCard() {
     TravelCardContainer {
-        PostcardLabel("Reise & Hotel", Modifier.testTag("trip-info-card"))
+        PostcardLabel("Gepäck & Veranstalter", Modifier.testTag("trip-info-card"))
         Spacer(Modifier.height(8.dp))
-        InfoLine("Hinflug", TripData.outbound.summary())
-        InfoLine("Rückflug", TripData.inbound.summary())
         InfoLine(
             "Gepäck",
             "${TripData.CHECKED_BAG_KG} kg aufgegeben, ${TripData.CARRY_ON_KG} kg Handgepäck " +
                 "(max. ${TripData.CARRY_ON_SIZE}) pro Person"
         )
-        InfoLine("Hotel", "${TripData.HOTEL_NAME}, ${TripData.HOTEL_PLACE}, ${TripData.HOTEL_POSTAL_CODE} Kos")
         InfoLine("Veranstalter", TripData.OPERATOR)
+    }
+}
+
+@Composable
+internal fun HotelInfoCard(onOpenMap: (String) -> Unit) {
+    TravelCardContainer {
+        PostcardLabel("Hotel auf einen Blick", Modifier.testTag("hotel-info-card"))
+        Spacer(Modifier.height(8.dp))
+        InfoLine("Hotel", "${TripData.HOTEL_NAME}, ${TripData.HOTEL_PLACE}, ${TripData.HOTEL_POSTAL_CODE} Kos")
+        hotelDetails.forEach { InfoLine(it.title, it.text) }
+        InfoLine("Bewertungen", HOTEL_REVIEW_SUMMARY)
         Spacer(Modifier.height(4.dp))
+        Text(HOTEL_SOURCE_NOTE, style = PostcardType.Label, color = KosInk.copy(alpha = 0.7f))
         TextButton(
             onClick = { onOpenMap("${TripData.HOTEL_LAT},${TripData.HOTEL_LON}(${TripData.HOTEL_NAME})") },
             modifier = Modifier.testTag("trip-info-map")
         ) {
             Text("HOTEL AUF DER KARTE", style = PostcardType.Label, color = HomeAccent)
         }
-    }
-}
-
-@Composable
-internal fun HotelInfoCard() {
-    TravelCardContainer {
-        PostcardLabel("Hotel auf einen Blick", Modifier.testTag("hotel-info-card"))
-        Spacer(Modifier.height(8.dp))
-        hotelDetails.forEach { InfoLine(it.title, it.text) }
-        InfoLine("Bewertungen", HOTEL_REVIEW_SUMMARY)
-        Spacer(Modifier.height(4.dp))
-        Text(HOTEL_SOURCE_NOTE, style = PostcardType.Label, color = KosInk.copy(alpha = 0.7f))
     }
 }
 

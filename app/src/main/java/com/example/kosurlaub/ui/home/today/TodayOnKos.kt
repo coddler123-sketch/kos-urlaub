@@ -1,6 +1,4 @@
 package com.example.kosurlaub.ui.home.today
-import com.example.kosurlaub.TripData
-import com.example.kosurlaub.ui.home.isReturnPassVisible
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -74,15 +72,6 @@ internal fun TodayOnKos(
             }
             KosWeatherRow(s)
             PhraseCard(s.phrase)
-            if (isReturnPassVisible(now)) {
-                val back = TripData.inbound
-                BoardingPass(
-                    back,
-                    stringResource(R.string.today_return_flight),
-                    "${back.weekday} %02d.%02d. · ${stringResource(R.string.today_return_checkout)}".format(back.day, back.month),
-                    "${TripData.HOTEL_CHECK_OUT} · ${TripData.HOTEL_NAME}"
-                )
-            }
             PaperPanel {
                 PostcardLabel(stringResource(R.string.today_next_bus))
                 if (bus == null) {

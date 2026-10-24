@@ -30,7 +30,7 @@ import com.example.kosurlaub.ui.compass.compassTips
 import com.example.kosurlaub.ui.home.HomeState
 import com.example.kosurlaub.ui.theme.*
 
-/** Heute vor dem Abflug: Klappzahlen-Countdown, Flug und Hotel, gemerkte Tipps, aktuelles Kos-Wetter. */
+/** Heute vor dem Abflug: Klappzahlen-Countdown, gemerkte Tipps, aktuelles Kos-Wetter. Flug und Hotel stehen im Reise-Tab. */
 @Composable
 internal fun TodayBefore(
     s: HomeState,
@@ -38,7 +38,6 @@ internal fun TodayBefore(
     onOpenTips: () -> Unit
 ) {
     val context = LocalContext.current
-    val flight = TripData.outbound
     val saved = compassTips.filter { it.id in CompassPreferences.saved(context) }
     Column(verticalArrangement = Arrangement.spacedBy(PostcardSpace.Gap)) {
         Box(modifier = Modifier.fillMaxWidth().height(240.dp).clip(PostcardShape.Panel)) {
@@ -85,13 +84,6 @@ internal fun TodayBefore(
                 )
             }
         }
-        BoardingPass(
-            flight,
-            stringResource(R.string.today_before_flight_hotel),
-            "${flight.weekday} %02d.%02d. · ${stringResource(R.string.today_before_hotel)}".format(flight.day, flight.month),
-            "${TripData.HOTEL_NAME} · ${TripData.HOTEL_PLACE}"
-        )
-        CheckInCard()
         if (saved.isNotEmpty()) {
             PaperPanel(modifier = Modifier.clickable(onClick = onOpenTips)) {
                 PostcardLabel("${stringResource(R.string.today_before_saved)} · ${saved.size}")

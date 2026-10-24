@@ -23,6 +23,12 @@ object CheckInWindow {
     /** Bei Condor öffnet der Online-Check-in 24 Stunden vor Abflug. */
     const val LEAD_HOURS = 24
 
+    /** Die Check-in-Karte erscheint erst so viele Tage vor Abflug. */
+    const val SHOW_LEAD_DAYS = 7
+
+    fun isCardVisible(nowMillis: Long, departureMillis: Long): Boolean =
+        nowMillis in (departureMillis - TimeUnit.DAYS.toMillis(SHOW_LEAD_DAYS.toLong())) until departureMillis
+
     fun state(nowMillis: Long, departureMillis: Long, leadHours: Int): State {
         val opensAt = departureMillis - TimeUnit.HOURS.toMillis(leadHours.toLong())
         return when {
