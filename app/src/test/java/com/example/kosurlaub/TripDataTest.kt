@@ -12,14 +12,14 @@ class TripDataTest {
 
     @Test
     fun `outbound flight uses local airport times`() {
-        assertEquals(millis(2027, 9, 13, 13, 25, "Europe/Berlin"), TripData.outbound.departureMillis())
-        assertEquals(millis(2027, 9, 13, 17, 45, "Europe/Athens"), TripData.outbound.arrivalMillis())
+        assertEquals(millis(2027, 9, 13, 6, 0, "Europe/Berlin"), TripData.outbound.departureMillis())
+        assertEquals(millis(2027, 9, 13, 10, 20, "Europe/Athens"), TripData.outbound.arrivalMillis())
     }
 
     @Test
     fun `inbound flight uses local airport times`() {
-        assertEquals(millis(2027, 9, 28, 11, 35, "Europe/Athens"), TripData.inbound.departureMillis())
-        assertEquals(millis(2027, 9, 28, 14, 0, "Europe/Berlin"), TripData.inbound.arrivalMillis())
+        assertEquals(millis(2027, 9, 28, 19, 5, "Europe/Athens"), TripData.inbound.departureMillis())
+        assertEquals(millis(2027, 9, 28, 21, 30, "Europe/Berlin"), TripData.inbound.arrivalMillis())
     }
 
     @Test
@@ -33,11 +33,11 @@ class TripDataTest {
     @Test
     fun `summary shows local times and flight number`() {
         assertEquals(
-            "Mo 13.09.2027 · Hamburg 13:25 → Kos 17:45 (Ortszeit) · Condor DE1640",
+            "Mo 13.09.2027 · Hamburg 06:00 → Kos 10:20 (Ortszeit) · Condor DE1640",
             TripData.outbound.summary()
         )
         assertEquals(
-            "Di 28.09.2027 · Kos 11:35 → Hamburg 14:00 (Ortszeit) · Condor DE1641",
+            "Di 28.09.2027 · Kos 19:05 → Hamburg 21:30 (Ortszeit) · Condor DE1641",
             TripData.inbound.summary()
         )
     }

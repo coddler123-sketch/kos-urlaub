@@ -49,7 +49,7 @@ class CountdownCalculatorTest {
 
     @Test
     fun `isOnVacation is false before departure`() {
-        val today = getMockToday(2027, Calendar.SEPTEMBER, 13, 13, 24)
+        val today = getMockToday(2027, Calendar.SEPTEMBER, 13, 5, 59)
         val r = CountdownCalculator.calculate(today)
         assertFalse(r.isOnVacation)
     }
@@ -74,7 +74,7 @@ class CountdownCalculatorTest {
 
     @Test
     fun `isReached is true on departure day but isOnVacation is false before arrival`() {
-        val departureDayNoon = getMockToday(2027, Calendar.SEPTEMBER, 13, 15, 0)
+        val departureDayNoon = getMockToday(2027, Calendar.SEPTEMBER, 13, 7, 0)
         val r = CountdownCalculator.calculate(departureDayNoon)
         assertTrue(r.isReached)
         assertFalse(r.isOnVacation)
@@ -82,13 +82,13 @@ class CountdownCalculatorTest {
 
     @Test
     fun `isOnVacation is false before arrival in Kos`() {
-        val beforeArrival = getMockToday(2027, Calendar.SEPTEMBER, 13, 16, 44)
+        val beforeArrival = getMockToday(2027, Calendar.SEPTEMBER, 13, 9, 19)
         assertFalse(CountdownCalculator.calculate(beforeArrival).isOnVacation)
     }
 
     @Test
     fun `isOnVacation is true after arrival in Kos`() {
-        val afterArrival = getMockToday(2027, Calendar.SEPTEMBER, 13, 16, 46)
+        val afterArrival = getMockToday(2027, Calendar.SEPTEMBER, 13, 9, 21)
         val r = CountdownCalculator.calculate(afterArrival)
         assertTrue(r.isReached)
         assertTrue(r.isOnVacation)

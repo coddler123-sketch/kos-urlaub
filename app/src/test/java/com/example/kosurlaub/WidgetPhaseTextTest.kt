@@ -9,14 +9,14 @@ import org.junit.Test
 class WidgetPhaseTextTest {
     private fun kos(day: Int, hour: Int) = AppClock.millisOf("Europe/Athens", 2027, 9, day, hour, 0)
 
-    @Test fun departureDayShowsTime() = assertEquals("Abflug 13:25 Uhr", WidgetPhaseText.departureDay())
+    @Test fun departureDayShowsTime() = assertEquals("Abflug 06:00 Uhr", WidgetPhaseText.departureDay())
 
     @Test fun vacationDayCounts() {
         assertEquals("Tag 4 von 16", WidgetPhaseText.vacationDay(kos(16, 12)))
     }
 
     @Test fun returnDayShowsFlightTime() {
-        assertEquals("Rückflug 11:35 Uhr", WidgetPhaseText.vacationDay(kos(28, 8)))
+        assertEquals("Rückflug 19:05 Uhr", WidgetPhaseText.vacationDay(kos(28, 8)))
     }
 
     @Test fun outsideTripIsNull() = assertNull(WidgetPhaseText.vacationDay(kos(1, 12)))

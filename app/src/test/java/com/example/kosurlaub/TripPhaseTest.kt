@@ -18,10 +18,10 @@ class TripPhaseTest {
 
     @Test
     fun phaseChangesAtArrivalAndReturnDeparture() {
-        assertEquals(TripPhase.BEFORE, TripPhase.of(athens(2027, 9, 13, 17, 44)))
-        assertEquals(TripPhase.ON_KOS, TripPhase.of(athens(2027, 9, 13, 17, 45)))
-        assertEquals(TripPhase.ON_KOS, TripPhase.of(athens(2027, 9, 28, 11, 34)))
-        assertEquals(TripPhase.AFTER, TripPhase.of(athens(2027, 9, 28, 11, 35)))
+        assertEquals(TripPhase.BEFORE, TripPhase.of(athens(2027, 9, 13, 10, 19)))
+        assertEquals(TripPhase.ON_KOS, TripPhase.of(athens(2027, 9, 13, 10, 20)))
+        assertEquals(TripPhase.ON_KOS, TripPhase.of(athens(2027, 9, 28, 19, 4)))
+        assertEquals(TripPhase.AFTER, TripPhase.of(athens(2027, 9, 28, 19, 5)))
     }
 
     @Test

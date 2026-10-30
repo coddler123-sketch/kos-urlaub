@@ -41,18 +41,18 @@ object TripData {
         airline = "Condor", number = "DE1640", weekday = "Mo",
         year = 2027, month = 9, day = 13,
         fromCity = "Hamburg", fromAirport = "HAM", fromZone = "Europe/Berlin",
-        departHour = 13, departMinute = 25,
+        departHour = 6, departMinute = 0,
         toCity = "Kos", toAirport = "KGS", toZone = "Europe/Athens",
-        arriveHour = 17, arriveMinute = 45
+        arriveHour = 10, arriveMinute = 20
     )
 
     val inbound = Flight(
         airline = "Condor", number = "DE1641", weekday = "Di",
         year = 2027, month = 9, day = 28,
         fromCity = "Kos", fromAirport = "KGS", fromZone = "Europe/Athens",
-        departHour = 11, departMinute = 35,
+        departHour = 19, departMinute = 5,
         toCity = "Hamburg", toAirport = "HAM", toZone = "Europe/Berlin",
-        arriveHour = 14, arriveMinute = 0
+        arriveHour = 21, arriveMinute = 30
     )
 
     const val CHECKED_BAG_KG = 23

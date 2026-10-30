@@ -67,7 +67,7 @@ private val goodToKnow = listOf(
     "Strom" to "Wie zu Hause: Typ C und F, 230 Volt. Kein Adapter nötig.",
     "Flughafen" to "KGS ist klein, der Ausgang ist zu Fuß. Tigaki liegt rund 15 Minuten vom Flughafen. Den Transfer vorher klären.",
     "Sonne und Wind" to "Mittags Schatten suchen, Wasser mitnehmen. Der Meltemi (Nordwind) ist im September schwächer als im Hochsommer, Südstrände sind bei Wind oft ruhiger.",
-    "Rückreise" to "Der Rückflug geht um 11:35 Uhr. Transfer am Vorabend an der Rezeption bestätigen und früh frühstücken."
+    "Rückreise" to "Der Rückflug geht um 19:05 Uhr. Check-out ist schon um 11:00 Uhr: Gepäck an der Rezeption lassen und den Transfer am Vorabend bestätigen."
 )
 
 @Composable

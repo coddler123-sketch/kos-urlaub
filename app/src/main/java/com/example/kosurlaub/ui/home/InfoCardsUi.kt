@@ -297,8 +297,8 @@ fun FlightDayTimelineCard() {
         )
         Spacer(Modifier.height(10.dp))
         TimelineItem("~12:45 Uhr", "Boarding & Abflugbereich", "Gepäck aufgegeben & Sicherheitskontrolle")
-        TimelineItem("13:25 Uhr", "Abflug ab Hamburg (HAM) nach Kos", "Condor DE1640, Direktflug 13.09.2027")
-        TimelineItem("17:45 Uhr", "Ankunft Flughafen Kos (KGS)", "Ortszeit Kos (+1 Std.)")
+        TimelineItem("06:00 Uhr", "Abflug ab Hamburg (HAM) nach Kos", "Condor DE1640, Direktflug 13.09.2027")
+        TimelineItem("10:20 Uhr", "Ankunft Flughafen Kos (KGS)", "Ortszeit Kos (+1 Std.)")
         TimelineItem("~19:00 Uhr", "Check-in ${TripData.HOTEL_NAME}", TripData.ROOM)
     }
 }

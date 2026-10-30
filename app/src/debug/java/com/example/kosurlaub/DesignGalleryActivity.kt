@@ -53,7 +53,7 @@ class DesignGalleryActivity : ComponentActivity() {
                     }
                     PaperPanel {
                         PostcardLabel("Flug & Hotel")
-                        Text("Mo 13.09. · 13:25 HAM → 17:45 KGS", style = PostcardType.Body, color = KosInk)
+                        Text("Mo 13.09. · 06:00 HAM → 10:20 KGS", style = PostcardType.Body, color = KosInk)
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(PostcardSpace.Gap)) {
                         PostcardPhotoCard(R.drawable.excursion_old_town, "Altstadt", "Ausflug", Modifier.weight(1f))
