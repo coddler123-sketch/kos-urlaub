@@ -175,7 +175,12 @@ internal fun CompassTipPhotoCard(
                 modifier = Modifier.size(34.dp).background(Color.Black.copy(alpha = 0.4f), CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                Text(if (isSaved) "♥" else "♡", color = Color.White, fontSize = 20.sp)
+                androidx.compose.material3.Icon(
+                    painter = androidx.compose.ui.res.painterResource(if (isSaved) R.drawable.ic_heart_filled else R.drawable.ic_heart_outline),
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp),
+                    tint = Color.White
+                )
             }
         }
     }

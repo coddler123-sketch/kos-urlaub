@@ -28,6 +28,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -230,6 +231,9 @@ private fun KosApp(
             }
         }
     ) { padding ->
+        // Auf Tablets und gefalteten Geräten bleibt die Handy-Spalte lesbar schmal und mittig.
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+        Box(Modifier.widthIn(max = 640.dp).fillMaxSize()) {
         when (destination) {
             MainDestination.TODAY -> KosHome(
                 padding = padding,
@@ -259,6 +263,8 @@ private fun KosApp(
                 padding = PaddingValues(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding()),
                 scrollToTopRequest = scrollToTopRequest.intValue
             )
+        }
+        }
         }
     }
 }
