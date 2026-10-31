@@ -146,7 +146,7 @@ fun WeatherCard(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         PostcardLabel("Kos · Tigaki jetzt")
-                        Text(s.weather.temperatureLabel, style = PostcardType.Title, color = KosInk)
+                        Text(s.weather.temperatureLabel, style = PostcardType.Numeral.copy(fontSize = PostcardType.Title.fontSize), color = KosInk)
                         Text(s.weather.apparentTemperatureLabel, style = PostcardType.Body, color = KosInk.copy(alpha = 0.85f))
                     }
                 }

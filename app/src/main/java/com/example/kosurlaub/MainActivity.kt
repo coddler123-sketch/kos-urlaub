@@ -444,12 +444,12 @@ private fun KosHome(
             }
             if (CountdownCalculator.isFlightDay()) {
                 FlightDayTimelineCard()
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(PostcardSpace.Gap))
             }
             when (phase) {
                 TripPhase.BEFORE -> {
                     TodayBefore(s, heroPhoto, onOpenTips)
-                    Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(PostcardSpace.Gap))
                     when (Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % 2) {
                         0 -> FactCard(s.factOfTheDay)
                         else -> HighlightCard(kosHighlightOfTheDay())
@@ -457,7 +457,7 @@ private fun KosHome(
                 }
                 TripPhase.ON_KOS -> {
                     TodayOnKos(s, heroPhoto, onOpenTips)
-                    Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(PostcardSpace.Gap))
                     HomeQuickActions(
                         onOpenTigaki = { onOpenTravel("MOBILITY") },
                         onOpenPhrasebook = { onOpenTravel("EXPLORE") },
@@ -467,10 +467,10 @@ private fun KosHome(
                 TripPhase.AFTER -> TodayAfter(s, heroPhoto)
             }
             if (phase != TripPhase.AFTER) {
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(PostcardSpace.Gap))
                 if (phase == TripPhase.ON_KOS) {
                     BeachWindRadarCard()
-                    Spacer(Modifier.height(12.dp))
+                    Spacer(Modifier.height(PostcardSpace.Gap))
                 }
                 BottomSection(
                     s = s,

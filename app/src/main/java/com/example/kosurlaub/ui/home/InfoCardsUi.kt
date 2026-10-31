@@ -184,14 +184,7 @@ private fun HomeQuickGridCard(
 
 @Composable
 fun FactCard(fact: String) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(HomeCardShape)
-            .background(HomeCardColor)
-            .border(1.dp, HomeCardBorder, HomeCardShape)
-            .padding(horizontal = 16.dp, vertical = 13.dp)
-    ) {
+    PaperPanel {
         PostcardLabel("KOS-FAKT")
         Spacer(Modifier.height(5.dp))
         Text(
@@ -206,14 +199,7 @@ fun FactCard(fact: String) {
 
 @Composable
 fun HighlightCard(highlight: String) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(HomeCardShape)
-            .background(HomeCardColor)
-            .border(1.dp, HomeCardBorder, HomeCardShape)
-            .padding(horizontal = 16.dp, vertical = 13.dp)
-    ) {
+    PaperPanel {
         PostcardLabel("TAGESHÖHEPUNKT")
         Spacer(Modifier.height(5.dp))
         Text(
