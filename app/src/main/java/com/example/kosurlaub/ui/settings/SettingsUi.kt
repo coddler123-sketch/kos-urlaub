@@ -63,7 +63,7 @@ fun SettingsSheet(
     ) {
         Text(
             text = "Optionen",
-            color = KosInk.copy(alpha = 0.6f),
+            color = KosInk.copy(alpha = 0.7f),
             fontSize = PostcardMetrics.LABEL_SP.sp,
             fontWeight = FontWeight.SemiBold,
             fontFamily = KosSans,
@@ -77,7 +77,7 @@ fun SettingsSheet(
             Text(text = "◐", fontSize = PostcardMetrics.HEADING_SP.sp, modifier = Modifier.width(28.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = "Darstellung", color = KosInk, fontSize = PostcardMetrics.BODY_SP.sp, fontFamily = KosSans, fontWeight = FontWeight.SemiBold)
-                Text(text = "System, hell oder dunkel", color = KosInk.copy(alpha = 0.6f), fontSize = PostcardMetrics.LABEL_SP.sp, fontFamily = KosSans)
+                Text(text = "System, hell oder dunkel", color = KosInk.copy(alpha = 0.7f), fontSize = PostcardMetrics.LABEL_SP.sp, fontFamily = KosSans)
             }
         }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -157,7 +157,7 @@ private fun SettingsRow(
         Text(text = icon, fontSize = PostcardMetrics.HEADING_SP.sp, modifier = Modifier.width(28.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(text = label, color = KosInk, fontSize = PostcardMetrics.BODY_SP.sp, fontFamily = KosSans, fontWeight = FontWeight.SemiBold)
-            Text(text = detail, color = KosInk.copy(alpha = 0.6f), fontSize = PostcardMetrics.LABEL_SP.sp, fontFamily = KosSans)
+            Text(text = detail, color = KosInk.copy(alpha = 0.7f), fontSize = PostcardMetrics.LABEL_SP.sp, fontFamily = KosSans)
         }
         SecondaryActionButton(
             text = actionLabel,
@@ -211,7 +211,7 @@ private fun DebugClockSection() {
     )
     Text(
         text = "TESTDATUM (NUR DEBUG)" + if (AppClock.isOverridden) " · aktiv" else "",
-        color = KosInk.copy(alpha = 0.6f), fontSize = PostcardMetrics.LABEL_SP.sp, fontWeight = FontWeight.SemiBold,
+        color = KosInk.copy(alpha = 0.7f), fontSize = PostcardMetrics.LABEL_SP.sp, fontWeight = FontWeight.SemiBold,
         fontFamily = KosSans, letterSpacing = 1.sp, modifier = Modifier.testTag("debug-clock-label")
     )
     androidx.compose.foundation.layout.FlowRow(

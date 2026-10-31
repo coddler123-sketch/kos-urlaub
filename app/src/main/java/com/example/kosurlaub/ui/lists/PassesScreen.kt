@@ -190,6 +190,6 @@ private fun PassRow(pass: Pass, onOpen: () -> Unit, onRemove: () -> Unit) {
             ).joinToString(" · ")
             Text(detail, style = PostcardType.Label, color = KosInk.copy(alpha = 0.7f))
         }
-        TextButton(onRemove) { Text("×", color = KosInk.copy(alpha = 0.6f), style = PostcardType.Heading) }
+        TextButton(onRemove) { Text("×", color = KosInk.copy(alpha = 0.7f), style = PostcardType.Heading) }
     }
 }

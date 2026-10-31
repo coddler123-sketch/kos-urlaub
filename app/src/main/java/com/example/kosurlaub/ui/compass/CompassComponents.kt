@@ -110,7 +110,7 @@ internal fun CompassDayPlanCard(tips: List<CompassTip>) {
             )
         }
         Spacer(Modifier.height(6.dp))
-        Text("Aus euren gemerkten Tipps · maximal drei Stationen", color = KosInk.copy(alpha = 0.6f), fontSize = PostcardMetrics.LABEL_SP.sp)
+        Text("Aus euren gemerkten Tipps · maximal drei Stationen", color = KosInk.copy(alpha = 0.7f), fontSize = PostcardMetrics.LABEL_SP.sp)
     }
 }
 @Composable
@@ -268,7 +268,7 @@ internal fun CompassTipCard(
             Column {
                 Text(
                     if (tip.source == CompassTipSource.COMMUNITY) "PERSÖNLICHE ERFAHRUNG" else "RECHERCHIERTER HINWEIS · STAND ${editorial.checkedAt}",
-                    style = PostcardType.Label, color = KosInk.copy(alpha = 0.6f)
+                    style = PostcardType.Label, color = KosInk.copy(alpha = 0.7f)
                 )
                 editorial.validUntil?.let {
                     Text("GÜLTIGKEIT · $it", style = PostcardType.Label, color = KosStamp)

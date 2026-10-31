@@ -433,7 +433,7 @@ private fun ExpandableTravelGroup(
 private fun SupportingTravelText(textRes: Int) {
     Text(
         text = stringResource(textRes),
-        color = KosInk.copy(alpha = 0.6f),
+        color = KosInk.copy(alpha = 0.7f),
         fontSize = PostcardMetrics.LABEL_SP.sp,
         lineHeight = 15.sp,
         fontFamily = KosSans,
@@ -650,7 +650,7 @@ private fun GreekPhrasebookCard() {
                     }
                     Text(
                         text = "Aussprache: ${phrase.phonetic}",
-                        color = KosInk.copy(alpha = 0.6f),
+                        color = KosInk.copy(alpha = 0.7f),
                         fontSize = PostcardMetrics.LABEL_SP.sp,
                         fontFamily = KosSans
                     )

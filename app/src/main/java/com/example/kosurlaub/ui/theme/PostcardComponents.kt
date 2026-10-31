@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -186,20 +187,23 @@ fun PostcardPhotoCard(
 @Composable
 fun FlipDigits(value: Long, modifier: Modifier = Modifier) {
     val digits = value.coerceIn(0, 999).toString().padStart(3, '0')
+    // Kachel und Ziffer wachsen mit der Systemschrift, aber höchstens bis 130 %, damit die drei Kacheln in die Zeile passen.
+    val fontScale = LocalDensity.current.fontScale
+    val scale = fontScale.coerceAtMost(1.3f)
     Row(
-        modifier = modifier.semantics(mergeDescendants = true) { contentDescription = "$value" },
+        modifier = modifier.semantics(mergeDescendants = true) { contentDescription = "$value Tage" },
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         digits.forEach { digit ->
             Box(
                 modifier = Modifier
-                    .size(width = 50.dp, height = 68.dp)
+                    .size(width = (50 * scale).dp, height = (68 * scale).dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(Brush.verticalGradient(listOf(Color(0xFF2C3733), Color(0xFF111815)))),
                 contentAlignment = Alignment.Center
             ) {
-                Text(digit.toString(), style = PostcardType.Numeral.copy(fontSize = 50.sp), color = Color(0xFFF6F0E4))
+                Text(digit.toString(), style = PostcardType.Numeral.copy(fontSize = (50 * scale / fontScale).sp), color = Color(0xFFF6F0E4))
                 Box(Modifier.fillMaxWidth().height(1.dp).background(Color(0x99000000)))
             }
         }
@@ -242,8 +246,8 @@ fun PostcardTextField(
             unfocusedBorderColor = HomeCardBorder,
             focusedLabelColor = KosInk,
             unfocusedLabelColor = KosInk.copy(alpha = 0.75f),
-            focusedPlaceholderColor = KosInk.copy(alpha = 0.5f),
-            unfocusedPlaceholderColor = KosInk.copy(alpha = 0.5f),
+            focusedPlaceholderColor = KosInk.copy(alpha = 0.7f),
+            unfocusedPlaceholderColor = KosInk.copy(alpha = 0.7f),
             cursorColor = KosInk
         )
     )

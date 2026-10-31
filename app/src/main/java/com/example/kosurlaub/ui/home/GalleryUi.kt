@@ -142,7 +142,7 @@ fun GallerySheet(
                 Text("AUTOMATIK", color = HomeAccent, fontSize = PostcardMetrics.LABEL_SP.sp, fontWeight = FontWeight.Bold, modifier = Modifier.width(72.dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Text("Täglicher Bildwechsel", color = KosInk, fontSize = PostcardMetrics.BODY_SP.sp, fontWeight = FontWeight.SemiBold, fontFamily = KosSans)
-                    Text("Jeden Tag eine neue Kos-Impression", color = KosInk.copy(alpha = 0.6f), fontSize = PostcardMetrics.LABEL_SP.sp, fontFamily = KosSans)
+                    Text("Jeden Tag eine neue Kos-Impression", color = KosInk.copy(alpha = 0.7f), fontSize = PostcardMetrics.LABEL_SP.sp, fontFamily = KosSans)
                 }
                 if (isAuto) Text("✓", color = HomeAccent, fontWeight = FontWeight.Bold)
             }

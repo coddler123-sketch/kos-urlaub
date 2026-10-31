@@ -87,7 +87,7 @@ internal fun MarineWeatherCard(
                         SimpleDateFormat("dd.MM. HH:mm", Locale.GERMANY)
                             .format(Date(marineWeather.fetchedAtMillis))
                     ),
-                    color = KosInk.copy(alpha = 0.5f),
+                    color = KosInk.copy(alpha = 0.7f),
                     fontSize = PostcardMetrics.LABEL_SP.sp,
                     modifier = Modifier.padding(top = 6.dp)
                 )
@@ -151,7 +151,7 @@ private fun Metric(@StringRes labelRes: Int, value: String, modifier: Modifier =
     Column(modifier = modifier) {
         Text(
             text = stringResource(labelRes),
-            color = KosInk.copy(alpha = 0.6f),
+            color = KosInk.copy(alpha = 0.7f),
             fontSize = PostcardMetrics.LABEL_SP.sp,
             fontFamily = KosSans
         )
@@ -305,7 +305,7 @@ internal fun TravelChecklistCard(
         )
         Text(
             text = stringResource(R.string.travel_notes_saved),
-            color = KosInk.copy(alpha = 0.5f),
+            color = KosInk.copy(alpha = 0.7f),
             fontSize = PostcardMetrics.LABEL_SP.sp,
             lineHeight = 14.sp,
             modifier = Modifier.padding(top = 6.dp)

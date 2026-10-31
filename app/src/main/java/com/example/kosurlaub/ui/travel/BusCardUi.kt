@@ -24,7 +24,7 @@ internal fun BusCard(onOpenSite: () -> Unit) {
             Text(first.validity.substringAfter(" · "), style = PostcardType.Body, color = KosInk.copy(alpha = 0.8f))
             Text(
                 "Quelle: ${first.source} (Stand ${first.asOf})",
-                style = PostcardType.Label, color = KosInk.copy(alpha = 0.6f)
+                style = PostcardType.Label, color = KosInk.copy(alpha = 0.7f)
             )
             Spacer(Modifier.height(12.dp))
             KtelKosTimetable.routes.forEach { route ->

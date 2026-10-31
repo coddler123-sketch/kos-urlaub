@@ -101,16 +101,16 @@ private fun ListPanel(key: String) {
                         Checkbox(
                             checked = item.done,
                             onCheckedChange = { update(items.toMutableList().also { l -> l[index] = item.copy(done = it) }) },
-                            colors = CheckboxDefaults.colors(checkedColor = HomeAccent, uncheckedColor = KosInk.copy(alpha = 0.5f))
+                            colors = CheckboxDefaults.colors(checkedColor = HomeAccent, uncheckedColor = KosInk.copy(alpha = 0.6f))
                         )
                         Column(Modifier.weight(1f)) {
                             Text(item.text, style = PostcardType.Body, color = KosInk.copy(alpha = if (item.done) 0.5f else 0.95f))
                             if (item.hint.isNotEmpty()) {
-                                Text(item.hint, style = PostcardType.Body, color = KosInk.copy(alpha = 0.6f))
+                                Text(item.hint, style = PostcardType.Body, color = KosInk.copy(alpha = 0.7f))
                             }
                         }
                         TextButton(onClick = { update(items.filterIndexed { i, _ -> i != index }) }) {
-                            Text("×", color = KosInk.copy(alpha = 0.6f), style = PostcardType.Heading)
+                            Text("×", color = KosInk.copy(alpha = 0.7f), style = PostcardType.Heading)
                         }
                     }
                 }
