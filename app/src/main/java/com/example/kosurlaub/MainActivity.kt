@@ -468,8 +468,10 @@ private fun KosHome(
             }
             if (phase != TripPhase.AFTER) {
                 Spacer(Modifier.height(12.dp))
-                BeachWindRadarCard()
-                Spacer(Modifier.height(12.dp))
+                if (phase == TripPhase.ON_KOS) {
+                    BeachWindRadarCard()
+                    Spacer(Modifier.height(12.dp))
+                }
                 BottomSection(
                     s = s,
                     isRefreshing = isRefreshing.value,

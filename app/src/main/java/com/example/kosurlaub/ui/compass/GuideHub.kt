@@ -30,6 +30,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.kosurlaub.ui.home.AppClock
+import com.example.kosurlaub.ui.home.TripPhase
 import com.example.kosurlaub.ui.theme.*
 
 /** Praktische Infos auf der Guide-Startseite: Seitenschlüssel, Titel, Kurzbeschreibung. */
@@ -39,6 +41,9 @@ private val practicalTiles = listOf(
     Triple("TRAVEL:TODAY", "Reise & Meer", "Hotel, Flug, Meer und Wellen"),
     Triple("TRAVEL:EXPLORE", "Sprache & Fotospots", "Griechisch und Fotomotive")
 )
+
+/** Nur vor Ort nützlich; erst ab Ankunft auf Kos sichtbar (im Debug-Build per Testdatum prüfbar). */
+private val onKosOnlyTiles = setOf("TRAVEL:MOBILITY", "TRAVEL:TODAY")
 
 /**
  * Guide-Startseite: Suche, praktische Infos und Tipp-Kategorien als Kacheln.
@@ -85,7 +90,8 @@ fun GuideHub(
             }
         }
         item { PostcardLabel("Praktisch") }
-        items(practicalTiles.chunked(2)) { row ->
+        val onKos = TripPhase.of(AppClock.nowMillis()) == TripPhase.ON_KOS
+        items(practicalTiles.filter { onKos || it.first !in onKosOnlyTiles }.chunked(2)) { row ->
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 row.forEach { (key, title, subtitle) ->
                     GuideInfoTile(
