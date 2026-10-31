@@ -138,6 +138,12 @@ fun PerforationEdge(color: Color = KosBg, modifier: Modifier = Modifier) {
     }
 }
 
+/** Dekoratives Symbol; der Knopf oder die Zeile drumherum trägt die Beschreibung. */
+@Composable
+fun PostcardIcon(@DrawableRes res: Int, tint: Color, size: androidx.compose.ui.unit.Dp = 20.dp, modifier: Modifier = Modifier) {
+    androidx.compose.material3.Icon(painterResource(res), contentDescription = null, modifier = modifier.size(size), tint = tint)
+}
+
 /** Papier-Karte für Inhalte. */
 @Composable
 fun PaperPanel(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {

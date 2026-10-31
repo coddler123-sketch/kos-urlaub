@@ -144,7 +144,7 @@ fun GallerySheet(
                     Text("Täglicher Bildwechsel", color = KosInk, fontSize = PostcardMetrics.BODY_SP.sp, fontWeight = FontWeight.SemiBold, fontFamily = KosSans)
                     Text("Jeden Tag eine neue Kos-Impression", color = KosInk.copy(alpha = 0.7f), fontSize = PostcardMetrics.LABEL_SP.sp, fontFamily = KosSans)
                 }
-                if (isAuto) Text("✓", color = HomeAccent, fontWeight = FontWeight.Bold)
+                if (isAuto) PostcardIcon(com.example.kosurlaub.R.drawable.ic_check, HomeAccent)
             }
 
             Spacer(Modifier.height(10.dp))

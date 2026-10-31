@@ -256,7 +256,7 @@ fun CompassScreen(
                                 contentDescription = "Tipp schließen und zur Tipps-Übersicht zurückkehren"
                             }
                     ) {
-                        Text("×", color = KosInk, fontSize = 28.sp)
+                        PostcardIcon(com.example.kosurlaub.R.drawable.ic_close, KosInk, size = 24.dp)
                     }
                 }
             }

@@ -139,7 +139,7 @@ internal fun CompassSearchField(
                         .semantics { contentDescription = "Suche leeren" },
                     contentPadding = PaddingValues(0.dp)
                 ) {
-                    Text("×", color = KosInk, fontSize = 22.sp)
+                    PostcardIcon(com.example.kosurlaub.R.drawable.ic_close, KosInk)
                 }
             }
         }

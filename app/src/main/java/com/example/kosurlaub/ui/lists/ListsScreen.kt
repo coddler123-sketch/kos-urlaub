@@ -24,6 +24,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
@@ -109,8 +111,11 @@ private fun ListPanel(key: String) {
                                 Text(item.hint, style = PostcardType.Body, color = KosInk.copy(alpha = 0.7f))
                             }
                         }
-                        TextButton(onClick = { update(items.filterIndexed { i, _ -> i != index }) }) {
-                            Text("×", color = KosInk.copy(alpha = 0.7f), style = PostcardType.Heading)
+                        TextButton(
+                            onClick = { update(items.filterIndexed { i, _ -> i != index }) },
+                            modifier = Modifier.semantics { contentDescription = "${item.text} entfernen" }
+                        ) {
+                            PostcardIcon(com.example.kosurlaub.R.drawable.ic_close, KosInk.copy(alpha = 0.7f))
                         }
                     }
                 }

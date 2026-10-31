@@ -73,11 +73,9 @@ fun WeatherCard(
     ) {
         if (s.weather != null) {
             if (reloadDone) {
-                Text(
-                    text = "✓",
-                    color = KosOk,
-                    style = PostcardType.Heading,
-                    modifier = Modifier.align(Alignment.TopEnd).padding(4.dp)
+                PostcardIcon(
+                    com.example.kosurlaub.R.drawable.ic_check, KosOk,
+                    modifier = Modifier.align(Alignment.TopEnd).padding(14.dp)
                 )
             } else {
                 Box(
@@ -185,7 +183,7 @@ fun WeatherCard(
                     Text(
                         text = s.weatherStatus,
                         style = PostcardType.Label,
-                        color = KosInk.copy(alpha = 0.65f),
+                        color = KosInk.copy(alpha = 0.7f),
                         maxLines = 1
                     )
                 }
