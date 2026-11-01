@@ -67,7 +67,11 @@ internal val compassTipIds = listOf(
     "trip-palio-pyli",
     "tigaki-overview",
     "tigaki-bike",
-    "tigaki-watersports"
+    "tigaki-watersports",
+    "trip-odeon",
+    "trip-bar-street",
+    "food-kolokithokeftedes",
+    "trip-dikeos-chapel"
 )
 
 internal fun attachCompassTipIds(tips: List<CompassTip>): List<CompassTip> {

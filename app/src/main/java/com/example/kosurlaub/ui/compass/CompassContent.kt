@@ -288,5 +288,47 @@ internal val compassTips = listOf(
         tags = listOf("Tigaki", "Strand", "Aktiv"),
         source = CompassTipSource.RESEARCHED,
         sourceUrl = "https://www.hotelplan.ch/ferien/tigaki-kos-griechenland/f-40488"
+    ),
+    CompassTip(
+        category = "Ausflüge",
+        title = "Römisches Odeon in Kos-Stadt",
+        description = "Das Odeon aus dem 2. Jahrhundert n. Chr. ist gut erhalten, mit Marmorsitzen und kleiner Bühne. Dort finden bis heute Veranstaltungen statt.",
+        note = "Ob während eures Aufenthalts etwas gespielt wird, vor Ort oder online prüfen. Lässt sich gut mit dem Kos-Stadt-Tag verbinden",
+        location = "Kos-Stadt",
+        journey = "Bus ab Tigaki, ca. 20–30 Minuten",
+        tags = listOf("Kultur", "Geschichte", "Abend"),
+        source = CompassTipSource.RESEARCHED
+    ),
+    CompassTip(
+        category = "Ausflüge",
+        title = "Bar Street in Kos-Stadt",
+        description = "Die Bar Street ist das Zentrum des Nachtlebens der Insel: Bar an Bar, von Lounge bis Tanzfläche. Etwas gemütlicher als die großen Partyorte. Wer es ruhiger mag, trinkt etwas an der Hafenpromenade.",
+        note = "Abends die Rückfahrt nach Tigaki vorher klären, die Busse fahren nicht die ganze Nacht",
+        kind = CompassTipKind.CAUTION,
+        location = "Kos-Stadt",
+        journey = "Bus oder Taxi ab Tigaki",
+        tags = listOf("Abend", "Nachtleben", "Hafen"),
+        source = CompassTipSource.RESEARCHED
+    ),
+    CompassTip(
+        category = "Essen",
+        title = "Kolokithokeftedes und Imam Bayildi",
+        description = "Zwei Gerichte der Inselküche zum Probieren: Zucchini-Fritters mit Feta und Kräutern sowie gefüllte Auberginen mit Tomate, Zwiebel und Knoblauch in Olivenöl.",
+        note = "Beides ist vegetarisch und steht in vielen Tavernen auf der Karte, auch in Tigaki",
+        location = "Tigaki",
+        journey = "zu Fuß oder kurze Fahrt",
+        tags = listOf("Essen", "Taverne", "vegetarisch"),
+        source = CompassTipSource.RESEARCHED
+    ),
+    CompassTip(
+        category = "Ausflüge",
+        title = "Dikeos-Gipfel mit weißer Kapelle",
+        description = "Von Zia aus lässt sich der knapp 850 m hohe Dikeos besteigen, gekrönt von einer weißen Kapelle. Wird es in Zia zu voll, ist das die ruhigere Alternative.",
+        note = "Wegverlauf, Dauer und Zustand der Strecke vorab klären, feste Schuhe und Wasser mitnehmen",
+        kind = CompassTipKind.CAUTION,
+        location = "Zia, Kos",
+        journey = "Mietwagen, Taxi oder Tour bis Zia, dann zu Fuß",
+        tags = listOf("Aussicht", "Natur", "Wandern", "Halbtag"),
+        source = CompassTipSource.RESEARCHED
     )
 ).let(::attachCompassTipIds)
